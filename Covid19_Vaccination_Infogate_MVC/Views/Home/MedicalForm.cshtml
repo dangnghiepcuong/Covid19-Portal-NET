@@ -2,7 +2,8 @@
     Layout = "_LayoutFeaturePage";
 }
 <link rel="stylesheet" href="/css/MedicalFormSubmit.css">
-
+<script src="/js/MedicalFormSubmit.js"></script>
+<script src="/js/index.js"></script>
 <div id="return-header">
     @{
         @await Component.InvokeAsync("ViewHeader");
@@ -91,5 +92,7 @@
 <!-- END FUNCTION PANEL -->
 <br>
 
-<script src="/js/MedicalFormSubmit.js"></script>
-<script src="/js/index.js"></script>
+@section scripts {
+    <script src="/js/MedicalFormSubmit.js"></script>
+    <script src="/js/index.js"></script>
+}

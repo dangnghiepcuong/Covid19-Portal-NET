@@ -10,11 +10,11 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
-    public class CitizenController : Controller
+    public class ORGController : Controller
     {
-        private readonly ILogger<CitizenController> _logger;
+        private readonly ILogger<ORGController> _logger;
 
-        public CitizenController(ILogger<CitizenController> logger)
+        public ORGController(ILogger<ORGController> logger)
         {
             _logger = logger;
         }
@@ -23,41 +23,26 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             return View();
         }
-
-        public IActionResult MedicalForm()
-        {
-            return View();
-        }
-        public IActionResult MedicalFormList()
-        {
-            return View();
-        }
-        public IActionResult Vaccination()
-        {
-            return View();
-        }
+        
         public IActionResult AccountInfo()
         {
             return View();
         }
+
         public IActionResult Profile()
         {
             return View();
         }
-        public IActionResult Reigstration()
-        {
-            return View();
-        }
-        public IActionResult Certificate()
-        {
-            return View();
-        }
 
-        public IActionResult SearchCitizen()
+        public IActionResult Schedule()
         {
             return View();
         }
-        public IActionResult AddRelative()
+        public IActionResult CreateSchedule()
+        {
+            return View();
+        }
+        public IActionResult Document()
         {
             return View();
         }
