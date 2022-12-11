@@ -1,28 +1,25 @@
-﻿<div class="header">
+﻿@*HEADER  CITIZEN*@
+<link rel="stylesheet" href="/css/header.css">
+
+<div class="header">
     <a class="title" href="index.cshtml">
-        <img src="image/CVM-Logo.png" alt="CVM-Logo">
+        <img src="/image/CVM-Logo.png" alt="CVM-Logo">
         <span>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</span>
     </a>
 
     <div class="nav">
         <div>
             <ul>
-                <a href="index.cshtml">
-                <li class="menu-section">Trang chủ</li>
-                </a>
+                <li class="menu-section">@Html.ActionLink("Trang chủ", "Index", "Citizen")</li>
 
-                <a href="MedicalFormSubmit.cshtml">
-                <li class="menu-section">Khai báo</li>
-                </a>
+                <li class="menu-section">@Html.ActionLink("Khai báo", "MedicalForm", "Citizen")</li>
 
-                <a href="CitizenVaccination.cshtml">
-                <li class="menu-section">Tiêm chủng</li>
-                </a>
+                <li class="menu-section">@Html.ActionLink("Tiêm chủng", "Vaccination", "Citizen")</li>
             </ul>
         </div>
 
         <a class="avatar" href="#">
-            <img src="image/Avatar-Citizen.png" alt="Avata công dân">
+            <img src="/image/Avatar-Citizen.png" alt="Avata công dân">
         </a>
     </div>
 
@@ -30,33 +27,17 @@
     <div class="drop-down-menu" id="drop-down-menu-profile">
         <div class="holder">
             <ul>
-                <a href="CitizenAccountInfo.cshtml">
                 <li>Thông tin tài khoản</li>
-                </a>
-
-                <a href="CitizenProfile.cshtml">
                 <li>Thông tin công dân</li>
-                </a>
-
-                <a href="CitizenRegistration.cshtml">
                 <li>Lịch đăng ký</li>
-                </a>
-
-                <a href="CitizenCertificate.cshtml">
                 <li>Chứng nhận</li>
-                </a>
-
-                <a href="#">
                 <li>Thêm người thân</li>
-                </a>
-
-                <a href="" id="btn-logout">
                 <li>Đăng xuất</li>
-                </a>
             </ul>
         </div>
     </div>
     <!-- END DROP DOWN MENU PROFILE -->
 </div>
-
 <!-- END HEADER -->
+
+<div class="header-virtual"></div>

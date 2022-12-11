@@ -72,25 +72,28 @@ $(document).ready(function () {
         }
         $.ajax({
             cache: false,
-            url: 'HandleLogin.php',
+            url: '/Home/Login',
             type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
             data: { username: username, password: password },
             success: function (result) {    //button click to login
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result);
+                alert(result.message)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message);
                     return;
                 }
-                if (result == 'NoAccount') {    //No Account Existed
+                if (result.message == 'NoAccount') {    //No Account Existed
                     $('#form-container-login').find('.msg1').text('Tài khoản không tồn tại!');
                     return;
                 }
-                if (result == 'NoProfile') {    //No Profile Existed
+                if (result.message == 'NoProfile') {    //No Profile Existed
                     $('#form-container-login').css('display', 'none');
                     $('#gradient-bg-faded').css('display', 'block');
                     $('.container-reg-profile').css('display', 'block');
                     return;
                 }
-                if (result == 'incorrect password') {   //Incorrect Password
+                if (result.message == 'incorrect password') {   //Incorrect Password
                     $('#form-container-login').find('.msg2').text('Sai mật khẩu!');
                     return;
                 }
@@ -118,9 +121,11 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleRegAcc.php',
+            url: 'HandleRegAcc.cs/CheckExist',
             type: 'POST',
-            data: { method: 'CheckExist', username: username },
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: { username: username },
             success: function (result) {    //check if account existed
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result);
@@ -144,9 +149,11 @@ $(document).ready(function () {
 
                     $.ajax({
                         cache: false,
+                        url: 'HandleRegAcc.cs/RegisterAccount',
                         type: 'POST',
-                        data: { method: 'RegisterAccount', username: username, password: password },
-                        url: 'HandleRegAcc.php',
+                        dataType: 'JSON',
+                        contentType: 'application/json; charset=utf-8',
+                        data: { username: username, password: password },
                         success: function (result) {
                             if (result.substring(0, 5) == 'ERROR') {
                                 alert(result);
@@ -212,7 +219,7 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleRegAcc.php',
+            url: 'HandleRegAcc.cs',
             type: 'POST',
             data: {
                 method: 'RegisterProfile', lastname: lastname, firstname: firstname,
@@ -248,7 +255,7 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleForgotPassword.php',
+            url: 'HandleForgotPassword.cs',
             type: 'POST',
             data: { username: username},
             success: function (result) {    //button click to login

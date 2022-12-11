@@ -1,21 +1,21 @@
 $(document).ready(function () {
     // LOAD FRONT END DATA
-    menu_title = '<a href="MedicalFormSubmit.php">Tờ khai y tế</a>'
+    menu_title = '<a href="MedicalFormSubmit.cshtml">Tờ khai y tế</a>'
     $('#function-navigation-bar-title').html(menu_title)
 
-    homepage = '<a href="index.php">Trang chủ</a>'
+    homepage = '<a href="index.cshtml">Trang chủ</a>'
     $('#homepage-path').html(homepage)
 
-    subpage = '<a href="MedicalFormSubmit.php">Khai báo</a>'
+    subpage = '<a href="MedicalFormSubmit.cshtml">Khai báo</a>'
     $('#subpage-path').html(subpage)
 
-    selected_function = '<a href="MedicalFormSubmit.php">Tờ khai y tế</a>'
+    selected_function = '<a href="MedicalFormSubmit.cshtml">Tờ khai y tế</a>'
     $('#selected-function-path').html(selected_function)
 
     $('#function-menu-title').text('Trang khai báo y tế')
 
-    menu = '<br><a href="MedicalFormSubmit.php"><li>Tờ khai y tế</li></a>'
-    menu += '<br><a href="MedicalFormList.php"><li>Danh sách tờ khai</li></a>'
+    menu = '<br><a href="MedicalFormSubmit.cshtml"><li>Tờ khai y tế</li></a>'
+    menu += '<br><a href="MedicalFormList.cshtml"><li>Danh sách tờ khai</li></a>'
 
     $('#function-menu-list').find('ul').html(menu)
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleMedicalForm.php',
+            url: 'HandleMedicalForm.cshtml',
             type: 'POST',
             data: { filleddate: filleddate, choice: choice },
             success: function (result) {

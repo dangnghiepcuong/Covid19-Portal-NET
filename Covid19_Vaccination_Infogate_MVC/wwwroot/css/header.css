@@ -29,11 +29,11 @@
     display: flex;
 }
 
-.header .nav a {
+.header .nav {
     text-decoration: none;
 }
 
-.header .nav a li {
+.header .nav li {
     list-style: none;
     padding: 0px 25px;
     transition: 300ms;
@@ -41,20 +41,24 @@
     font-size: 20px;
 }
 
-.header .btn-login {
-    font-weight: 500px;
-    font-size: 20px;
-    line-height: 40px;
-    text-decoration: none;
-    color: white;
-    background: var(--color_footer);
-    padding: 0px 20px;
-    border-radius: 15px;
-    display: inline-block;
-    cursor: pointer;
-    transition: 300ms;
-    border: none;
-}
+    .header .nav li a {
+        text-decoration: none;
+    }
+
+    .header .btn-login {
+        font-weight: 500px;
+        font-size: 20px;
+        line-height: 40px;
+        text-decoration: none;
+        color: white;
+        background: var(--color_footer);
+        padding: 0px 20px;
+        border-radius: 15px;
+        display: inline-block;
+        cursor: pointer;
+        transition: 300ms;
+        border: none;
+    }
 
 .btn-login:hover {
     transform: translateY(-3px);

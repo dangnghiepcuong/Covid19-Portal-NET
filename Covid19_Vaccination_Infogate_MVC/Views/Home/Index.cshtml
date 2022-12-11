@@ -1,8 +1,14 @@
-﻿@{
+﻿@*HOME PAGE*@
+@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="/css/HomepageSlider.css">
 
-
+<div id="return-header">
+    @{
+        @await Component.InvokeAsync("ViewHeader");
+    }
+</div>
 
 <!-- SLIDER -->
 <div class="slider">

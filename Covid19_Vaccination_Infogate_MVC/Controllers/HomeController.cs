@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -23,7 +24,29 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Login(string username, string password)
+        {
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            if (conn.State == System.Data.ConnectionState.Open)
+            {
+                string query = "select * from ACCOUNT where Username = :username";
+                var command = new OracleCommand(query, conn);
+                command.Parameters.Add(new OracleParameter("userName", username));
+                var reader = command.ExecuteReader();
+            }
+            else
+                return Json(new { message = "ERROR: Connection Fail!" }); 
+            conn.Close();
+
+
+
+            return Json(new { message = "Login" });
+        }
+
+        public IActionResult MedicalForm()
         {
             return View();
         }
