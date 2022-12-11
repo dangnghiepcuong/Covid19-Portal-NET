@@ -1,19 +1,22 @@
-﻿<div class="header">
-    <a class="title" href="index.cshtml">
-        <img src="image/CVM-Logo.png" alt="CVM-Logo">
+﻿ @*HEADER GENERAL*@
+<link rel="stylesheet" href="/css/header.css">
+
+<div class="header">
+    <a class="title" href="/Home">
+        <img src="/image/CVM-Logo.png" alt="CVM-Logo">
         <span>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</span>
     </a>
 
     <div class="nav">
         <div>
             <ul>
-                <a href="index.cshtml">
+                <a href="/Home">
                 <li class="menu-section">Trang chủ</li>
                 </a>
-                <a href="MedicalFormSubmit.cshtml">
+                <a href="/Home/MedicalForm">
                 <li class="menu-section">Khai báo</li>
                 </a>
-                <a href="#">
+                <a href="/Home/Statistic">
                 <li class="menu-section">Thống kê</li>
                 </a>
             </ul>
@@ -22,3 +25,4 @@
     </div>
 </div>
 
+<div class="header-virtual"></div>

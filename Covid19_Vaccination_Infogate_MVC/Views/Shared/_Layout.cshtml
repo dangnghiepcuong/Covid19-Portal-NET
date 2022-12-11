@@ -6,66 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cổng thông tin tiêm chủng Covid-19</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">`
-
-    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="/js/WebElements.js"></script>
 </head>
 <body>
-    <div id="return-header">
-        @{
-            @await Component.InvokeAsync("ViewHeader");
-        }
-        @*<div class="header-virtual"></div>*@
-    </div>
-
     @RenderBody()
 
-    <footer class="footer">
-        <div class="footer-alignment-side"></div>
-        <div class="footer-content">&copy; Bản quyền thuộc TRUNG TÂM CÔNG NGHỆ PHÒNG, CHỐNG DỊCH COVID-19 QUỐC GIA</div>
-        <div class="footer-content">Phát triển bởi Chrysanthemums</div>
-        <div class="footer-logo"><img src="image/Logo BỘ.png" alt="Logo Bộ Y Tế "></div>
-        <div class="footer-alignment-side"></div>
-    </footer>
-    @RenderSection("Scripts", required: false)
+    @{
+        @await Component.InvokeAsync("ViewFooter");
+    }
+
 
     @{
         @await Component.InvokeAsync("ViewSignupLoginForm");
     }
-
-    <div class="form-popup" id="form-popup-confirm">
-        <p class="form-message"></p>
-        <div class="holder-btn">
-            <button class="btn-medium-filled btn-confirm">OK</button>
-        </div>
-    </div>
-
-    <div class="form-popup" id="form-popup-option">
-        <p class="form-message"></p>
-        <div class="holder-btn">
-            <button class="btn-medium-filled btn-confirm">Xác nhận</button>
-            <button class="btn-medium-bordered btn-cancel">Hủy</button>
-        </div>
-    </div>
-
-    <div class="form-popup" id="form-popup-option-cancel-registration">
-        <p class="form-message"></p>
-        <div class="holder-btn">
-            <button class="btn-medium-filled btn-confirm">Xác nhận</button>
-            <button class="btn-medium-bordered btn-cancel">Hủy</button>
-        </div>
-    </div>
-
-    <!-- FADED COVER -->
-    <div class="gradient-bg-faded" id="gradient-bg-faded"></div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script src="/js/header.js"></script>
-    <script src="/js/index.js"></script>
-    <script src="/js/WebElements.js"></script>
 </body>
 </html>
