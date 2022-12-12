@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "_LayoutFeaturePage";
+}
+
+<link rel="stylesheet" href="/css/MOHManageOrg.css">
+<script src="/js/MOHManageOrg.js"></script>
+
+<div class="holder-function-panel">
+    <!-- MENU -->
+    @{
+        @await Component.InvokeAsync("ViewFunctionMenu");
+    }
+    <!-- END MENU -->
+
+    <!-- FUNCTIONAL PANEL -->
+    <div class="function-panel">
+        <br>
+        <div class="filter-panel">
+            <div class="filter-pane">
+                <div>
+                    <label for="province-name">Tỉnh/Thành phố</label>
+                    <select type="text" name="province-name" id="select-province">
+                        @*
+                        echo '
+                        <option value="">' . $moh->get_provincename() . '</option>';
+                        $str = file_get_contents('local.json');
+                        $local = json_decode($str, true); // decode the JSON into an associative array
+                        $provincecode = -1;
+                        for ($i = 0; $i < 63; $i++) {
+                        if ($local[$i]['name'] != $moh->get_provincename())
+                        echo '
+                        <option value="' . $i . '">' . $local[$i]['name'] . '</option>';
+                        else
+                        $provincecode = $i;
+                        }
+                        echo '
+                        <script>
+                            $("#select-province option:first-child").val(' . $provincecode . ');
+                        </script>';
+                        *@
+                    </select>
+                </div>
+                <div>
+                    <label for="district-name">Quận/Huyện/Thị xã</label>
+                    <select type="text" name="district-name" id="select-district">
+                        @*
+                        echo '
+                        <option value="">' . $moh->get_districtname() . '</option>';
+                        $districtcode = -1;
+                        $i = 0;
+                        while (isset($local[$provincecode]['districts'][$i])) {
+                        if ($local[$provincecode]['districts'][$i]['name'] != $moh->get_districtname())
+                        echo '
+                        <option value="' . $i . '">' . $local[$provincecode]['districts'][$i]['name'] . '</option>';
+                        else
+                        $districtcode = $i;
+                        $i++;
+                        }
+                        echo '
+                        <script>
+                            $("#select-district option:first-child").val(' . $districtcode . ')
+                            $("#select-district option:first-child").after("<option value></option>");
+                        </script>';
+                        *@
+                    </select>
+                </div>
+
+                <div>
+                    <label for="town-name">Xã/Phường/Thị trấn</label>
+                    <select type="drop-down" name="town-name" id="select-town">
+                        @*
+                        echo '
+                        <option value="">' . $moh->get_townname() . '</option>';
+                        $towncode = -1;
+                        $i = 0;
+                        while (isset($local[$provincecode]['districts'][$districtcode]['wards'][$i])) {
+                        if ($local[$provincecode]['districts'][$districtcode]['wards'][$i]['name'] != $moh->get_townname())
+                        echo '
+                        <option value="' . $i . '">' . $local[$provincecode]['districts'][$districtcode]['wards'][$i]['name'] . '</option>';
+                        else
+                        $towncode = $i;
+                        $i++;
+                        }
+                        echo '
+                        <script>
+                            $("#select-town option:first-child").val(' . $towncode . ');
+                            $("#select-town option:first-child").after("<option value></option>");
+
+                        </script>';
+                        *@
+                    </select>
+                </div>
+
+                <button class="btn-medium-bordered-icon btn-filter" id="btn-filter-org">
+                    Tìm kiếm
+                </button>
+            </div>
+        </div>
+        <br>
+
+        <div class="panel-list">
+            <div class="list-name">
+                <div class="org" id="list-name-org">Danh sách các đơn vị tiêm chủng</div>
+            </div>
+            <br>
+
+            <div class="holder">
+                <div class="list-org" id="list-org">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+</div>
+    </div>
+
+<br>
