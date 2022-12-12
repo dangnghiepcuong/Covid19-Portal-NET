@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/js/header.js"></script>
-    <script src="/js/WebElements.js"></script>
+    @RenderSection("Scripts", false)
 </head>
 <body>
     @RenderBody()
@@ -18,9 +18,12 @@
         @await Component.InvokeAsync("ViewFooter");
     }
 
-
     @{
         @await Component.InvokeAsync("ViewSignupLoginForm");
+    }
+
+    @{
+        @await Component.InvokeAsync("ViewWebElements");
     }
 </body>
 </html>
