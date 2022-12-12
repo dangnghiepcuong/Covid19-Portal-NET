@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "_LayoutFeaturePage";
+}
+
+<link rel="stylesheet" href="/css/MOHProvideAccount.css">
+<script src="/js/MOHProvideAccount.js"></script>
+
+<div class="holder-function-panel">
+    <!-- MENU -->
+    @{
+        @await Component.InvokeAsync("ViewFunctionMenu");
+    }
+    <!-- END MENU -->
+
+    <!-- FUNCTIONAL PANEL -->
+    <div class="function-panel">
+        <div class="provide-panel">
+            <div class="frame">
+                <div class="provide-account">
+                    <p>Tạo tài khoản đơn vị</p>
+                    <label for="city">Tỉnh/Thành phố </label><br>
+                    <select name="city" id="select-province">
+                        @*
+                        $str = file_get_contents('local.json');
+                        $local = json_decode($str, true); // decode the JSON into an associative array
+                        $provincecode = -1;
+                        for ($i = 0; $i < 63; $i++) {
+                        echo '
+                        <option value="' . $i . '">' . $local[$i]['name'] . '</option>';
+                        }
+                        *@
+                    </select>
+                    <hr>
+                    <br>
+                    <label for="num">Số lượng tài khoản cần tạo</label><br>
+                    <input type="text" name="num" id="account-quantity" required value=""><br>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+        <div class="group_btn">
+            <button class="btn-medium-filled" id="btn-confirm-acc-creation">Xác nhận</button>
+            <button class="btn-medium-bordered" id="close_reg_person_profile">Hủy bỏ</button>
+        </div>
+
+    </div>
+</div>
+
+<br>

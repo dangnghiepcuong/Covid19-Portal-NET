@@ -49,7 +49,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return View();
         }
 
-        public IActionResult Reigstration()
+        public IActionResult Registration()
         {
             return View();
         }
