@@ -28,22 +28,27 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             return View();
         }
+
         public IActionResult MedicalFormList()
         {
             return View();
         }
+
         public IActionResult Vaccination()
         {
             return View();
         }
+
         public IActionResult AccountInfo()
         {
             return View();
         }
+
         public IActionResult Profile()
         {
             return View();
         }
+
         public IActionResult Reigstration()
         {
             return View();
@@ -52,7 +57,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             return View();
         }
-
         public IActionResult SearchCitizen()
         {
             return View();
