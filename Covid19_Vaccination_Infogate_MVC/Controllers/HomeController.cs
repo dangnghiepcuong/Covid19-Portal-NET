@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
+using System.Security.Principal;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -36,6 +37,50 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 var command = new OracleCommand(query, conn);
                 command.Parameters.Add(new OracleParameter("userName", username));
                 var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                        if (password == reader['PASSWORD']) {   // account existed, check password
+        HttpContext.Session.SetString('AccountInfo',reader['USERNAME']);
+        HttpContext.Session.SetString('AccountInfo',reader['PASSWORD']);
+        HttpContext.Session.SetString('AccountInfo',reader['ROLE']);
+        HttpContext.Session.SetString('AccountInfo',reader['STATUS']);
+
+                            switch (HttpContext.Session.GetString('STATUS') {
+            case 0:
+                $sql = "select * from ORGANIZATION where ID = :id";    //check exist profile
+                                break;
+            case 1:
+                $sql = "select * from ORGANIZATION where ID = :id";    //check exist profile
+                                break;
+            case 2:
+                $sql = "select * from CITIZEN where Phone = :id";    //check exist profile
+                                break;
+                            }
+        $command = oci_parse($connection, $sql);
+                            oci_bind_by_name($command, ':id', $_POST['username']);
+
+        $r = oci_execute($command);
+                            if (!$r) {
+            $exception = oci_error($command);
+                                echo 'ERROR: '. $exception['code']. ' - '. $exception['message'];
+                                return;
+                            }
+
+        reader2 = oci_fetch_array($command, OCI_BOTH | OCI_RETURN_NULLS);
+                            if (reader2 == false) {
+                                echo 'NoProfile';   //no profile existed
+                                setcookie('username', $_POST['username']);
+                                return;
+                            }
+
+        HttpContext.Session.SetString(['username'] = $_POST['username'];
+                        } else
+                        {    //wrong password;
+                            echo 'incorrect password';
+                        }
+                    
+                }
             }
             else
                 return Json(new { message = "ERROR: Connection Fail!" }); 
@@ -43,7 +88,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
 
 
-            return Json(new { message = "Login" });
+            return Json(new { success = true, message = "Login" });
         }
 
         public IActionResult MedicalForm()
