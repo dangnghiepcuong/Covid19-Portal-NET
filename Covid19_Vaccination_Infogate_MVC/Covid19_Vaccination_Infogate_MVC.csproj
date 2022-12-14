@@ -11,6 +11,7 @@
     <Compile Remove="Controllers\HomeController1.cs" />
     <Compile Remove="Models\ConnectionInfo.cs" />
     <Compile Remove="Models\HandleLogin.cs" />
+    <Compile Remove="SessionHelper.cs" />
     <Compile Remove="Views\Shared\Components\ViewHeaderMOH\ViewHeaderMOH.cs" />
   </ItemGroup>
 
@@ -27,10 +28,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.32" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.31">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.80" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>
