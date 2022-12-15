@@ -33,17 +33,13 @@
     text-decoration: none;
 }
 
-.header .nav li {
+.header .nav a li {
     list-style: none;
     padding: 0px 25px;
     transition: 300ms;
     color: var(--color_header);
     font-size: 20px;
 }
-
-    .header .nav a li {
-        text-decoration: none;
-    }
 
     .header .btn-login {
         font-weight: 500px;

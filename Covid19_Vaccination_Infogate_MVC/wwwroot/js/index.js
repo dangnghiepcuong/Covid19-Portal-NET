@@ -70,15 +70,17 @@ $(document).ready(function () {
             $('#form-login').find('.msg2').text('Nhập mật khẩu!');
             return;
         }
+
+        /*var data = { username: username, password: password }*/
+
         $.ajax({
             cache: false,
             url: '/Home/Login',
-            type: 'POST',
+            type: 'POST',/*
             dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8',*/
             data: { username: username, password: password },
             success: function (result) {    //button click to login
-                alert(result.message)
                 if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result.message);
                     return;
