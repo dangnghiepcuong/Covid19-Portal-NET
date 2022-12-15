@@ -1,4 +1,5 @@
 ﻿using Covid19_Vaccination_Infogate_MVC.Models;
+using Covid19_Vaccination_Infogate_MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -18,16 +19,16 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
-            /*ViewBag.Role = HttpContext.Session.GetInt32("role");*/
             return View();
         }
 
+        [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            return Json(new { message = username });
             var conn = new OracleConnection();
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
+            Account account = new Account();
 
             if (conn.State == System.Data.ConnectionState.Open)
             {
@@ -41,7 +42,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
                 while (reader.Read())
                 {
-                    if (password == reader["PASSWORD"])
+                    if (password == (string)reader["PASSWORD"])
                     {   // account existed, check password
 
                         switch (reader["STATUS"])
@@ -66,17 +67,18 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                             return Json(new { message = "NoProfile" });   //no profile existed
                         }
 
-                        Account account = new Account();
-                        account.Username = username;
-                        account.Password = password;
-                        account.Role = (int)reader["ROLE"];
-                        account.Status = (int)reader["STATUS"];
-
-                        /*SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);*/
+                        account = new Account
+                        {
+                            Username = username,
+                            Password = password,
+                            Role = (int)reader["ROLE"],
+                            Status = (int)reader["STATUS"]
+                        };
+                        SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
 
                         HttpContext.Session.SetString("username", username);
                         HttpContext.Session.SetString("password", password);
-                        HttpContext.Session.SetInt32("role", (int) reader["ROLE"]);
+                        HttpContext.Session.SetInt32("role", (int)reader["ROLE"]);
                         HttpContext.Session.SetInt32("status", (int)reader["STATUS"]);
                     }
                     else
@@ -89,6 +91,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 return Json(new { message = "ERROR: Connection Fail!" }); 
             conn.Close();
 
+            account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             return Json(new { success = true, message = "Login" });
         }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Covid19_Vaccination_Infogate_MVC.Controllers.Helpers
+namespace Covid19_Vaccination_Infogate_MVC.Helpers
 {
     public static class SessionHelper
     {

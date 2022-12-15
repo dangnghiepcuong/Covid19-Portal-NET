@@ -25,7 +25,7 @@ namespace Covid19_Vaccination_Infogate_MVC
         {
             services.AddControllersWithViews();
 
-            services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+            services.AddDistributedMemoryCache();
             services.AddSession();
         }
 
@@ -42,12 +42,16 @@ namespace Covid19_Vaccination_Infogate_MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -56,7 +60,6 @@ namespace Covid19_Vaccination_Infogate_MVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSession();
         }
     }
 }
