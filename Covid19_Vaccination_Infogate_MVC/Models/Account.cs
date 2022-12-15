@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Covid19_Vaccination_Infogate_MVC.Models
+﻿namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Account
     {
@@ -12,14 +7,16 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         private int role;
         private int status;
 
+        //Constructor
         public Account()
         {
-            username = "";
-            password = "";
-            role = -1;
-            status = 0;
+            Username = "";
+            Password = "";
+            Role = -1;
+            Status = -1;
         }
 
+        //Getter, Setter
         public string Username { get; set; }
         public string Password { get; set; }
         public int Role { get; set; }
