@@ -61,11 +61,11 @@ $(document).ready(function () {
             type: 'POST',
             data: { filleddate: filleddate, choice: choice },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                if (result == 'Form Submited!') {
+                if (result.message == 'Form Submited!') {
                     PopupConfirm('Khai báo y tế thành công!')
                 }
             },
