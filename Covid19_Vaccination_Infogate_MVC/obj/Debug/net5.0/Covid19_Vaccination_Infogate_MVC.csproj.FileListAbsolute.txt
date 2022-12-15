@@ -6,7 +6,6 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Covid19_Vaccinatio
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.runtimeconfig.json
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.runtimeconfig.dev.json
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.dll
-D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\ref\Covid19_Vaccination_Infogate_MVC.dll
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.pdb
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\refs\Microsoft.AspNetCore.Antiforgery.dll
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
@@ -359,7 +358,6 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\_ViewS
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.RazorAssemblyInfo.cache
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.RazorAssemblyInfo.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\staticwebassets\Covid19_Vaccination_Infogate_MVC.StaticWebAssets.Manifest.cache
-D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\staticwebassets\Covid19_Vaccination_Infogate_MVC.StaticWebAssets.xml
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\scopedcss\bundle\Covid19_Vaccination_Infogate_MVC.styles.css
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.RazorTargetAssemblyInfo.cache
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Covid19_Vaccination_Infogate_MVC.RazorTargetAssemblyInfo.cs
@@ -394,3 +392,14 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\Citize
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\Citizen\MedicalForm.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\MOH\Index.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\ORG\Index.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\Citizen\MedicalFormList.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\Citizen\Vaccination.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\Razor\Views\Shared\Components\ViewWebElements\Default.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\net5.0\refint\Covid19_Vaccination_Infogate_MVC.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.Mvc.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.Razor.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.Helpers.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.WebPages.Deployment.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.WebPages.Razor.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\System.Web.WebPages.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\net5.0\Microsoft.Web.Infrastructure.dll
