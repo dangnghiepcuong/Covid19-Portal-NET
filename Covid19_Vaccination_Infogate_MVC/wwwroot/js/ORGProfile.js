@@ -46,11 +46,9 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: "HandleUpdateProfile.php",
+            url: "/ORG/UpdateOrgProfile",
             type: "POST",
-            data: {
-                method: 'UpdateOrgProfile', name: name, district: district, town: town, street: street
-            },
+            data: { name: name, district: district, town: town, street: street },
             success: function (result) {
                 $('.form-message').text('Cập nhật thông tin thành công!');
                 $('#form-popup-confirm').css('display', 'block');
