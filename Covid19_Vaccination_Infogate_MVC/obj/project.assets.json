@@ -1763,7 +1763,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HoaDo\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -1771,11 +1771,11 @@
       "projectUniqueName": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
       "projectName": "Covid19_Vaccination_Infogate_MVC",
       "projectPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
-      "packagesPath": "C:\\Users\\HoaDo\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
       "outputPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\HoaDo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1829,6 +1829,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.31, 3.1.31]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1837,7 +1843,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },
