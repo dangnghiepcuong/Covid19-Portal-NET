@@ -52,5 +52,29 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string )
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadCertificate()
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadCertificate()
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadCertificate()
+        {
+            return Json(new { message = "" });
+        }
     }
 }

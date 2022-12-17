@@ -49,9 +49,9 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleProvideAccORG.php',
+            url: '/MOH/ProvideAccount',
             type: 'POST',
-            data: { method: 'ProvideAccount', quantity: quantity, code: code, province: province },
+            data: { quantity: quantity, code: code, province: province },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result)

@@ -28,11 +28,11 @@ $(document).ready(function () {
     function LoadInjection() {
         $.ajax({
             cache: false,
-            url: 'HandleLoadCertificate.php',
+            url: '/Citizen/LoadCertificate',
             type: 'POST',
-            data: { method: 'LoadInjection' },
+            data: { },
             success: function (result) {
-                $('#list-injection').html(result)
+                $('#list-injection').html(result.html)
                 cert = $('#list-injection').find('.status').attr('id')
                 switch (parseInt(cert)) {
                     case 0:

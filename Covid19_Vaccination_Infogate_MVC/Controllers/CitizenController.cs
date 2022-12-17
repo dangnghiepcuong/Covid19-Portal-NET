@@ -66,6 +66,73 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult UpdateAccount(string phone, string password, string new_password)
+        {
+
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadCertificate()
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadRegistration(string status, string vaccine, string time)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult CancelRegistration(string SchedID)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadOrg(string province, string district, string town)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult LoadSchedule(string orogid, string startdate, string enddate, string vaccine )
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult CheckRegistration()
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult RegisterVaccination(string SchedID, string time, string dosetype)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult HandleMedicalList(string formdate2)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult HandleMedicalForm(string filleddate, string choice)
+        {
+            return Json(new { message = "" });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

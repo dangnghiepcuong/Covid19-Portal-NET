@@ -76,9 +76,7 @@ $(document).ready(function () {
         $.ajax({
             cache: false,
             url: '/Home/Login',
-            type: 'POST',/*
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',*/
+            type: 'POST',
             data: { username: username, password: password },
             success: function (result) {    //button click to login
                 if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
@@ -123,18 +121,16 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleRegAcc.cs/CheckExist',
+            url: '/Home/RegisterCheckExist',
             type: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
             data: { username: username },
             success: function (result) {    //check if account existed
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result);
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message);
                     return;
                 }
 
-                if (result == 'Account Existed!') {     //account existed
+                if (result.message == 'Account Existed!') {     //account existed
                     $('#form-reg-acc').find('.msg1').text('Số điện thoại đã được sử dụng!');
                 }
                 else {                                  //register account
@@ -151,14 +147,12 @@ $(document).ready(function () {
 
                     $.ajax({
                         cache: false,
-                        url: 'HandleRegAcc.cs/RegisterAccount',
+                        url: '/Home/RegisterAccount',
                         type: 'POST',
-                        dataType: 'JSON',
-                        contentType: 'application/json; charset=utf-8',
                         data: { username: username, password: password },
                         success: function (result) {
-                            if (result.substring(0, 5) == 'ERROR') {
-                                alert(result);
+                            if (result.message.substring(0, 5) == 'ERROR') {
+                                alert(result.message);
                                 return;
                             }
                         },
@@ -221,19 +215,19 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleRegAcc.cs',
+            url: '/Home/RegisterProfile',
             type: 'POST',
             data: {
-                method: 'RegisterProfile', lastname: lastname, firstname: firstname,
+                lastname: lastname, firstname: firstname,
                 gender: gender, id: id, birthday: birthday, hometown: hometown, province: province,
                 district: district, town: town, street: street, email: email
             },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result);
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message);
                     return;
                 }
-                if (result == 'Profile Created!') {
+                if (result.message == 'Profile Created!') {
                     $('#container-reg-profile').css('display', 'none');
                     $('.form-message').text('Đăng ký thông tin tài khoản thành công!');
                     $('#form-popup-confirm').css('display', 'block');
@@ -261,11 +255,11 @@ $(document).ready(function () {
             type: 'POST',
             data: { username: username},
             success: function (result) {    //button click to login
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result);
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message);
                     return;
                 }
-                if (result == 'NoAccount') {    //No Account Existed
+                if (result.message == 'NoAccount') {    //No Account Existed
                     $('#container-forgot-password').find('.message').text('Tài khoản không tồn tại!');
                     return;
                 }

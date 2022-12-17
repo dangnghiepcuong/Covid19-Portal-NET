@@ -39,15 +39,15 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleLoadRegistration.php',
+            url: '/Citizen/LoadRegistration',
             type: 'POST',
-            data: { method: 'LoadRegistration', status: status, vaccine: vaccine, time: time },
+            data: {status: status, vaccine: vaccine, time: time },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                    alert(result.message)
                     return
                 }
-                $('#list-registration').html(result)
+                $('#list-registration').html(result.html)
             },
             error: function (error) {
 
@@ -75,11 +75,11 @@ $(document).ready(function () {
     function CancelRegistration(SchedID) {
         $.ajax({
             cache: false,
-            url: 'HandleLoadRegistration.php',
+            url: '/Citizen/CancelRegistration',
             type: 'POST',
-            data: { method: 'CancelRegistration', SchedID: SchedID },
+            data: { SchedID: SchedID },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result)
                     return
                 }

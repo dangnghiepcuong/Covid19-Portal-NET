@@ -44,5 +44,18 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult LoadOrg(string province, string district, string town)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult ProvideAccount(string quantity, string code, string province)
+        {
+            return Json(new { message = "" });
+        }
+
     }
 }

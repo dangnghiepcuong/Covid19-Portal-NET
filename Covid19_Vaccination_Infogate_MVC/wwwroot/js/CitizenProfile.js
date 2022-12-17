@@ -73,19 +73,19 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleUpdateProfile.php',
+            url: '/Citizen/UpdateProfile',
             type: 'POST',
             data: {
-                method: 'UpdateCitizenProfile', lastname: lastname, firstname: firstname,
+                lastname: lastname, firstname: firstname,
                 gender: gender, id: id, birthday: birthday, hometown: hometown, province: province,
                 district: district, town: town, street: street, email: email
             },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                switch (result) {
+                switch (result.message) {
                     case 'UpdateCitizenProfile':
                     case 'UpdateOrgProfile':
                         $('.form-message').text('Cập nhật thông tin thành công!')
@@ -94,7 +94,7 @@ $(document).ready(function () {
                         $('.form-message').text('Lỗi chưa xác định!')
                         break
                     default:
-                        alert(result)
+                        alert(result.message)
                         break
                 }
 

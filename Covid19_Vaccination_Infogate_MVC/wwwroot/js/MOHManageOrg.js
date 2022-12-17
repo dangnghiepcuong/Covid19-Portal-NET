@@ -34,9 +34,9 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleLoadOrg.php',
+            url: '/MOH/LoadOrg',
             type: 'POST',
-            data: { method: 'LoadOrg', province: province, district: district, town: town },
+            data: { province: province, district: district, town: town },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result)
