@@ -34,27 +34,27 @@ $(document).ready(function () {
         + 'type' field specifies the method to send data to the called php file.
         + 'data' field defines the key-value to be sent to the called php file. So that can make it accessible
         + 'sucess' field defines a function to be called if the request succeeds.
-        The parameter result stores the returned data which is returned by return echo header etc. statements.
+        The parameter result.message stores the returned data which is returned by return echo header etc. statements.
         + 'error' field defines a function to be called if the request fails.
         The parameter error stores errors.
         */
         $.ajax({
             cache: false,
-            url: 'HandleUpdateAccount.php',
+            url: '/Citizen/UpdateAccount',
             type: "POST",
             /*
             The requests to back-end code must send a key-value to verify that this is a right call.
             The verification can be do by the key-value of the calling method.
             The requested file also should be formated in function-oriented to make a reusable code.
             */
-            data: { method: 'HandleUpdateAccount', phone: phone, password: password, new_password: new_password },
+            data: { phone: phone, password: password, new_password: new_password },
             success: function (result) {
                 /*
                 In the php back-end code, catches the exception then return in a formated message,
                 so that we can check back in this jQuery function and throw an optional message.
                 */
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 Back-end code obviously can return difference values every calls.
                 Switch cases and handle!
                 */
-                switch (result) {
+                switch (result.message) {
                     case 'Password is incorrect!':
                         $('.account').find('.msg2').html('Sai mật khẩu!')
                         return
@@ -81,7 +81,7 @@ $(document).ready(function () {
                         $('.form-message').text('Lỗi chưa xác định!')
                         break
                     default:
-                        alert(result)
+                        alert(result.message)
                         break
                 }
 
