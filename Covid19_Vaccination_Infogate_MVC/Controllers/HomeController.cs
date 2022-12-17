@@ -19,6 +19,15 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("AccountInfo") != null)
+            {
+                Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+                ViewBag.username = account.Username;
+            }
+            else
+            {
+                ViewBag.username = "NA";
+            }
             return View();
         }
 
@@ -37,11 +46,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 command.Parameters.Add(new OracleParameter("userName", username));
                 var reader = command.ExecuteReader();
 
-                if (reader.Read() == false)
-                    return Json(new { message = "NoAccount" });
+                int RowCount = 0;
 
                 while (reader.Read())
                 {
+                    RowCount++;
                     if (password == (string)reader["PASSWORD"])
                     {   // account existed, check password
 
@@ -86,6 +95,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         return Json(new { message = "incorrect password" });
                     }
                 }
+
+                if (RowCount == 0)
+                    return Json(new { message = "NoAccount" });
             }
             else
                 return Json(new { message = "ERROR: Connection Fail!" }); 
