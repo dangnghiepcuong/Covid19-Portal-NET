@@ -54,27 +54,54 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string )
+        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string limitnight)
         {
             return Json(new { message = "" });
         }
 
         [HttpPost]
-        public IActionResult LoadCertificate()
+        public IActionResult UpdateOrgProfile(string name, string district, string town, string street)
         {
             return Json(new { message = "" });
         }
 
         [HttpPost]
-        public IActionResult LoadCertificate()
+        public IActionResult LoadSchedule(string orgid, string startdate, string enddate, string vaccine)
         {
             return Json(new { message = "" });
         }
 
         [HttpPost]
-        public IActionResult LoadCertificate()
+        public IActionResult LoadScheduleRegistration(string SchedID, string SchedInfo)
         {
             return Json(new { message = "" });
         }
+
+
+        [HttpPost]
+        public IActionResult UpdateRegistrationStatus(string citizenid, string SchedID, string status)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult SelectScheduleValue(string SchedID)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateSchedule(string SchedID, string limitday, string limitnoon, string limitnight)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult CancelSchedule(string SchedID)
+        {
+            return Json(new { message = "" });
+        }
+
+
     }
 }

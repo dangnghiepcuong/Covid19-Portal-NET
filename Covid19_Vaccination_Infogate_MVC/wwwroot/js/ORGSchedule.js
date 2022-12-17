@@ -35,15 +35,15 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleLoadOrgSchedule.php',
+            url: '/ORG/LoadSchedule',
             type: 'POST',
-            data: { method: 'LoadSchedule', orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
+            data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                $('#list-schedule').html(result)
+                $('#list-schedule').html(result.html)
             },
             error: function (error) {
             }
@@ -83,18 +83,18 @@ $(document).ready(function () {
         SchedInfo = schedule.find('.obj-attr').find('.attr-date-vaccine-serial').text()
         $.ajax({
             cache: false,
-            url: 'HandleScheduleManagement.php',
+            url: '/ORG/LoadScheduleRegistration',
             type: 'POST',
-            data: { method: 'LoadScheduleRegistration', SchedID: SchedID, SchedInfo: SchedInfo },
+            data: { SchedID: SchedID, SchedInfo: SchedInfo },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                if (result == '') {
+                if (result.message == '') {
                     PopupConfirm('Không có lượt đăng ký nào cho lịch tiêm này.')
                 }
-                $('#list-registration').html(result)
+                $('#list-registration').html(result.html)
             },
             error: function (error) {
             }
@@ -108,18 +108,18 @@ $(document).ready(function () {
         status = $(this).parent().find('.select-status').find('option:selected').val()
         $.ajax({
             cache: false,
-            url: 'HandleScheduleManagement.php',
+            url: '/ORG/UpdateRegistrationStatus',
             type: 'POST',
-            data: { method: 'UpdateRegistrationStatus', citizenid: citizenid, SchedID: SchedID, status: status },
+            data: { citizenid: citizenid, SchedID: SchedID, status: status },
             indexValue: { reg: $(this).parent().parent().parent() },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
 
                 reg = this.indexValue.reg
-                switch (result) {
+                switch (result.message) {
                     case '1':
                         reg.find('.hoder-obj-attr .interactive-area select').html('<option value="2">Đã tiêm</option><option value="3">Đã hủy</option>')
                         reg.find('.hoder-obj-attr .obj-attr .attr-detail p:last-child').text('Tình trạng: Đã điểm danh')
@@ -150,9 +150,9 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleScheduleManagement.php',
+            url: '/ORG/SelectScheduleValue',
             type: 'POST',
-            data: { method: 'SelectScheduleValue', SchedID: SchedID },
+            data: { SchedID: SchedID },
             success: function (result) {
             },
             error: function (error) {
@@ -202,15 +202,15 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleScheduleManagement.php',
+            url: '/ORG/UpdateSchedule',
             type: 'POST',
-            data: { method: 'UpdateSchedule', SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
+            data: { SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                if (result == 'UpdateSchedule') {
+                if (result.message == 'UpdateSchedule') {
                     PopupConfirm('Cập nhật lịch tiêm thành công!')
                     LoadSchedule(orgid)
                 }
@@ -228,16 +228,16 @@ $(document).ready(function () {
             SchedID = schedule.attr('id')
             $.ajax({
                 cache: false,
-                url: 'HandleScheduleManagement.php',
+                url: '/ORG/CancelSchedule',
                 type: 'POST',
-                data: { method: 'CancelSchedule', SchedID: SchedID },
+                data: { SchedID: SchedID },
                 indexValue: { schedule: schedule },
                 success: function (result) {
-                    if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                        alert(result)
+                    if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                        alert(result.message)
                         return
                     }
-                    if (result == 'CancelSchedule') {
+                    if (result.message == 'CancelSchedule') {
                         schedule.find('.obj-attr .attr-time .day').attr('id', 0)
                         schedule.find('.obj-attr .attr-time .day').text(0)
                         schedule.find('.obj-attr .attr-time .noon').attr('id', 0)

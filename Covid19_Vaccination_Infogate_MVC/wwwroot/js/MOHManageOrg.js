@@ -38,11 +38,11 @@ $(document).ready(function () {
             type: 'POST',
             data: { province: province, district: district, town: town },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                $('#list-org').html(result)
+                $('#list-org').html(result.html)
             },
             error: function (error) {
             }
