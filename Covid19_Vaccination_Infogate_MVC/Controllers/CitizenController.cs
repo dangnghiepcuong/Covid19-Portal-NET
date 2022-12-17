@@ -133,17 +133,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Json(new { message = "" });
         }
 
-        [HttpPost]
-        public IActionResult LoadCertificate()
-        {
-            return Json(new { message = "" });
-        }
-
-        [HttpPost]
-        public IActionResult LoadCertificate()
-        {
-            return Json(new { message = "" });
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
