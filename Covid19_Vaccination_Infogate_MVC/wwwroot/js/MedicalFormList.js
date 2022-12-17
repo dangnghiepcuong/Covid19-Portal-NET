@@ -43,17 +43,17 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleMedicalList.php',
+            url: '/Citizen/HandleMedicalList',
             type: 'POST',
             data: { formdate: formdate },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                 }
-                if (result == 'NoForm') {
+                if (result.message == 'NoForm') {
                     PopupConfirm('Bạn chưa khai báo y tế trong vòng ' + formdate + ' ngày!')
                 }
-                $('#holder-form-medical').html(result);
+                $('#holder-form-medical').html(result.html);
             },
             error: function (error) {
                 // $('body').html(error)

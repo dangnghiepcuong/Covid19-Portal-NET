@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
+using System.IO;
+using System.Reflection;
+using System.Web.Helpers;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -116,6 +119,30 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult HandleLogout()
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult RegisterCheckExist(string username)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult RegisterAccount(string username, string password)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult RegisterProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
+        {
+            return Json(new { message = "" });
         }
     }
 }

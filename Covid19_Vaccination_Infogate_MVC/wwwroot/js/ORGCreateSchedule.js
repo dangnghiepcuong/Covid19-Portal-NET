@@ -39,9 +39,9 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleScheduleManagement.php',
+            url: '/ORG/CreateSchedule',
             type: 'POST',
-            data: { method: 'CreateSchedule', orgid: orgid, date: date, vaccine: vaccine, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
+            data: { orgid: orgid, date: date, vaccine: vaccine, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
                     alert(result)
