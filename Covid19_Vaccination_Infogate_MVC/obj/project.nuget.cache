@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0CwiNpHnmhEN49QOIDzNtrto8UJW9rsTcF/X1LQnL0n4AS0h6r03Ua0OhpIJHhl1QDK0+82IXGLHBMglK/PMUQ==",
+  "dgSpecHash": "gclNA5YihxQSj8afxsh3XZSYXKm+bSjYQaC8tYdV/D+t42bCNEqoDA1SUB590dXQ34eiMDihy15/e5/QmDW8Iw==",
   "success": true,
   "projectFilePath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "C:\\Users\\HoaDo\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
     "C:\\Users\\HoaDo\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\HoaDo\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\HoaDo\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
     "C:\\Users\\HoaDo\\.nuget\\packages\\oracle.manageddataaccess.core\\3.21.80\\oracle.manageddataaccess.core.3.21.80.nupkg.sha512",
     "C:\\Users\\HoaDo\\.nuget\\packages\\system.collections.immutable\\1.5.0\\system.collections.immutable.1.5.0.nupkg.sha512",
     "C:\\Users\\HoaDo\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.0\\system.configuration.configurationmanager.6.0.0.nupkg.sha512",

@@ -415,3 +415,4 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Document.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Profile.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Schedule.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
