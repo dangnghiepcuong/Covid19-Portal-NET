@@ -54,7 +54,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string)
+        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string )
         {
             return Json(new { message = "" });
         }
