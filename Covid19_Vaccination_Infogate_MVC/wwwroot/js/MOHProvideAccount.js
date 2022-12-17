@@ -54,7 +54,7 @@ $(document).ready(function () {
             data: { quantity: quantity, code: code, province: province },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                    alert(result.message)
                     return
                 }
                 if (result == 'ProvideAccount') {

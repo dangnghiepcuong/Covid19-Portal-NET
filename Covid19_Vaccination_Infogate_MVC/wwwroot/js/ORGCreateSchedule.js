@@ -44,7 +44,7 @@ $(document).ready(function () {
             data: { orgid: orgid, date: date, vaccine: vaccine, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (result) {
                 if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                    alert(result.message)
                     return
                 }
                 PopupConfirm('Tạo lịch tiêm chủng thành công!')
