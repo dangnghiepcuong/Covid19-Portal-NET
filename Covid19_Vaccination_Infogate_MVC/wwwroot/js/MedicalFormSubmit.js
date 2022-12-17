@@ -57,7 +57,7 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleMedicalForm',
+            url: '/Citizen/HandleMedicalForm',
             type: 'POST',
             data: { filleddate: filleddate, choice: choice },
             success: function (result) {

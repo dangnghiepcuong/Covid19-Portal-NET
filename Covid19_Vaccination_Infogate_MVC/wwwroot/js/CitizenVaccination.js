@@ -35,15 +35,15 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleLoadOrgSchedule.php',
+            url: '/Citizen/LoadOrg',
             type: 'POST',
-            data: { method: 'LoadOrg', province: province, district: district, town: town },
+            data: { province: province, district: district, town: town },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                $('#list-org').html(result)
+                $('#list-org').html(result.html)
             },
             error: function (error) {
             }
@@ -71,16 +71,16 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleLoadOrgSchedule.php',
+            url: '/Citizen/LoadSchedule',
             type: 'POST',
-            data: { method: 'LoadSchedule', orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
+            data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(result.message)
                     return
                 }
-                $('#list-schedule').html(result)
-                // $('body').html(result)
+                $('#list-schedule').html(result.html)
+                // $('body').html(result.message)
             },
             error: function (error) {
 
@@ -147,16 +147,16 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: 'HandleRegisterVaccination.php',
+            url: '/Citizen/CheckRegistration',
             type: 'POST',
-            data: { method: 'CheckRegistration' },
+            data: { },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    PopupConfirm(result)    //if fired trigger, show error
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    PopupConfirm(result.message)    //if fired trigger, show error
                     return
                 }
                 else {
-                    CheckBooster(result, SchedID, time)       //Passed check conditions, Check dosetype suitable for vaccination
+                    CheckBooster(result.message, SchedID, time)       //Passed check conditions, Check dosetype suitable for vaccination
                     return
                 }
             },
@@ -189,13 +189,13 @@ $(document).ready(function () {
     function RegisterVaccination(SchedID, dosetype, time) { //RegisterVaccination
         $.ajax({
             cache: false,
-            url: 'HandleRegisterVaccination.php',
+            url: '/Citizen/RegisterVaccination',
             type: 'POST',
-            data: { method: 'RegisterVaccination', SchedID: SchedID, time: time, dosetype: dosetype },
+            data: { SchedID: SchedID, time: time, dosetype: dosetype },
             indexValue: { orgid: SchedID.substring(0, 5) },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    switch (result.substring(7, 12)) {
+                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    switch (result.message.substring(7, 12)) {
                         case '20001':
                             PopupConfirm('Bạn phải hoàn thành mũi tiêm đã đăng ký trước đó<br>trước khi đăng ký mũi mới.')
                             break
@@ -206,11 +206,11 @@ $(document).ready(function () {
                             PopupConfirm('Bạn phải khai báo y tế trong vòng 7 ngày trước khi ngày tiêm diễn ra!')
                             break
                         default:
-                            alert(result)
+                            alert(result.message)
                             break
                     }
                 }
-                if (result == 'RegisterVaccination') {
+                if (result.message == 'RegisterVaccination') {
                     LoadSchedule(this.indexValue.orgid)
                     PopupConfirm('Đăng ký tiêm chủng thành công!')
                 }
