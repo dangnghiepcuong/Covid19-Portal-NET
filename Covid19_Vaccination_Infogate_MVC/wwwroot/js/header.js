@@ -55,7 +55,7 @@ $(document).ready(function(){
     $('#btn-logout').click(function () {
         $.ajax({
             cache: false,
-            url: '/Home/HandleLogout',
+            url: '/Home/Logout',
             success: function (result) {
                 window.location.href = 'index.php'
             },

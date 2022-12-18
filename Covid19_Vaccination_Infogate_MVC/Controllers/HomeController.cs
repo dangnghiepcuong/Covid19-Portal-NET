@@ -22,6 +22,15 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("AccountInfo") != null)
+            {
+                Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+                ViewBag.username = account.Username;
+            }
+            else
+            {
+                ViewBag.username = "NA";
+            }
             return View();
         }
 
@@ -40,15 +49,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 command.Parameters.Add(new OracleParameter("userName", username));
                 var reader = command.ExecuteReader();
 
-                if (reader.Read() == false)
+                if (reader.HasRows == false)
                     return Json(new { message = "NoAccount" });
 
                 while (reader.Read())
                 {
                     if (password == (string)reader["PASSWORD"])
                     {   // account existed, check password
-
-                        switch (reader["STATUS"])
+                        switch (reader.GetInt32(reader.GetOrdinal("ROLE")))
                         {
                             case 0:
                                 query = "select * from ORGANIZATION where ID = :id";    //check exist profile
@@ -63,26 +71,25 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
                         command = new OracleCommand(query, conn);
                         command.Parameters.Add(new OracleParameter("id", username));
-                        reader = command.ExecuteReader();
+                        var reader2 = command.ExecuteReader();
 
-                        if (reader.Read() == false)
+                        if (reader2.HasRows == false)
                         {
                             return Json(new { message = "NoProfile" });   //no profile existed
                         }
 
-                        account = new Account
-                        {
-                            Username = username,
-                            Password = password,
-                            Role = (int)reader["ROLE"],
-                            Status = (int)reader["STATUS"]
-                        };
+                        account = new Account();
+                        account.Username = username;
+                        account.Password = password;
+                        account.Role = reader.GetInt32(reader.GetOrdinal("ROLE"));
+                        account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
+                        
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
 
                         HttpContext.Session.SetString("username", username);
                         HttpContext.Session.SetString("password", password);
-                        HttpContext.Session.SetInt32("role", (int)reader["ROLE"]);
-                        HttpContext.Session.SetInt32("status", (int)reader["STATUS"]);
+                        /*HttpContext.Session.SetInt32("role", (int)reader["ROLE"]);
+                        HttpContext.Session.SetInt32("status", (int)reader["STATUS"]);*/
                     }
                     else
                     {    //wrong password;
@@ -131,6 +138,13 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult RegisterProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
         {
             return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return null;
         }
     }
 }
