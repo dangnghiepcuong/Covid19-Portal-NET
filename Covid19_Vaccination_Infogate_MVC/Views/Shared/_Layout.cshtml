@@ -23,12 +23,10 @@
         string username = ViewBag.username;
         if (account == null)
         {
-            @await Component.InvokeAsync("ViewHeader")
-            <script>alert('null')</script>
+            @await Component.InvokeAsync("ViewHeader");
         }
         else
         {
-            <script>alert(1 + '@account.Role' + 1)</script>
             switch (account.Role)
             {
                 case 0:
@@ -47,7 +45,7 @@
             }
         }
 
-        @RenderBody()
+        @RenderBody();
 
         @await Component.InvokeAsync("ViewFooter");
         @await Component.InvokeAsync("ViewSignupLoginForm");

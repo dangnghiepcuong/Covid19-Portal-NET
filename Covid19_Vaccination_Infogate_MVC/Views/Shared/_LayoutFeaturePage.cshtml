@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Covid19_Vaccination_Infogate_MVC.Helpers;
+@using Microsoft.AspNetCore.Http;
+@using Covid19_Vaccination_Infogate_MVC.Models;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,15 +16,37 @@
     @RenderSection("Scripts", false)
 </head>
 <body>
-
-
-    @RenderBody()
-
     @{
+        Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
+        string username = ViewBag.username;
+        if (account == null)
+        {
+            @await Component.InvokeAsync("ViewHeader");
+        }
+        else
+        {
+            switch (account.Role)
+            {
+                case 0:
+                    @await Component.InvokeAsync("ViewHeaderMOH");
+                    break;
+                case 1:
+                    @await Component.InvokeAsync("ViewHeaderORG");
+                    break;
+                case 2:
+                    @await Component.InvokeAsync("ViewHeaderCitizen");
+                    Console.WriteLine(2);
+                    break;
+                default:
+                    @await Component.InvokeAsync("ViewHeader");
+                    break;
+            }
+        }
+        @await Component.InvokeAsync("ViewFunctionNavBar");
+        <br>
+        @RenderBody();
+
         @await Component.InvokeAsync("ViewFooter");
-    }
-
-    @{
         @await Component.InvokeAsync("ViewWebElements");
     }
 </body>

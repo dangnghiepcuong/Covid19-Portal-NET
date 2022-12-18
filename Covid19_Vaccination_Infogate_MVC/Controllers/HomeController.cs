@@ -25,11 +25,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             if (HttpContext.Session.GetString("AccountInfo") != null)
             {
                 Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-                ViewBag.username = account.Username;
-            }
-            else
-            {
-                ViewBag.username = "NA";
             }
             return View();
         }
@@ -85,11 +80,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                         
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
-
-                        HttpContext.Session.SetString("username", username);
-                        HttpContext.Session.SetString("password", password);
-                        /*HttpContext.Session.SetInt32("role", (int)reader["ROLE"]);
-                        HttpContext.Session.SetInt32("status", (int)reader["STATUS"]);*/
                     }
                     else
                     {    //wrong password;
@@ -117,12 +107,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleLogout()
-        {
-            return Json(new { message = "" });
-        }
-
-        [HttpPost]
         public IActionResult RegisterCheckExist(string username)
         {
             return Json(new { message = "" });
@@ -143,8 +127,10 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult Logout()
         {
+            HttpContext.Session.Remove("AccountInfo");
             HttpContext.Session.Clear();
-            return null;
+
+            return View(Index());
         }
     }
 }

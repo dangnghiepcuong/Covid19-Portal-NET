@@ -3,7 +3,7 @@
 <script src="/js/header.js"></script>
 
 <div class="header">
-    <a class="title" href="index.cshtml">
+    <a class="title" href="/Home">
         <img src="/image/CVM-Logo.png" alt="CVM-Logo">
         <span>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</span>
     </a>
@@ -11,11 +11,17 @@
     <div class="nav">
         <div>
             <ul>
-                <li class="menu-section">@Html.ActionLink("Trang chủ", "Index", "Citizen")</li>
+                <a href="/Home">
+                <li class="menu-section">Trang chủ</li>
+                </a>
 
-                <li class="menu-section">@Html.ActionLink("Khai báo", "MedicalForm", "Citizen")</li>
+                <a href="MedicalFormSubmit">
+                <li class="menu-section">Khai báo</li>
+                </a>
 
-                <li class="menu-section">@Html.ActionLink("Tiêm chủng", "Vaccination", "Citizen")</li>
+                <a href="/Citizen/Vaccination">
+                <li class="menu-section">Tiêm chủng</li>
+                </a>
             </ul>
         </div>
 
@@ -28,17 +34,38 @@
     <div class="drop-down-menu" id="drop-down-menu-profile">
         <div class="holder">
             <ul>
+                <a href="/Citizen/AccountInfo">
                 <li>Thông tin tài khoản</li>
+                </a>
+
+                <a href="/Citizen/Profile">
                 <li>Thông tin công dân</li>
+                </a>
+
+                <a href="/Citizen/Registration">
                 <li>Lịch đăng ký</li>
+                </a>
+
+                <a href="/Citizen/Certificate">
                 <li>Chứng nhận</li>
+                </a>
+
+                <a href="/Citizen/VaccinationProfile">
+                <li>Tra cứu</li>
+                </a>
+
+                <a href="#">
                 <li>Thêm người thân</li>
+                </a>
+
+                <a href="" id="btn-logout">
                 <li>Đăng xuất</li>
+                </a>
             </ul>
         </div>
     </div>
     <!-- END DROP DOWN MENU PROFILE -->
 </div>
-<!-- END HEADER -->
 
 <div class="header-virtual"></div>
+<!-- END HEADER -->
