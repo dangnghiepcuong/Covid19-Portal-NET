@@ -416,3 +416,5 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Profile.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Schedule.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\staticwebassets\Covid19_Vaccination_Infogate_MVC.StaticWebAssets.xml
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\scopedcss\bundle\Covid19_Vaccination_Infogate_MVC.styles.css

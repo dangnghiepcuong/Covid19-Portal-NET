@@ -28,7 +28,9 @@ using Covid19_Vaccination_Infogate_MVC.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b93faf7c24680e9e111ade6cfeb8f297e898cd91", @"/Views/Shared/Components/ViewSignupLoginForm/Default.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2d6cf68f1de3d4ed5694007f3e39407c7f9dba19", @"/Views/_ViewImports.cshtml")]
+    #nullable restore
     public class Views_Shared_Components_ViewSignupLoginForm_Default : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
+    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("form form-login"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("id", new global::Microsoft.AspNetCore.Html.HtmlString("form-login"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -68,7 +70,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             WriteLiteral("<!-- LOGIN FORM -->\r\n<link rel=\"stylesheet\" href=\"/css/SignupLoginForm.css\">\r\n\r\n<div class=\"form-container\" id=\"form-container-login\">\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd917267", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd917313", async() => {
                 WriteLiteral(@"
         <p class=""btn-close"" id=""btn-close-form-login"">X</p>
         <p class=""title"">Đăng nhập</p>
@@ -110,7 +112,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n</div>\r\n<!-- END LOGIN FORM -->\r\n<!-- REGISTRATION ACCOUNT FORM -->\r\n<div class=\"form-container\" id=\"form-container-reg-acc\">\r\n    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd919917", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd919963", async() => {
                 WriteLiteral(@"
         <p class=""btn-close"" id=""btn-close-form-reg-acc"">X</p>
         <p class=""title"">Đăng ký</p>
@@ -183,7 +185,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             BeginWriteAttribute("id", " id=\"", 3017, "\"", 3022, 0);
             EndWriteAttribute();
             WriteLiteral(">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9113535", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9113581", async() => {
                 WriteLiteral("Nam");
             }
             );
@@ -199,7 +201,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9114708", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9114754", async() => {
                 WriteLiteral("Nữ");
             }
             );
@@ -215,7 +217,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9115880", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9115926", async() => {
                 WriteLiteral("Khác");
             }
             );
@@ -256,7 +258,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             <label for=""hometown"">Quê quán <span>(*)</span></label><br>
             <select name=""hometown"" id=""select-hometown"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9117834", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9117880", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -284,7 +286,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             <label for=""city"">Tỉnh/Thành phố <span>(*)</span></label><br>
             <select name=""city"" id=""select-province"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9119300", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9119346", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -308,7 +310,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             <label for=""district"">Quận/Huyện <span>(*)</span></label><br>
             <select name=""district"" id=""select-district"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9120698", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9120744", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -332,7 +334,7 @@ using Covid19_Vaccination_Infogate_MVC.Models;
             <label for=""town"">Xã/Phường/Thị trấn <span>(*)</span></label><br>
             <select name=""town"" id=""select-town"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9122092", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b93faf7c24680e9e111ade6cfeb8f297e898cd9122138", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
@@ -425,16 +427,26 @@ using Covid19_Vaccination_Infogate_MVC.Models;
 ");
         }
         #pragma warning restore 1998
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; } = default!;
+        #nullable disable
     }
 }
 #pragma warning restore 1591

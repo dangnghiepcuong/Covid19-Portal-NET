@@ -26,7 +26,11 @@ namespace Covid19_Vaccination_Infogate_MVC
             services.AddControllersWithViews();
 
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession((option) =>
+            {
+                option.Cookie.IsEssential = true;
+                option.IdleTimeout = TimeSpan.FromMinutes(180);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,9 +53,9 @@ namespace Covid19_Vaccination_Infogate_MVC
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseSession();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
