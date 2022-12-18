@@ -3,22 +3,34 @@
 <script src="/js/header.js"></script>
 
 <div class="header">
-    <a class="title" href="index.cshtml">
-        <img src="image/CVM-Logo.png" alt="CVM-Logo">
+    <a class="title" href="/Home">
+        <img src="/image/CVM-Logo.png" alt="CVM-Logo">
         <span>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</span>
     </a>
 
     <div class="nav">
         <div>
             <ul>
-                <li class="menu-section">Tổng quan</li>
+                <a href="/Home">
+                <li class="menu-section">Trang chủ</li>
+                </a>
+
+                <a href="#">
                 <li class="menu-section">Dữ liệu</li>
+                </a>
+
+                <a href="/MOH/SearchInformation">
+                <li class="menu-section">Tra cứu</li>
+                </a>
+
+                <a href="/MOH/MOHManageOrg">
                 <li class="menu-section">Các đơn vị</li>
+                </a>
             </ul>
         </div>
 
         <a class="avatar" href="#">
-            <img src="image/Avatar-MOH.png" alt="Avata Bộ Y Tế">
+            <img src="/image/Avatar-MOH.png" alt="Avata Bộ Y Tế">
         </a>
     </div>
 
@@ -26,9 +38,19 @@
     <div class="drop-down-menu" id="drop-down-menu-profile">
         <div class="holder">
             <ul>
+                <a href="/MOH/AccountInfo">
                 <li>Thông tin tài khoản</li>
+                </a>
+
+                <a href="/MOH/Profile">
                 <li>Thông tin đơn vị</li>
+                </a>
+
+                <a href="/MOH/Profile">
                 <li>Văn bản</li>
+                </a>
+
+                <a href="" id="btn-logout">
                 <li>Đăng xuất</li>
                 </a>
             </ul>
@@ -36,6 +58,6 @@
     </div>
     <!-- END DROP DOWN MENU PROFILE -->
 </div>
-<!-- END HEADER -->
 
 <div class="header-virtual"></div>
+<!-- END HEADER -->

@@ -22,6 +22,8 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
+            /*ILogger<ORGController> logger;
+            return View(new ORGController(logger).Profile());*/
             return View();
         }
 

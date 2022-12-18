@@ -21,7 +21,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Profile();
         }
         
         public IActionResult AccountInfo()
