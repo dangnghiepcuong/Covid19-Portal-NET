@@ -4,8 +4,8 @@
     {
         private string username;
         private string password;
-        private int role;
-        private int status;
+        private string role;
+        private string status;
 
         //Constructor
         public Account()

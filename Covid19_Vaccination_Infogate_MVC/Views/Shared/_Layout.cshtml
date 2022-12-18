@@ -21,15 +21,15 @@
     @{
         Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
         string username = ViewBag.username;
-        if (username == null)
+        if (account == null)
         {
             @await Component.InvokeAsync("ViewHeader")
             <script>alert('null')</script>
         }
         else
         {
-            @*<script>alert(1 + '@ViewBag.username' + 1)</script>*@
-            switch (Context.Session.GetInt32("role"))
+            <script>alert(1 + '@account.Role' + 1)</script>
+            switch (account.Role)
             {
                 case 0:
                     @await Component.InvokeAsync("ViewHeaderMOH");
