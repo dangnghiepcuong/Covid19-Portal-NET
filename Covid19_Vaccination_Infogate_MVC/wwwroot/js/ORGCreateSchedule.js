@@ -1,16 +1,16 @@
 $(document).ready(function () {
 
     // LOAD FRONT END DATA
-    menu_title = '<a href="OrgCreateSchedule.php">Tạo lịch tiêm chủng</a>'
+    menu_title = '<a href="/ORG/CreateSchedule">Tạo lịch tiêm chủng</a>'
     $('#function-navigation-bar-title').html(menu_title)
 
-    homepage = '<a href="index.php">Trang chủ</a>'
+    homepage = '<a href="/Home">Trang chủ</a>'
     $('#homepage-path').html(homepage)
 
-    subpage = '<a href="OrgCreateSchedule.php">Lịch tiêm</a>'
+    subpage = '<a href="/ORG/CreateSchedule">Lịch tiêm</a>'
     $('#subpage-path').html(subpage)
 
-    selected_function = '<a href="OrgCreateSchedule.php">Tạo lịch tiêm chủng</a>'
+    selected_function = '<a href="/ORG/CreateSchedule">Tạo lịch tiêm chủng</a>'
     $('#selected-function-path').html(selected_function)
     // END LOAD FRONT END DATA
 
