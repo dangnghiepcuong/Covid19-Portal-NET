@@ -3,16 +3,16 @@ var SelectedOption = false
 $(document).ready(function () {
     // LOAD FRONT END DATA
 
-    menu_title = '<a href="CitizenVaccination.php">Đăng ký tiêm chủng</a>'
+    menu_title = '<a href="/Citizen/Vaccination">Đăng ký tiêm chủng</a>'
     $('#function-navigation-bar-title').html(menu_title)
 
-    homepage = '<a href="index.php">Trang chủ</a>'
+    homepage = '<a href="/Home">Trang chủ</a>'
     $('#homepage-path').html(homepage)
 
-    subpage = '<a href="CitizenVaccination.php">Tiêm chủng</a>'
+    subpage = '<a href="/Citizen/Vaccination">Tiêm chủng</a>'
     $('#subpage-path').html(subpage)
 
-    selected_function = '<a href="CitizenVaccination.php">Đăng ký tiêm chủng</a>'
+    selected_function = '<a href="/Citizen/Vaccination">Đăng ký tiêm chủng</a>'
     $('#selected-function-path').html(selected_function)
 
     var today = new Date()
