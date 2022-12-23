@@ -1,5 +1,4 @@
 ﻿@using Covid19_Vaccination_Infogate_MVC.Helpers;
-@using Microsoft.AspNetCore.Http;
 @using Covid19_Vaccination_Infogate_MVC.Models;
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,7 @@
 <body>
     @{
         Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
-        string username = ViewBag.username;
+
         if (account == null)
         {
             @await Component.InvokeAsync("ViewHeader");
@@ -37,7 +36,6 @@
                     break;
                 case 2:
                     @await Component.InvokeAsync("ViewHeaderCitizen");
-                    Console.WriteLine(2);
                     break;
                 default:
                     @await Component.InvokeAsync("ViewHeader");

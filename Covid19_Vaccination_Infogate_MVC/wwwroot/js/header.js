@@ -57,9 +57,9 @@ $(document).ready(function(){
             cache: false,
             url: '/Home/Logout',
             success: function (result) {
-                window.location.href = 'index.php'
+                window.location.href = '/Home'
             },
-            error: function (result) {
+            error: function (error) {
                 alert(error)
             }
         })
