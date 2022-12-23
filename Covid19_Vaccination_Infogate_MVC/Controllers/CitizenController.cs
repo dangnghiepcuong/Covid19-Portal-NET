@@ -173,13 +173,13 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleMedicalList(string formdate2)
+        public IActionResult MedicalList(string formdate2)
         {
             return Json(new { message = "" });
         }
 
         [HttpPost]
-        public IActionResult HandleMedicalForm(string filleddate, string choice)
+        public IActionResult MedicalForm(string filleddate, string choice)
         {
             return Json(new { message = "" });
         }
