@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
-using System.IO;
-using System.Reflection;
-using System.Web.Helpers;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -47,15 +44,15 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 if (reader.HasRows == false)
                     return Json(new { message = "NoAccount" });
 
+                // account existed,
                 while (reader.Read())
                 {
+                    // check password
                     if (password == (string)reader["PASSWORD"])
-                    {   // account existed, check password
+                    {   
                         switch (reader.GetInt32(reader.GetOrdinal("ROLE")))
                         {
                             case 0:
-                                query = "select * from ORGANIZATION where ID = :id";    //check exist profile
-                                break;
                             case 1:
                                 query = "select * from ORGANIZATION where ID = :id";    //check exist profile
                                 break;
@@ -69,9 +66,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         var reader2 = command.ExecuteReader();
 
                         if (reader2.HasRows == false)
-                        {
                             return Json(new { message = "NoProfile" });   //no profile existed
-                        }
 
                         account = new Account();
                         account.Username = username;
@@ -80,6 +75,8 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                         
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
+                        SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+
                     }
                     else
                     {    //wrong password;
@@ -90,8 +87,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             else
                 return Json(new { message = "ERROR: Connection Fail!" }); 
             conn.Close();
-
-            account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             return Json(new { success = true, message = "Login" });
         }
 
@@ -124,13 +120,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Json(new { message = "" });
         }
 
-        [HttpPost]
+        /*[HttpPost]*/
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("AccountInfo");
             HttpContext.Session.Clear();
-
-            return View(Index());
+            return Json(new { message = "Logout" });
         }
     }
 }
