@@ -45,13 +45,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Document()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }       
 
         [HttpPost]
         public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string limitnight)
@@ -102,6 +96,33 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Json(new { message = "" });
         }
 
+        
+        /*MOH method*/
+        public IActionResult ManageOrg()
+        {
+            return View();
+        }
+        public IActionResult ProvideOrgAcc()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult LoadOrg(string province, string district, string town)
+        {
+            return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult ProvideAccount(string quantity, string code, string province)
+        {
+            return Json(new { message = "" });
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

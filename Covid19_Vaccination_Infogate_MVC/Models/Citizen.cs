@@ -5,42 +5,65 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Citizen
     {
-        private String ID;
-        private String LastName;
-        private String FirstName;
-        private DateTime Birthday;
-        private int Gender;
-        private String HomeTown;
-        private String ProvinceName;
-        private String DistrictName;
-        private String TownName;
-        private String Street;
-        private String Phone;
-        private String Email;
-        private String Guadian;
-        private Blob Avatar;
+        private string id;
+        private string lastname;
+        private string firstname;
+        private string birthday;
+        private int gender;
+        private string hometown;
+        private string provincename;
+        private string districtname;
+        private string townname;
+        private string street;
+        private string phone;
+        private string email;
+        private string guadian;
+        private byte[] avatar;
 
         //Constructor
         public Citizen()
         {
-            Gender1 = -1;
         }
 
         //Getter, setter
-        public string ID1 { get => ID; set => ID = value; }
-        public string LastName1 { get => LastName; set => LastName = value; }
-        public string FirstName1 { get => FirstName; set => FirstName = value; }
-        public DateTime Birthday1 { get => Birthday; set => Birthday = value; }
-        public int Gender1 { get => Gender; set => Gender = value; }
-        public string HomeTown1 { get => HomeTown; set => HomeTown = value; }
-        public string ProvinceName1 { get => ProvinceName; set => ProvinceName = value; }
-        public string DistrictName1 { get => DistrictName; set => DistrictName = value; }
-        public string TownName1 { get => TownName; set => TownName = value; }
-        public string Street1 { get => Street; set => Street = value; }
-        public string Phone1 { get => Phone; set => Phone = value; }
-        public string Email1 { get => Email; set => Email = value; }
-        public string Guadian1 { get => Guadian; set => Guadian = value; }
-        public Blob Avatar1 { get => Avatar; set => Avatar = value; }
+        public string ID { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string FullName() { return (LastName + ' ' + FirstName); }
+        public string Birthday { get; set; }
+        public string Gender(int value = -1)
+        {
+            if (value == -1)
+            {
+                switch (gender)
+                {
+                    case 0:
+                        return "Nữ";
+                    case 1:
+                        return "Nam";
+                    default:
+                        return "Khác";
+                }
+            }
+            else if (value == -2)
+            {
+                return gender.ToString();
+            }
+            else
+            {
+                gender = value;
+            }
+            return "";
+        }
+        public string HomeTown { get; set; }
+        public string ProvinceName { get; set; }
+        public string DistrictName { get; set; }
+        public string TownName { get; set; }
+        public string Street { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Guadian { get; set; }
+        public byte[] Avatar { get; set; }
 
 
 

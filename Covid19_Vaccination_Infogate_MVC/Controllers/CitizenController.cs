@@ -1,12 +1,10 @@
 ﻿using Covid19_Vaccination_Infogate_MVC.Models;
+using Covid19_Vaccination_Infogate_MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
+using System;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -18,9 +16,57 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             _logger = logger;
         }
+        private string LoadCitizenProfile()
+        {
+            Citizen citizen = new Citizen();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+
+            SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select ID, LastName, FirstName, TO_CHAR( Birthday, 'YYYY-MM-DD' ) Birthday, Gender,"
+            + "Hometown, ProvinceName, DistrictName, TownName, Street,"
+            + "Phone, Email, Guardian, Avatar "
+            + "from CITIZEN where Phone= :username";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("userName", account.Username));
+            var reader = command.ExecuteReader();
+
+            if (reader.HasRows == false)
+                return "NoProfile";
+
+            while (reader.Read())
+            {
+                citizen.LastName = reader["LASTNAME"] as string;
+                citizen.FirstName = reader["FIRSTNAME"] as string;
+                citizen.ID = reader["ID"] as string;
+                citizen.Birthday = reader["BIRTHDAY"] as string;
+                citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
+                citizen.HomeTown = reader["HOMETOWN"] as string;
+                citizen.ProvinceName = reader["PROVINCENAME"] as string;
+                citizen.DistrictName = reader["DISTRICTNAME"] as string;
+                citizen.TownName = reader["TOWNNAME"] as string;
+                citizen.Street = reader["STREET"] as string;
+                citizen.Phone = reader["PHONE"] as string;
+                citizen.Email = reader["EMAIL"] as string;
+                citizen.Guadian = reader["GUARDIAN"] as string;
+                /*citizen.Avatar = (byte[])reader["AVATAR"];*/
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
+
+            return "";
+        }
 
         public IActionResult Index()
         {
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                LoadCitizenProfile();
+            else
+                Response.Redirect("~/Home");
+
             return Profile();
         }
 
@@ -46,6 +92,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Profile()
         {
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                LoadCitizenProfile();
+            else
+                Response.Redirect("~/Home");
             return View();
         }
 
