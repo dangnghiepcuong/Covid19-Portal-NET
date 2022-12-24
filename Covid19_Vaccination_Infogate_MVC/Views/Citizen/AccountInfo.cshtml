@@ -10,7 +10,6 @@
 @using System.Web;
 @{
     Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
-    Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(Context.Session, "CitizenProfile");
 }
 <link rel="stylesheet" href="/css/CitizenAccountInfo.css">
 <script src="/js/CitizenAccountInfo.js"></script>

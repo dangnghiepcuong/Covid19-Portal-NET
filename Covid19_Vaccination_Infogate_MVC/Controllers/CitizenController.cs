@@ -41,8 +41,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             {
                 citizen.LastName = reader["LASTNAME"] as string;
                 citizen.FirstName = reader["FIRSTNAME"] as string;
-                citizen.ID = reader["ID"] as string;
-                citizen.Birthday = reader["BIRTHDAY"] as string;
+                citizen.Id = reader["ID"] as string;
+                string date = reader["BIRTHDAY"] as string;
+                citizen.Birthday = DateTime.Parse(date);
                 citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
                 citizen.HomeTown = reader["HOMETOWN"] as string;
                 citizen.ProvinceName = reader["PROVINCENAME"] as string;
