@@ -16,7 +16,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         {
             _logger = logger;
         }
-        private string LoadCitizenProfile()
+        private void LoadCitizenProfile()
         {
             Citizen citizen = new Citizen();
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
@@ -35,7 +35,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             var reader = command.ExecuteReader();
 
             if (reader.HasRows == false)
-                return "NoProfile";
+                return;
 
             while (reader.Read())
             {
@@ -56,65 +56,128 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
 
-            return "";
+            return;
         }
 
         public IActionResult Index()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             if (account != null && account.Status == 1)
+            {
                 LoadCitizenProfile();
+            }
             else
-                Response.Redirect("~/Home");
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
 
             return Profile();
         }
 
         public IActionResult MedicalForm()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult MedicalFormList()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult Vaccination()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult AccountInfo()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult Profile()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             if (account != null && account.Status == 1)
-                LoadCitizenProfile();
+                return View();
             else
-                Response.Redirect("~/Home");
-            return View();
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult Registration()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult Certificate()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult SearchCitizen()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult AddRelative()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         [HttpPost]

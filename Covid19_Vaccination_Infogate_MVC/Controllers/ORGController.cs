@@ -1,11 +1,9 @@
 ﻿using Covid19_Vaccination_Infogate_MVC.Models;
+using Covid19_Vaccination_Infogate_MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
@@ -19,32 +17,112 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             _logger = logger;
         }
 
+        public void LoadORGProfile()
+        {
+            Organization org = new Organization();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+
+            SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select ID, LastName, FirstName, TO_CHAR( Birthday, 'YYYY-MM-DD' ) Birthday, Gender,"
+            + "Hometown, ProvinceName, DistrictName, TownName, Street,"
+            + "Phone, Email, Guardian, Avatar "
+            + "from CITIZEN where Phone= :username";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("userName", account.Username));
+            var reader = command.ExecuteReader();
+
+            if (reader.HasRows == false)
+                return;
+
+            while (reader.Read())
+            {
+                org.ID1 = reader["ID"] as string;
+                org.Name1 = reader["NAME"] as string;
+                org.ProvinceName1 = reader["PROVINCENAME"] as string;
+                org.DistrictName1 = reader["DISTRICTNAME"] as string;
+                org.TownName1 = reader["TOWNNAME"] as string;
+                org.Street1 = reader["STREET"] as string;
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "ORGProfile", org);
+
+            return;
+        }
+
         public IActionResult Index()
         {
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Role < 2)
+            {
+                LoadORGProfile();
+            }
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
             return Profile();
         }
         
         public IActionResult AccountInfo()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status < 2)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult Profile()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status < 2)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         public IActionResult Schedule()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult CreateSchedule()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 1)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult Document()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status < 2)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }       
 
         [HttpPost]
@@ -100,11 +178,25 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         /*MOH method*/
         public IActionResult ManageOrg()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 0)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
         public IActionResult ProvideOrgAcc()
         {
-            return View();
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Status == 0)
+                return View();
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
         }
 
         [HttpPost]

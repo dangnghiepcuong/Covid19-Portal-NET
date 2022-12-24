@@ -6,10 +6,6 @@
 @using System.Web;
 @{
     Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(Context.Session, "CitizenProfile");
-    if (citizen == null)
-    {
-        <script>alert("null")</script>
-    }
 }
 <link rel="stylesheet" href="/css/CitizenProfile.css">
 <script src="/js/CitizenProfile.js"></script>
