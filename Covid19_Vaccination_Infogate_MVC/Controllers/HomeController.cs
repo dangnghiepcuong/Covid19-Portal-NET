@@ -19,10 +19,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("AccountInfo") != null)
-            {
-                Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            }
             return View();
         }
 
@@ -75,8 +71,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                         
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
-                        SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-
                     }
                     else
                     {    //wrong password;
@@ -87,7 +81,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             else
                 return Json(new { message = "ERROR: Connection Fail!" }); 
             conn.Close();
-            SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             return Json(new { success = true, message = "Login" });
         }
 
