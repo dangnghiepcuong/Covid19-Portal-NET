@@ -37,7 +37,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             while (reader.Read())
             {
-                org.ID = reader["ID"] as string;
+                org.Id = reader["ID"] as string;
                 org.Name = reader["NAME"] as string;
                 org.ProvinceName = reader["PROVINCENAME"] as string;
                 org.DistrictName = reader["DISTRICTNAME"] as string;

@@ -21,7 +21,7 @@
         }
 
         //Getter, Setter
-        public string ID { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string ProvinceName { get; set; }
         public string DistrictName { get; set; }
