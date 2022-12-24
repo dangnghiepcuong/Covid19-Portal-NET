@@ -6,7 +6,6 @@
 @using System.IO;
 @using Newtonsoft.Json;
 @{
-    Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
     Organization org = SessionHelper.GetObjectFromJson<Organization>(Context.Session, "ORGProfile");
 }
 <link rel="stylesheet" href="/css/ORGSchedule.css">

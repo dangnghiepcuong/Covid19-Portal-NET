@@ -8,7 +8,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         private string id;
         private string lastname;
         private string firstname;
-        private string birthday;
+        private DateTime birthday;
         private int gender;
         private string hometown;
         private string provincename;
@@ -26,11 +26,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         }
 
         //Getter, setter
-        public string ID { get; set; }
+        public string Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string FullName() { return (LastName + ' ' + FirstName); }
-        public string Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string Gender(int value = -1)
         {
             if (value == -1)

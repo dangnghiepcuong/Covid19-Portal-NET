@@ -36,7 +36,7 @@
                                     int districtcode = -1;
                                     int towncode = -1;
 
-                                    using (StreamReader r = new StreamReader(@Url.Content("local.json")))
+                                    using (StreamReader r = new StreamReader(@Url.Content("wwwroot/local.json")))
                                     {
                                         string json = r.ReadToEnd();
                                         province = JsonConvert.DeserializeObject<LocalProvince[]>(json);
