@@ -66,7 +66,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
                         account = new Account();
                         account.Username = username;
-                        account.Password = password;
                         account.Role = reader.GetInt32(reader.GetOrdinal("ROLE"));
                         account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                         
