@@ -5,7 +5,7 @@
 @using Covid19_Vaccination_Infogate_MVC.Helpers
 @using System.Web;
 @{
-    Organization org = SessionHelper.GetObjectFromJson<Organization>(Context.Session, "ORGProfile");
+    Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
 }
 <link rel="stylesheet" href="~/css/CitizenAccountInfo.css">
 <script src="~/js/ORGAccountInfo.js"></script>
@@ -25,7 +25,7 @@
                     <p>Tài khoản</p>
                     <br>
                     <label for="id">Mã đơn vị tiêm chủng</label><br>
-                    <input type="text" name="id" required value="@org.ID1" disabled><br>
+                    <input type="text" name="id" required value="@account.Username" disabled><br>
                     <hr>
                     <div class="message msg1"></div>
                     <br>

@@ -27,10 +27,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
 
-            string query = "select ID, LastName, FirstName, TO_CHAR( Birthday, 'YYYY-MM-DD' ) Birthday, Gender,"
-            + "Hometown, ProvinceName, DistrictName, TownName, Street,"
-            + "Phone, Email, Guardian, Avatar "
-            + "from CITIZEN where Phone= :username";
+            string query = "select * from Organization where ID = :username";
             var command = new OracleCommand(query, conn);
             command.Parameters.Add(new OracleParameter("userName", account.Username));
             var reader = command.ExecuteReader();
@@ -40,12 +37,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             while (reader.Read())
             {
-                org.ID1 = reader["ID"] as string;
-                org.Name1 = reader["NAME"] as string;
-                org.ProvinceName1 = reader["PROVINCENAME"] as string;
-                org.DistrictName1 = reader["DISTRICTNAME"] as string;
-                org.TownName1 = reader["TOWNNAME"] as string;
-                org.Street1 = reader["STREET"] as string;
+                org.ID = reader["ID"] as string;
+                org.Name = reader["NAME"] as string;
+                org.ProvinceName = reader["PROVINCENAME"] as string;
+                org.DistrictName = reader["DISTRICTNAME"] as string;
+                org.TownName = reader["TOWNNAME"] as string;
+                org.Street = reader["STREET"] as string;
             }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "ORGProfile", org);
 
@@ -57,7 +54,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             if (account != null && account.Role < 2)
             {
-                LoadORGProfile();
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
+                return View();
             }
             else
             {
@@ -70,8 +69,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult AccountInfo()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status < 2)
+            if (account != null && account.Role < 2)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -82,8 +85,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Profile()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status < 2)
+            if (account != null && account.Role < 2)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -94,8 +101,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Schedule()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -105,8 +116,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult CreateSchedule()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -116,8 +131,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Document()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status < 2)
+            if (account != null && account.Role < 2)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -179,8 +198,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult ManageOrg()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 0)
+            if (account != null && account.Role == 0)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -190,8 +213,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult ProvideOrgAcc()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 0)
+            if (account != null && account.Role == 0)
+            {
+                if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
+                    LoadORGProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
