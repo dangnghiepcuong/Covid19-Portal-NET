@@ -5,22 +5,22 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
     public class Form
     {
         private Citizen citizen;
-        private DateTime FilledDate;
-        private String Choice;
-        private int ID;
+        private DateTime filleddate;
+        private String choice;
+        private int id;
 
         //Constructor
         public Form()
         {
             this.citizen = new Citizen();
-            Choice = "";
-            ID = -1;
+            choice = "";
+            id = -1;
         }
 
         //Getter,Setter
-        public Citizen Citizen { get => citizen; set => citizen = value; }
-        public DateTime FilledDate1 { get => FilledDate; set => FilledDate = value; }
-        public string Choice1 { get => Choice; set => Choice = value; }
-        public int ID1 { get => ID; set => ID = value; }
+        public Citizen Citizen { get ; set ; }
+        public DateTime FilledDate { get ; set ; }
+        public string Choice { get ; set ; }
+        public int ID { get ; set ; }
     }
 }

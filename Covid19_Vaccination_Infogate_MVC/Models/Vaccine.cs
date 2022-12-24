@@ -2,24 +2,29 @@
 {
     public class Vaccine
     {
-        private string ID;
-        private string Name;
-        private string Technology;
-        private string Country;
+        private string id;
+        private string name;
+        private string technology;
+        private string country;
 
         //Constructor
         public Vaccine()
         {
-            ID = "";
-            Name = "";
-            Technology = "";
-            Country = "";
+            id = "";
+            name = "";
+            technology = "";
+            country = "";
         }
 
         //Getter, Setter
-        public string ID1 { get => ID; set => ID = value; }
-        public string Name1 { get => Name; set => Name = value; }
-        public string Technology1 { get => Technology; set => Technology = value; }
-        public string Country1 { get => Country; set => Country = value; }
+
+        public string Id { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }
+        public string Technology { get => technology; set => technology = value; }
+        public string Country { get => country; set => country = value; }
+
+      
+
+
     }
 }

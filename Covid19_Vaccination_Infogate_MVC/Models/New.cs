@@ -5,29 +5,29 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class New
     {
-        private string ID;
-        private Organization Org;
-        private string Tittle;
-        private DateTime PublishDate;
-        private Blob Image;
-        private string Content;
+        private string id;
+        private Organization org;
+        private string tittle;
+        private DateTime publishdate;
+        private Blob image;
+        private string content;
 
 
         //Constructor
         public New()
         {
-            ID = "";
-            Org = new Organization();
-            Tittle = "";
-            Content = "";
+            id = "";
+            org = new Organization();
+            tittle = "";
+            content = "";
         }
 
         //Getter, Setter
-        public string ID1 { get => ID; set => ID = value; }
-        public Organization Org1 { get => Org; set => Org = value; }
-        public string Tittle1 { get => Tittle; set => Tittle = value; }
-        public DateTime PublishDate1 { get => PublishDate; set => PublishDate = value; }
-        public Blob Image1 { get => Image; set => Image = value; }
-        public string Content1 { get => Content; set => Content = value; }
+        public string ID { get; set ; }
+        public Organization Org { get ; set; }
+        public string Tittle { get; set; }
+        public DateTime PublishDate { get; set; }
+        public Blob Image { get ; set ; }
+        public string Content { get ; set ; }
     }
 }
