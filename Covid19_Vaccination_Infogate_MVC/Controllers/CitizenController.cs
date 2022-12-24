@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Globalization;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -31,7 +32,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             + "Phone, Email, Guardian, Avatar "
             + "from CITIZEN where Phone= :username";
             var command = new OracleCommand(query, conn);
-            command.Parameters.Add(new OracleParameter("userName", account.Username));
+            command.Parameters.Add(new OracleParameter("username", account.Username));
             var reader = command.ExecuteReader();
 
             if (reader.HasRows == false)
@@ -55,8 +56,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 citizen.Guadian = reader["GUARDIAN"] as string;
                 /*citizen.Avatar = (byte[])reader["AVATAR"];*/
             }
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
+            conn.Close();
 
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
             return;
         }
 
@@ -222,8 +224,86 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult UpdateAccount(string phone, string password, string new_password)
         {
+            string message = "";
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
 
-            return Json(new { message = "" });
+            string query = "select Password from ACCOUNT where Username = :username";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("username", account.Username));
+            var reader = command.ExecuteReader();
+
+            reader.Read();
+            account.Password = reader["Password"] as string;
+            conn.Close();
+
+            /*CHECK ENTERED PASSWORD*/
+            if (password != account.Password)
+            {
+                account.Password = null;
+                return Json(new { message = "Password is incorrect!" });
+            }
+            account.Password = null;
+
+            /*CHANGE PASSWORD*/
+            if (new_password == null || new_password == account.Password)
+                message += "!ChangePassword";
+            else
+            {
+                command = new OracleCommand("ACC_UPDATE_PASSWORD", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add("par_Username", OracleDbType.Varchar2).Value = phone;
+                command.Parameters.Add("par_OldPass", OracleDbType.Varchar2).Value = password;
+                command.Parameters.Add("par_NewPass", OracleDbType.Varchar2).Value = new_password;
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+
+                message = "ChangePassword";
+            }
+
+            /*UPDATE USERNAME*/
+            if (account.Role == 2)
+            {
+                if (phone == account.Username)
+                {
+                    message += "!UpdateAccount";
+                }
+                else
+                {
+                    command = new OracleCommand("alter session set NLS_DATE_FORMAT='YYYY-MM-DD'" , conn);
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
+
+                    command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.Add("par_OldID", OracleDbType.Varchar2, 256).Value = citizen.Id;
+                    command.Parameters.Add("par_ID", OracleDbType.Varchar2, 256).Value = citizen.Id;
+                    command.Parameters.Add("par_LastName", OracleDbType.Varchar2, 100).Value = citizen.LastName;
+                    command.Parameters.Add("par_FirstName", OracleDbType.Varchar2, 50).Value = citizen.FirstName;
+                    command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = "TO_DATE("+citizen.Birthday.ToString("yyyy-MM-dd")+", 'YYYY-MM-DD')";
+                    command.Parameters.Add("par_Gender", OracleDbType.Int32).Value = Int32.Parse(citizen.Gender(-2));
+                    command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2, 50).Value = citizen.HomeTown;
+                    command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2, 50).Value = citizen.ProvinceName;
+                    command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2, 50).Value = citizen.DistrictName;
+                    command.Parameters.Add("par_TownName", OracleDbType.Varchar2, 50).Value = citizen.TownName;
+                    command.Parameters.Add("par_Street", OracleDbType.Varchar2, 100).Value = citizen.Street;
+                    command.Parameters.Add("par_Phone", OracleDbType.Varchar2, 254).Value = phone;
+                    command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2, 30).Value = citizen.Phone;
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                    conn.Close();
+
+                    message += "UpdateAccount";
+                }
+            }
+
+            return Json(new { message = message });
         }
 
         [HttpPost]
