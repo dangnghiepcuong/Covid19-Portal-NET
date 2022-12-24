@@ -1,18 +1,21 @@
 ﻿@{
     Layout = "_LayoutFeaturePage";
 }
-
+@using Covid19_Vaccination_Infogate_MVC.Models
+@using Covid19_Vaccination_Infogate_MVC.Helpers
+@using System.IO;
+@using Newtonsoft.Json;
+@{
+    Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
+    Organization org = SessionHelper.GetObjectFromJson<Organization>(Context.Session, "ORGProfile");
+}
 <link rel="stylesheet" href="/css/ORGSchedule.css">
-<script src="/js/ORGSchedule.js"></script>    
-
+<script src="/js/ORGSchedule.js"></script>
 
 <div class="holder-function-panel">
     <div class="function-panel">
         <br>
-        @*
-        echo '
-        <div class="list-name orgid" id="' . $org->get_id() . '">' . $org->get_name() . '</div>'
-        *@
+        <div class="list-name orgid" id="@org.Id">@org.Name</div>'
 
         <div class="holder-list">
             <div class="list-name" id="list-name-schedule">DANH SÁCH LỊCH TIÊM</div>
@@ -49,8 +52,6 @@
         </div>
 
         <div class="panel-list-schedule">
-
-
 
             <div class="holder">
                 <div class="list-schedule" id="list-schedule">
