@@ -24,8 +24,7 @@ $(document).ready(function () {
 
         $('#select-district').html('<option></option>');
         $('#select-town').html('<option></option>');
-
-        $.getJSON('local.json', function (data) {
+        $.getJSON('../local.json', function (data) {
             i = 0;
             district = data[SelectedProvince].districts[i];
             while (typeof (district) != "undefined" && district !== null) {
@@ -43,7 +42,7 @@ $(document).ready(function () {
 
         $('#select-town').html('<option></option>');
 
-        $.getJSON('local.json', function (data) {
+        $.getJSON('../local.json', function (data) {
             i = 0;
             town = data[SelectedProvince].districts[SelectedDistrict].wards[i];
             while (typeof (town) != "undefined" && town !== null) {

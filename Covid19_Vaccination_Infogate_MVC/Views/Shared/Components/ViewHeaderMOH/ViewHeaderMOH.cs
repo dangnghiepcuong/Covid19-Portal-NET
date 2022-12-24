@@ -14,7 +14,7 @@ namespace MyViewComponent
         public ViewHeaderMOH()
         {
         }
-        // Dùng async Task<IViewComponentResult>InvokeAsync
+        // Dùng async Task<IViewComponentResult> InvokeAsync
         // nếu dùng kỹ thuật bất đồng bộ
         public IViewComponentResult Invoke()
         {

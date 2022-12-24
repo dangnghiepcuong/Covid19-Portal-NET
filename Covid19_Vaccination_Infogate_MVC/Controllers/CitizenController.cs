@@ -62,9 +62,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Index()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
             {
-                LoadCitizenProfile();
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
+                return View();
             }
             else
             {
@@ -78,8 +80,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult MedicalForm()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -90,8 +96,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult MedicalFormList()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -102,8 +112,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Vaccination()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -114,8 +128,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult AccountInfo()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -126,8 +144,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Profile()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -138,8 +160,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Registration()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -149,8 +175,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Certificate()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -160,8 +190,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult SearchCitizen()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
@@ -171,8 +205,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult AddRelative()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Status == 1)
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
                 return View();
+            }
             else
             {
                 Response.Redirect("/Home");
