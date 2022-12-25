@@ -1,9 +1,14 @@
 ﻿@{
     Layout = "_LayoutFeaturePage";
 }
-
-<link rel="stylesheet" href="/css/CitizenAccountInfo.css">
-<script src="/js/ORGAccountInfo.js"></script>
+@using Covid19_Vaccination_Infogate_MVC.Models
+@using Covid19_Vaccination_Infogate_MVC.Helpers
+@using System.Web;
+@{
+    Account account = SessionHelper.GetObjectFromJson<Account>(Context.Session, "AccountInfo");
+}
+<link rel="stylesheet" href="~/css/CitizenAccountInfo.css">
+<script src="~/js/ORGAccountInfo.js"></script>
 
 <div class="holder-function-panel">
     <!-- MENU -->
@@ -11,7 +16,6 @@
         @await Component.InvokeAsync("ViewFunctionMenu");
     }
     <!-- END MENU -->
-
     <!-- FUNCTIONAL PANEL -->
     <div class="function-panel">
         <div class="accinfo-panel">
@@ -21,7 +25,7 @@
                     <p>Tài khoản</p>
                     <br>
                     <label for="id">Mã đơn vị tiêm chủng</label><br>
-                    @* echo '<input type="text" name="id" required value="' . $org->get_id() . '" disabled>' *@<br>
+                    <input type="text" name="id" required value="@account.Username" disabled><br>
                     <hr>
                     <div class="message msg1"></div>
                     <br>

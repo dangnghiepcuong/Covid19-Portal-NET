@@ -81,7 +81,7 @@ $(document).ready(function () {
                 district: district, town: town, street: street, email: email
             },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }

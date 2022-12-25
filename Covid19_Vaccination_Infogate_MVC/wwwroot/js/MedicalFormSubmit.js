@@ -60,12 +60,12 @@ $(document).ready(function () {
             url: '/Citizen/MedicalForm',
             type: 'POST',
             data: { filleddate: filleddate, choice: choice },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result.message == 'Form Submited!') {
+                if (data == 'Form Submited!') {
                     PopupConfirm('Khai báo y tế thành công!')
                 }
             },

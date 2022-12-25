@@ -36,21 +36,20 @@ $(document).ready(function () {
         status = $('#status').val()
         vaccine = $('#vaccine').val()
         time = $('#time').val()
-
         $.ajax({
             cache: false,
             url: '/Citizen/LoadRegistration',
             type: 'POST',
             data: {status: status, vaccine: vaccine, time: time },
-            success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                $('#list-registration').html(result.html)
+                $('#list-registration').html(data)
+                alert(data);
             },
             error: function (error) {
-
             }
         })
     }
@@ -78,12 +77,12 @@ $(document).ready(function () {
             url: '/Citizen/CancelRegistration',
             type: 'POST',
             data: { SchedID: SchedID },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result == 'CancelRegistration')
+                if (data == 'CancelRegistration')
                     location.reload()
             },
             error: function (error) {

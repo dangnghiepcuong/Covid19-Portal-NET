@@ -46,14 +46,14 @@ $(document).ready(function () {
             url: '/Citizen/MedicalList',
             type: 'POST',
             data: { formdate: formdate },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                 }
-                if (result.message == 'NoForm') {
+                if (data == 'NoForm') {
                     PopupConfirm('Bạn chưa khai báo y tế trong vòng ' + formdate + ' ngày!')
                 }
-                $('#holder-form-medical').html(result.html);
+                $('#holder-form-medical').html(data);
             },
             error: function (error) {
                 // $('body').html(error)

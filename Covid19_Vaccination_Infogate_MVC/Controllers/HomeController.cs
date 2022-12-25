@@ -19,16 +19,13 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("AccountInfo") != null)
-            {
-                Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            }
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
+            string message = "";
             var conn = new OracleConnection();
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
@@ -42,7 +39,10 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 var reader = command.ExecuteReader();
 
                 if (reader.HasRows == false)
-                    return Json(new { message = "NoAccount" });
+                {
+                    message = "NoAccount";
+                    return Content(message, "text/html");
+                }
 
                 // account existed,
                 while (reader.Read())
@@ -66,29 +66,35 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                         var reader2 = command.ExecuteReader();
 
                         if (reader2.HasRows == false)
-                            return Json(new { message = "NoProfile" });   //no profile existed
+                        {
+                            message = "NoProfile";   //no profile existed
+                            return Content(message, "text/html");
+                        }
 
                         account = new Account();
                         account.Username = username;
-                        account.Password = password;
                         account.Role = reader.GetInt32(reader.GetOrdinal("ROLE"));
                         account.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                         
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
-                        SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-
                     }
                     else
                     {    //wrong password;
-                        return Json(new { message = "incorrect password" });
+                        message = "incorrect password";
+                        return Content(message, "text/html");
                     }
                 }
             }
             else
-                return Json(new { message = "ERROR: Connection Fail!" }); 
+            {
+                message = "ERROR: Connection Fail!";
+                return Content(message, "text/html");
+            }
+                
+
             conn.Close();
-            SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            return Json(new { success = true, message = "Login" });
+            message = "Login";
+            return Content(message, "text/html");
         }
 
         public IActionResult MedicalForm()

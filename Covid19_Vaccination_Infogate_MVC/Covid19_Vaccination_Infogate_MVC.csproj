@@ -6,24 +6,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Components\ViewHeaderBYT\**" />
+    <Content Remove="Views\Shared\Components\ViewHeaderBYT\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\ViewHeaderBYT\**" />
+    <None Remove="Views\Shared\Components\ViewHeaderBYT\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\HandleLogin.cs" />
     <Compile Remove="Controllers\header.cs" />
     <Compile Remove="Controllers\HomeController1.cs" />
     <Compile Remove="Models\ConnectionInfo.cs" />
     <Compile Remove="Models\HandleLogin.cs" />
-    <Compile Remove="Views\Shared\Components\ViewHeaderMOH\ViewHeaderMOH.cs" />
+    <Compile Remove="Views\Shared\Components\ViewHeaderMOH\Class.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Views\Shared\Components\Component.razor" />
+    <Content Remove="Views\Shared\Components\ViewHeaderMOH\Component.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Views\Shared\_SignupLoginForm.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Views\Shared\Components\ViewHeaderMOH\ViewHeaderMOH.cs" />
   </ItemGroup>
 
   <ItemGroup>

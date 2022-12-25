@@ -1,6 +1,13 @@
 ﻿@{
     Layout = "_LayoutFeaturePage";
 }
+@using Covid19_Vaccination_Infogate_MVC.Models
+@using Covid19_Vaccination_Infogate_MVC.Helpers
+@using System.IO;
+@using Newtonsoft.Json;
+@{
+    Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(Context.Session, "CitizenProfile");
+}
 <link rel="stylesheet" href="/css/CitizenVaccination.css">
 <script src="/js/CitizenVaccination.js"></script>
 
@@ -12,69 +19,75 @@
             <div class="filter-pane" id="filter-org">
                 <label for="province-name">Tỉnh/Thành phố</label>
                 <select type="text" name="province-name" id="select-province">
+                    <option value="">@citizen.ProvinceName</option>
                     @{
-                        @*<option value="">' . $citizen->get_provincename() . '</option>
-                            $str = file_get_contents('local.json');
-                            $local = json_decode($str, true); // decode the JSON into an associative array
-                            $provincecode = -1;
-                            for ($i = 0; $i < 63; $i++) {
-                            if ($local[$i]['name'] != $citizen->get_provincename())
-                            echo '
-                            <option value="' . $i . '">' . $local[$i]['name'] . '</option>';
-                            else
-                            $provincecode = $i;
+                        LocalProvince[] province = null;
+                        LocalDistrict[] district = null;
+                        LocalTown[] town = null;
+                        int provincecode = -1;
+                        int districtcode = -1;
+                        int towncode = -1;
+
+                        using (StreamReader r = new StreamReader(@Url.Content("wwwroot/local.json")))
+                        {
+                            string json = r.ReadToEnd();
+                            province = JsonConvert.DeserializeObject<LocalProvince[]>(json);
+                        }
+                        int i = 0;
+                        for (i = 0; i < 63; i++)
+                            if (province[i].Name != citizen.ProvinceName)
+                            {
+                                <option value="@i">@province[i].Name</option>
+                                continue;
                             }
-                            echo '
-                            <script>
-                                $("#select-province option:first-child").val(' . $provincecode . ');
-                                $("#select-province option:first-child").after("<option value></option>");
-                            </script>';*@
+                            else
+                                provincecode = i;
+                        <script>
+                                    $("#select-province option:first-child").val('@provincecode')
+                        </script>
                     }
                 </select>
                 <label for="district-name">Quận/Huyện/Thị xã</label>
                 <select type="text" name="district-name" id="select-district">
+                    <option value="">@citizen.DistrictName</option>
                     @{
-                        @*echo '
-                            <option value="">' . $citizen->get_districtname() . '</option>';
-                            $districtcode = -1;
-                            $i = 0;
-                            while (isset($local[$provincecode]['districts'][$i])) {
-                            if ($local[$provincecode]['districts'][$i]['name'] != $citizen->get_districtname())
-                            echo '
-                            <option value="' . $i . '">' . $local[$provincecode]['districts'][$i]['name'] . '</option>';
-                            else
-                            $districtcode = $i;
-                            $i++;
+                        i = 0;
+                        district = province[provincecode].Districts;
+                        while (i < district.Length)
+                        {
+                            if (district[i].Name != citizen.DistrictName)
+                            {
+                                <option value="@i">@district[i].Name</option>
                             }
-                            echo '
-                            <script>
-                                $("#select-district option:first-child").val(' . $districtcode . ')
-                                $("#select-district option:first-child").after("<option value></option>");
-                            </script>';*@
+                            else
+                                districtcode = i;
+                            i++;
+                        }
+                        <script>
+                                    $("#select-district option:first-child").val('@districtcode')
+                        </script>
                     }
                 </select>
 
                 <label for="town-name">Xã/Phường/Thị trấn</label>
                 <select type="drop-down" name="town-name" id="select-town">
+                    <option value="">@citizen.TownName</option>
                     @{
-                        @*echo '
-                            <option value="">' . $citizen->get_townname() . '</option>';
-                            $towncode = -1;
-                            $i = 0;
-                            while (isset($local[$provincecode]['districts'][$districtcode]['wards'][$i])) {
-                            if ($local[$provincecode]['districts'][$districtcode]['wards'][$i]['name'] != $citizen->get_townname())
-                            echo '
-                            <option value="' . $i . '">' . $local[$provincecode]['districts'][$districtcode]['wards'][$i]['name'] . '</option>';
-                            else
-                            $towncode = $i;
-                            $i++;
+                        i = 0;
+                        town = district[districtcode].Wards;
+                        while (i < town.Length)
+                        {
+                            if (town[i].Name != citizen.TownName)
+                            {
+                                <option value="@i">@town[i].Name</option>
                             }
-                            echo '
-                            <script>
-                                $("#select-town option:first-child").val(' . $towncode . ');
-                                $("#select-town option:first-child").after("<option value></option>");
-
-                            </script>';*@
+                            else
+                                towncode = i;
+                            i++;
+                        }
+                        <script>
+                                $("#select-town option:first-child").val('@towncode')
+                        </script>
                     }
                 </select>
                 <button class="btn-medium-bordered-icon btn-filter" id="btn-filter-org">

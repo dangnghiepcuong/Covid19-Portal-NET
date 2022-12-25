@@ -1,17 +1,17 @@
 ﻿@{
     Layout = "_LayoutFeaturePage";
 }
-
-<link rel="stylesheet" href="/css/MedicalFormSubmit.css">
-
-@section scripts {
-    <script src="/js/index.js"></script>
-}
-
-
+@using Covid19_Vaccination_Infogate_MVC.Models
+@using Covid19_Vaccination_Infogate_MVC.Helpers
+@using System.Web;
 @{
-    @await Component.InvokeAsync("ViewFunctionNavBar");
+    Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(Context.Session, "CitizenProfile");
 }
+<link rel="stylesheet" href="/css/MedicalFormSubmit.css">
+<script src="/js/MedicalFormSubmit.js"></script>
+<script src="/js/index.js"></script>
+
+
 
 <!-- FUNCTION PANEL -->
 <div class="holder-function-panel">
@@ -26,7 +26,7 @@
         <div class="panel-target-citizen">
             <p>Đối tượng: </p>
             <select name="" id="">
-                <option value="' . $citizen->get_ID() . '"></option>
+                <option value="@citizen.Id"></option>
             </select>
         </div>'
         <br>

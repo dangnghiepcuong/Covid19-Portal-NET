@@ -2,30 +2,30 @@
 {
     public class Organization
     {
-        private string ID;
-        private string Name;
-        private string ProvinceName;
-        private string DistrictName;
-        private string TownName;
-        private string Street;
+        private string id;
+        private string name;
+        private string provincename;
+        private string districtname;
+        private string townname;
+        private string street;
 
         //Constructor
         public Organization()
         {
-            ID = "";
-            Name = "";
-            ProvinceName = "";
-            DistrictName = "";
-            TownName = "";
-            Street = "";
+            id = "";
+            name = "";
+            provincename = "";
+            districtname = "";
+            townname = "";
+            street = "";
         }
 
         //Getter, Setter
-        public string ID1 { get => ID; set => ID = value; }
-        public string Name1 { get => Name; set => Name = value; }
-        public string ProvinceName1 { get => ProvinceName; set => ProvinceName = value; }
-        public string DistrictName1 { get => DistrictName; set => DistrictName = value; }
-        public string TownName1 { get => TownName; set => TownName = value; }
-        public string Street1 { get => Street; set => Street = value; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string ProvinceName { get; set; }
+        public string DistrictName { get; set; }
+        public string TownName { get; set; }
+        public string Street { get; set; }
     }
 }

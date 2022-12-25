@@ -38,12 +38,12 @@ $(document).ready(function () {
             url: '/Citizen/LoadOrg',
             type: 'POST',
             data: { province: province, district: district, town: town },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                $('#list-org').html(result.html)
+                $('#list-org').html(data)
             },
             error: function (error) {
             }
@@ -74,13 +74,13 @@ $(document).ready(function () {
             url: '/Citizen/LoadSchedule',
             type: 'POST',
             data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                $('#list-schedule').html(result.html)
-                // $('body').html(result.message)
+                $('#list-schedule').html(data)
+                // $('body').html(data)
             },
             error: function (error) {
 
@@ -93,6 +93,7 @@ $(document).ready(function () {
         $('#list-schedule').html('')
         org = $(this).parent()//.parent()
         if (org.css('margin-top') == '20px') {
+            $('#list-schedule').html('Danh sách lịch tiêm')
             $('#list-schedule').html('')
             org.css('margin', '3px 0px 3px 5px')
             org.css('width', '90%')
@@ -109,7 +110,7 @@ $(document).ready(function () {
 
         orgid = org.attr('id')
         orgname = org.find('.obj-org-name').text()
-        $('.list-name .schedule').html('Lịch tiêm ' + orgname)
+        $('.list-name .schedule').html('DS lịch tiêm ' + orgname)
         $('.list-name .schedule').attr('id', orgid)
         LoadSchedule(orgid)
     })
@@ -150,13 +151,13 @@ $(document).ready(function () {
             url: '/Citizen/CheckRegistration',
             type: 'POST',
             data: { },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    PopupConfirm(result.message)    //if fired trigger, show error
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    PopupConfirm(data)    //if fired trigger, show error
                     return
                 }
                 else {
-                    CheckBooster(result.message, SchedID, time)       //Passed check conditions, Check dosetype suitable for vaccination
+                    CheckBooster(data, SchedID, time)       //Passed check conditions, Check dosetype suitable for vaccination
                     return
                 }
             },
@@ -193,9 +194,9 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID, time: time, dosetype: dosetype },
             indexValue: { orgid: SchedID.substring(0, 5) },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    switch (result.message.substring(7, 12)) {
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    switch (data.substring(5, 10)) {
                         case '20001':
                             PopupConfirm('Bạn phải hoàn thành mũi tiêm đã đăng ký trước đó<br>trước khi đăng ký mũi mới.')
                             break
@@ -206,11 +207,11 @@ $(document).ready(function () {
                             PopupConfirm('Bạn phải khai báo y tế trong vòng 7 ngày trước khi ngày tiêm diễn ra!')
                             break
                         default:
-                            alert(result.message)
+                            alert(data)
                             break
                     }
                 }
-                if (result.message == 'RegisterVaccination') {
+                if (data == 'RegisterVaccination') {
                     LoadSchedule(this.indexValue.orgid)
                     PopupConfirm('Đăng ký tiêm chủng thành công!')
                 }

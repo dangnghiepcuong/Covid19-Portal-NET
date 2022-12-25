@@ -38,12 +38,12 @@ $(document).ready(function () {
             url: '/ORG/LoadSchedule',
             type: 'POST',
             data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                $('#list-schedule').html(result.html)
+                $('#list-schedule').html(data)
             },
             error: function (error) {
             }
@@ -86,15 +86,15 @@ $(document).ready(function () {
             url: '/ORG/LoadScheduleRegistration',
             type: 'POST',
             data: { SchedID: SchedID, SchedInfo: SchedInfo },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result.message == '') {
+                if (data == '') {
                     PopupConfirm('Không có lượt đăng ký nào cho lịch tiêm này.')
                 }
-                $('#list-registration').html(result.html)
+                $('#list-registration').html(data)
             },
             error: function (error) {
             }
@@ -112,14 +112,14 @@ $(document).ready(function () {
             type: 'POST',
             data: { citizenid: citizenid, SchedID: SchedID, status: status },
             indexValue: { reg: $(this).parent().parent().parent() },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
 
                 reg = this.indexValue.reg
-                switch (result.message) {
+                switch (data) {
                     case '1':
                         reg.find('.hoder-obj-attr .interactive-area select').html('<option value="2">Đã tiêm</option><option value="3">Đã hủy</option>')
                         reg.find('.hoder-obj-attr .obj-attr .attr-detail p:last-child').text('Tình trạng: Đã điểm danh')
@@ -153,7 +153,7 @@ $(document).ready(function () {
             url: '/ORG/SelectScheduleValue',
             type: 'POST',
             data: { SchedID: SchedID },
-            success: function (result) {
+            success: function (data) {
             },
             error: function (error) {
             }
@@ -205,12 +205,12 @@ $(document).ready(function () {
             url: '/ORG/UpdateSchedule',
             type: 'POST',
             data: { SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result.message == 'UpdateSchedule') {
+                if (data == 'UpdateSchedule') {
                     PopupConfirm('Cập nhật lịch tiêm thành công!')
                     LoadSchedule(orgid)
                 }
@@ -232,12 +232,12 @@ $(document).ready(function () {
                 type: 'POST',
                 data: { SchedID: SchedID },
                 indexValue: { schedule: schedule },
-                success: function (result) {
-                    if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                        alert(result.message)
+                success: function (data) {
+                    if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                        alert(data)
                         return
                     }
-                    if (result.message == 'CancelSchedule') {
+                    if (data == 'CancelSchedule') {
                         schedule.find('.obj-attr .attr-time .day').attr('id', 0)
                         schedule.find('.obj-attr .attr-time .day').text(0)
                         schedule.find('.obj-attr .attr-time .noon').attr('id', 0)

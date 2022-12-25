@@ -31,8 +31,8 @@ $(document).ready(function () {
             url: '/Citizen/LoadCertificate',
             type: 'POST',
             data: { },
-            success: function (result) {
-                $('#list-injection').html(result.html)
+            success: function (data) {
+                $('#list-injection').html(data.html)
                 cert = $('#list-injection').find('.status').attr('id')
                 switch (parseInt(cert)) {
                     case 0:

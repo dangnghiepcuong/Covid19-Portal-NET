@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyViewComponent
+namespace Covid19_Vaccination_Infogate_MVC.ViewComponents
 {
     // Tên lớp ViewProductViewComponent thì không cần thuộc tính [ViewComponent]
     [ViewComponent]
@@ -14,7 +14,7 @@ namespace MyViewComponent
         public ViewHeaderMOH()
         {
         }
-        // Dùng async Task<IViewComponentResult>InvokeAsync
+        // Dùng async Task<IViewComponentResult> InvokeAsync
         // nếu dùng kỹ thuật bất đồng bộ
         public IViewComponentResult Invoke()
         {

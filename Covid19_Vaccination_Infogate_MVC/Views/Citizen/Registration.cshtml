@@ -1,7 +1,12 @@
 ﻿@{
     Layout = "_LayoutFeaturePage";
 }
-
+@using Covid19_Vaccination_Infogate_MVC.Models
+@using Covid19_Vaccination_Infogate_MVC.Helpers
+@using System.Web;
+@{
+    Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(Context.Session, "CitizenProfile");
+}
 <link rel="stylesheet" href="/css/CitizenRegistration.css">
 <script src="/js/CitizenRegistration.js"></script>
 
@@ -17,7 +22,7 @@
         <div class="panel-target-citizen">
             <p>Đối tượng: </p>
             <select name="" id="">
-                <option value="">@* echo $citizen->get_lastname() . ' ' . $citizen->get_firstname() *@</option>
+                <option value="">@citizen.FullName()</option>
             </select>
         </div>
         <br>

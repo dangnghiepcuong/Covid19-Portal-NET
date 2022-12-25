@@ -3,24 +3,24 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Injection
     {
-        private Citizen citizen;
-        private int InjNO;
-        private Schedule Sched;
-        private String DoseType;
+        private Citizen citizen = new Citizen();
+        private int injno;
+        private Schedule sched;
+        private string dosetype;
 
         //Constructor
         public Injection()
         {
-            this.citizen = new Citizen();
-            InjNO = -1;
-            Sched = new Schedule();
-            DoseType = "";
+            citizen = new Citizen();
+            injno = -1;
+            sched = new Schedule();
+            dosetype = "";
         }
 
         //Getter, setter
-        public Citizen Citizen { get => citizen; set => citizen = value; }
-        public int InjNO1 { get => InjNO; set => InjNO = value; }
-        public Schedule Sched1 { get => Sched; set => Sched = value; }
-        public string DoseType1 { get => DoseType; set => DoseType = value; }
+        public Citizen Citizen { get ; set; }
+        public int InjNO { get ; set ; }
+        public Schedule Sched { get ; set; }
+        public string DoseType { get; set; }
     }
 }

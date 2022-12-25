@@ -37,12 +37,12 @@ $(document).ready(function () {
             url: '/MOH/LoadOrg',
             type: 'POST',
             data: { province: province, district: district, town: town },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                $('#list-org').html(result.html)
+                $('#list-org').html(data)
             },
             error: function (error) {
             }
