@@ -47,7 +47,6 @@ $(document).ready(function () {
                     return
                 }
                 $('#list-registration').html(data)
-                alert(data);
             },
             error: function (error) {
             }

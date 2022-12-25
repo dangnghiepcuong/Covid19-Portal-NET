@@ -97,7 +97,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Content(message, "text/html");
         }
 
-        public IActionResult MedicalForm()
+        public IActionResult Statistic()
         {
             return View();
         }
