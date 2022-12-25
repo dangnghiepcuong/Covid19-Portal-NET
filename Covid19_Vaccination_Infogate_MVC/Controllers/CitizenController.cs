@@ -297,10 +297,20 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
                     command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = citizen.Email;
                     conn.Open();
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (OracleException e)
+                    {
+                        message = e.Message;
+                    };
                     conn.Close();
 
                     message += "UpdateAccount";
+
+                    account.Username = phone;
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "AccountInfo", account);
                 }
             }
 
@@ -321,7 +331,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             string message = "";
             var conn = new OracleConnection();
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
-            conn.Open();
 
             Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
 

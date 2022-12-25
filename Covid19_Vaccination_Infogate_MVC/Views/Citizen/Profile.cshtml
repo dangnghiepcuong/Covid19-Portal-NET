@@ -166,11 +166,13 @@
                             <option value="@i">@district[i].Name</option>
                         }
                         else
+                        {
                             districtcode = i;
+                        }
                         i++;
                     }
                     <script>
-                                    $("#select-district option:first-child").val('@districtcode')
+                        $("#select-district option:first-child").val('@districtcode')
                     </script>
                 }
             </select>
@@ -183,7 +185,6 @@
                 <select name="town" id="select-town">
                     <option value="">@citizen.TownName</option>';
                     @{
-                        <script>alert(@districtcode)</script>
                         i = 0;
                         town = district[districtcode].Wards;
                         while (i < town.Length)
