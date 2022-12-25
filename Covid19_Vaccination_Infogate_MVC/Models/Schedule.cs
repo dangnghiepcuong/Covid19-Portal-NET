@@ -4,11 +4,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Schedule
     {
-        private String id;
+        private string id;
         private Organization org;
-        private DateTime ondate;
+        private string ondate;
         private Vaccine vaccine;
-        private String serial;
+        private string serial;
         private int limitday;
         private int limitnoon;
         private int limitnight;
@@ -19,6 +19,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public Schedule()
         {
             id = "";
+            ondate = "";
             org = new Organization();
             vaccine = new Vaccine();
             serial = "";
@@ -32,14 +33,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 
         public string Id { get; set; }
         public Organization Org { get; set; }
-        public DateTime Ondate { get ; set ; }
-        public Vaccine Vaccine { get ; set ; }
-        public string Serial { get; set ; }
-        public int Limitday { get ; set; }
-        public int Limitnoon { get ; set; }
-        public int Limitnight { get; set ; }
-        public int Dayregister { get ; set ; }
-        public int Noonregister { get; set; }
-        public int Nightregister { get; set; }
+        public string OnDate { get; set; }
+        public Vaccine Vaccine { get; set; }
+        public string Serial { get; set; }
+        public int LimitDay { get; set; }
+        public int LimitNoon { get; set; }
+        public int LimitNight { get; set; }
+        public int DayRegistered { get; set; }
+        public int NoonRegistered { get; set; }
+        public int Nightregistered { get; set; }
     }
 }

@@ -17,14 +17,9 @@
         }
 
         //Getter, Setter
-
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Technology { get => technology; set => technology = value; }
-        public string Country { get => country; set => country = value; }
-
-      
-
-
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Technology { get; set; }
+        public string Country { get; set; }
     }
 }

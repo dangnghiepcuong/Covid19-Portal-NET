@@ -183,6 +183,7 @@
                 <select name="town" id="select-town">
                     <option value="">@citizen.TownName</option>';
                     @{
+                        <script>alert(@districtcode)</script>
                         i = 0;
                         town = district[districtcode].Wards;
                         while (i < town.Length)
