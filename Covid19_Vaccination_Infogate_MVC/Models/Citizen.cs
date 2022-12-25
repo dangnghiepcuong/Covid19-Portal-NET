@@ -16,9 +16,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         private string townname;
         private string street;
         private string phone;
-        private string email;
-        private string guadian;
-        private byte[] avatar;
+        private string? email;
+        private string? guadian;
+        private byte[]? avatar;
 
         //Constructor
         public Citizen()

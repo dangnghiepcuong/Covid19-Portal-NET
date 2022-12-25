@@ -4,12 +4,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Register
     {
-        private Citizen citizen;
-        private Schedule sched;
+        private Citizen citizen = new Citizen();
+        private Schedule sched = new Schedule();
         private int time;
         private int no;
         private int status;
-        private byte[] image;
+        private byte[]? image;
         private string dosetype;
         private int id;
         

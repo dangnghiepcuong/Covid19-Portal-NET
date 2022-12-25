@@ -6,10 +6,10 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
     public class New
     {
         private string id;
-        private Organization org;
+        private Organization org = new Organization();
         private string tittle;
-        private DateTime publishdate;
-        private Blob image;
+        private string publishdate;
+        private byte[]? image;
         private string content;
 
 
@@ -26,8 +26,8 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public string ID { get; set ; }
         public Organization Org { get ; set; }
         public string Tittle { get; set; }
-        public DateTime PublishDate { get; set; }
-        public Blob Image { get ; set ; }
+        public string PublishDate { get; set; }
+        public byte[] Image { get ; set ; }
         public string Content { get ; set ; }
     }
 }

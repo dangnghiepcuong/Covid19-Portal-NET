@@ -258,7 +258,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 command.Parameters.Add("par_OldPass", OracleDbType.Varchar2).Value = password;
                 command.Parameters.Add("par_NewPass", OracleDbType.Varchar2).Value = new_password;
                 conn.Open();
-                command.ExecuteNonQuery();
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (OracleException e)
+                {
+                    message = e.Message;
+                };
                 conn.Close();
 
                 message = "ChangePassword";
@@ -273,11 +280,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 }
                 else
                 {
-                    /*command = new OracleCommand("alter session set NLS_DATE_FORMAT='YYYY-MM-DD'" , conn);
-                    conn.Open();
-                    command.ExecuteNonQuery();
-                    conn.Close();*/
-
                     Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
 
                     command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
@@ -351,7 +353,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
             command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = email;
             conn.Open();
-            command.ExecuteNonQuery();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+            };
             conn.Close();
 
             message += "UpdateAccount";
@@ -416,6 +425,10 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             Register reg = new Register();
             reg.Sched = new Schedule();
+            reg.Sched.Org = new Organization();
+            reg.Sched.Vaccine = new Vaccine();
+
+            string html = "";
             while (reader.Read())
             {
                 reg.Sched.Id = reader["SCHEDID"] as string;
@@ -431,37 +444,37 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 reg.No = reader.GetInt32(reader.GetOrdinal("NO"));
                 reg.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
                 reg.DoseType = reader["DOSETYPE"] as string;
-                reg.Image = (byte[])reader["IMAGE"];
-            }
-            string CancelButton = "";
 
-            if (reg.Status < 2)
-                CancelButton = "<div class='interactive-area'>" 
-                    + "<button class='btn-medium-bordered btn-cancel-registration'>Hủy</button>"
-                    + "</div>";
+                string CancelButton = "";
 
-            message += 
-            "< div class='registration' id='" + reg.Sched.Id + "'>"
-            + "<p class='obj-org-name'>" + reg.Sched.Org.Name + "</p>"
-            + "<div class='holder-obj-attr'>"
-                + "< div class='obj-attr'>"
-                    + "< p class='attr-address'>Đ/c: "
-                    + reg.Sched.Org.ProvinceName + ", "
-                    + reg.Sched.Org.DistrictName + ", "
-                    + reg.Sched.Org.TownName
-                    + "</p>"
-                    + "<p class='attr-date-time-no'>Lịch tiêm ngày: " + reg.Sched.OnDate
-                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Buổi " + reg.Time
-                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
-                    + "<p class='attr-vaccine-serial'>Vaccine: "
-                    + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
-                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                if (reg.Status < 2)
+                    CancelButton = "<div class='interactive-area'>"
+                        + "<button class='btn-medium-bordered btn-cancel-registration'>Hủy</button>"
+                        + "</div>";
+
+                html +=
+                "<div class='registration' id='" + reg.Sched.Id + "'>"
+                + "<p class='obj-org-name'>" + reg.Sched.Org.Name + "</p>"
+                + "<div class='holder-obj-attr'>"
+                    + "<div class='obj-attr'>"
+                        + "<p class='attr-address'>Đ/c: "
+                        + reg.Sched.Org.ProvinceName + ", "
+                        + reg.Sched.Org.DistrictName + ", "
+                        + reg.Sched.Org.TownName
+                        + "</p>"
+                        + "<p class='attr-date-time-no'>Lịch tiêm ngày: " + reg.Sched.OnDate
+                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Buổi " + reg.Time
+                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
+                        + "<p class='attr-vaccine-serial'>Vaccine: "
+                        + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
+                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                    + "</div>"
+                    + CancelButton
                 + "</div>"
-                + CancelButton 
-            + "</div>"
-        + "</div>";
+            + "</div>";
+            }
 
-            return Json(new { message = "" });
+            return Content(html, "text/html");
         }
         
         [HttpPost]

@@ -5,9 +5,9 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
     public class Schedule
     {
         private string id;
-        private Organization org;
+        private Organization org = new Organization();
         private string ondate;
-        private Vaccine vaccine;
+        private Vaccine vaccine = new Vaccine();
         private string serial;
         private int limitday;
         private int limitnoon;
