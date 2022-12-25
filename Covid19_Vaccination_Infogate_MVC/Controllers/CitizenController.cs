@@ -610,10 +610,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    DateTime date = (DateTime)reader["ONDATE"];
+
                     html +=
                 "<div class='schedule object' id='" + reader["ID"] as string + "'>"
                         + "<div class='obj-attr'>"
-                            + "<p class='attr-date'>Lịch tiêm ngày: " + reader["ONDATE"] as string + "</p>"
+                            + "<p class='attr-date'>Lịch tiêm ngày: " + date.ToString("yyyy/MM/dd") + "</p>"
                             + "<p class='attr-vaccine'>Vaccine: " + reader["VACCINEID"] as string + "</p>"
                             + "<p class='attr-serial'>Serial: " + reader["SERIAL"] as string + "</p>"
                         + "</div>"
@@ -646,6 +648,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult CheckRegistration()
         {
+
             return Json(new { message = "" });
         }
 
