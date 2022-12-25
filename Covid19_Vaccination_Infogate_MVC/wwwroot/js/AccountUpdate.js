@@ -48,13 +48,13 @@ $(document).ready(function () {
             The requested file also should be formated in function-oriented to make a reusable code.
             */
             data: { phone: phone, password: password, new_password: new_password },
-            success: function (result) {
+            success: function (data) {
                 /*
                 In the php back-end code, catches the exception then return in a formated message,
                 so that we can check back in this jQuery function and throw an optional message.
                 */
-                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
-                    alert(result.message)
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 Back-end code obviously can return difference values every calls.
                 Switch cases and handle!
                 */
-                switch (result.message) {
+                switch (data) {
                     case 'Password is incorrect!':
                         $('.account').find('.msg2').html('Sai mật khẩu!')
                         return
@@ -81,7 +81,7 @@ $(document).ready(function () {
                         $('.form-message').text('Lỗi chưa xác định!')
                         break
                     default:
-                        alert(result.message)
+                        alert(data)
                         break
                 }
 

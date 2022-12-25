@@ -49,7 +49,7 @@ $(document).ready(function () {
             url: "/ORG/UpdateOrgProfile",
             type: "POST",
             data: { name: name, district: district, town: town, street: street },
-            success: function (result) {
+            success: function (data) {
                 $('.form-message').text('Cập nhật thông tin thành công!');
                 $('#form-popup-confirm').css('display', 'block');
                 $('.gradient-bg-faded').css('display', 'block');
