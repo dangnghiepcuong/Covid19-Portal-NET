@@ -44,7 +44,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 citizen.FirstName = reader["FIRSTNAME"] as string;
                 citizen.Id = reader["ID"] as string;
                 string date = reader["BIRTHDAY"] as string;
-                citizen.Birthday = DateTime.Parse(date);
+                citizen.Birthday = reader["BIRTHDAY"] as string;
                 citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
                 citizen.HomeTown = reader["HOMETOWN"] as string;
                 citizen.ProvinceName = reader["PROVINCENAME"] as string;
@@ -273,28 +273,28 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 }
                 else
                 {
-                    command = new OracleCommand("alter session set NLS_DATE_FORMAT='YYYY-MM-DD'" , conn);
+                    /*command = new OracleCommand("alter session set NLS_DATE_FORMAT='YYYY-MM-DD'" , conn);
                     conn.Open();
                     command.ExecuteNonQuery();
-                    conn.Close();
+                    conn.Close();*/
 
                     Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
 
                     command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.Add("par_OldID", OracleDbType.Varchar2, 256).Value = citizen.Id;
-                    command.Parameters.Add("par_ID", OracleDbType.Varchar2, 256).Value = citizen.Id;
-                    command.Parameters.Add("par_LastName", OracleDbType.Varchar2, 100).Value = citizen.LastName;
-                    command.Parameters.Add("par_FirstName", OracleDbType.Varchar2, 50).Value = citizen.FirstName;
-                    command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = "TO_DATE("+citizen.Birthday.ToString("yyyy-MM-dd")+", 'YYYY-MM-DD')";
-                    command.Parameters.Add("par_Gender", OracleDbType.Int32).Value = Int32.Parse(citizen.Gender(-2));
-                    command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2, 50).Value = citizen.HomeTown;
-                    command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2, 50).Value = citizen.ProvinceName;
-                    command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2, 50).Value = citizen.DistrictName;
-                    command.Parameters.Add("par_TownName", OracleDbType.Varchar2, 50).Value = citizen.TownName;
-                    command.Parameters.Add("par_Street", OracleDbType.Varchar2, 100).Value = citizen.Street;
-                    command.Parameters.Add("par_Phone", OracleDbType.Varchar2, 254).Value = phone;
-                    command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2, 30).Value = citizen.Phone;
+                    command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
+                    command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = citizen.Id;
+                    command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = citizen.LastName;
+                    command.Parameters.Add("par_FirstName", OracleDbType.Varchar2).Value = citizen.FirstName;
+                    command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = citizen.Birthday;
+                    command.Parameters.Add("par_Gender", OracleDbType.Int16).Value = Int16.Parse(citizen.Gender(-2));
+                    command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2).Value = citizen.HomeTown;
+                    command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2).Value = citizen.ProvinceName;
+                    command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2).Value = citizen.DistrictName;
+                    command.Parameters.Add("par_TownName", OracleDbType.Varchar2).Value = citizen.TownName;
+                    command.Parameters.Add("par_Street", OracleDbType.Varchar2).Value = citizen.Street;
+                    command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = phone;
+                    command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
                     conn.Open();
                     command.ExecuteNonQuery();
                     conn.Close();
@@ -319,8 +319,53 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoadRegistration(string status, string vaccine, string time)
+        public IActionResult LoadRegistration(int status, int vaccine, int time)
         {
+            string message = "";
+            Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
+
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select SchedID, Name, ProvinceName, DistrictName, TownName, Street, TO_CHAR(OnDate, 'YYYY-MM-DD') OnDate, Time, NO, VaccineID, Serial, Status, DoseType, Image from ("
+                            + "(select SchedID, Time, NO, Status, REG.DoseType, OrgID, OnDate, VaccineID, Serial, Image from("
+                                + "(select ID, SchedID, NO, Time, Status, DoseType, Image from REGISTER where CitizenID = :citizenid) REG"
+                                + "inner join"
+                                + "(select ID, OrgID, OnDate, VaccineID, Serial from SCHEDULE) SCHED"
+                                + "on"
+                                + "REG.SchedID = SCHED.ID)"
+                            + ") REG_SCHED"
+                            + "inner join"
+                            + "(select ID, Name, ProvinceName, DistrictName, TownName, Street from ORGANIZATION) ORG"
+                            + "on REG_SCHED.OrgID = ORG.ID"
+                        + ")"
+                        + "where 1 = 1";
+
+            if (status != -1)
+                query += " and Status = :status";
+            if (vaccine != -1)
+                query += " and VaccineID = :vaccine";
+            if (time != -1)
+                query += " and Time = :time";
+            query += " order by Status";
+
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("citizenid", citizen.Id));
+            if (status != -1)
+                command.Parameters.Add(new OracleParameter("status", status));
+            if (vaccine != -1)
+                command.Parameters.Add(new OracleParameter("vaccine", vaccine));
+            if (time != -1)
+                command.Parameters.Add(new OracleParameter("time", time));
+            var reader = command.ExecuteReader();
+
+            Register reg = new Register();
+            while (reader.Read())
+            {
+                reg.
+            }
+
             return Json(new { message = "" });
         }
 
