@@ -52,12 +52,12 @@ $(document).ready(function () {
             url: '/MOH/ProvideAccount',
             type: 'POST',
             data: { quantity: quantity, code: code, province: province },
-            success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message)
+            success: function (data) {
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result == 'ProvideAccount') {
+                if (data == 'ProvideAccount') {
                     PopupConfirm('Tạo các tài khoản đơn vị thành công!')
                     return
                 }

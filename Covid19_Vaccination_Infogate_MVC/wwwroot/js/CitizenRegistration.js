@@ -77,12 +77,12 @@ $(document).ready(function () {
             url: '/Citizen/CancelRegistration',
             type: 'POST',
             data: { SchedID: SchedID },
-            success: function (result) {
-                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
-                    alert(result)
+            success: function (data) {
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    alert(data)
                     return
                 }
-                if (result == 'CancelRegistration')
+                if (data == 'CancelRegistration')
                     location.reload()
             },
             error: function (error) {
