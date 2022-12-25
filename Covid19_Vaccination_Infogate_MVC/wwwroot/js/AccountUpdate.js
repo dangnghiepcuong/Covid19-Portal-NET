@@ -53,7 +53,7 @@ $(document).ready(function () {
                 In the php back-end code, catches the exception then return in a formated message,
                 so that we can check back in this jQuery function and throw an optional message.
                 */
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }

@@ -47,7 +47,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { formdate: formdate },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                 }
                 if (result.message == 'NoForm') {

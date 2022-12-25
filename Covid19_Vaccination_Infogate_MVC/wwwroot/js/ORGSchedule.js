@@ -39,7 +39,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -87,7 +87,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID, SchedInfo: SchedInfo },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -113,7 +113,7 @@ $(document).ready(function () {
             data: { citizenid: citizenid, SchedID: SchedID, status: status },
             indexValue: { reg: $(this).parent().parent().parent() },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -206,7 +206,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -233,7 +233,7 @@ $(document).ready(function () {
                 data: { SchedID: SchedID },
                 indexValue: { schedule: schedule },
                 success: function (result) {
-                    if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                         alert(result.message)
                         return
                     }
