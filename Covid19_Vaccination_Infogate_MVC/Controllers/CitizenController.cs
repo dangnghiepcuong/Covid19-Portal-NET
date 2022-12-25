@@ -363,12 +363,52 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             Register reg = new Register();
             while (reader.Read())
             {
-                reg.
+                reg.Sched.Id = reader["SCHEDID"] as string;
+                reg.Sched.Org.Name = reader["NAME"] as string;
+                reg.Sched.Org.ProvinceName = reader["PROVINCENAME"] as string;
+                reg.Sched.Org.DistrictName = reader["DISTRICTNAME"] as string;
+                reg.Sched.Org.TownName = reader["TOWNNAME"] as string;
+                reg.Sched.Org.Street = reader["STREET"] as string;
+                reg.Sched.OnDate = reader["ONDATE"] as string;
+                reg.Sched.Vaccine.Id = reader["VACCINEID"] as string;
+                reg.Sched.Serial = reader["SERIAL"] as string;
+                reg.Time = reader.GetInt32(reader.GetOrdinal("TIME"));
+                reg.No = reader.GetInt32(reader.GetOrdinal("NO"));
+                reg.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
+                reg.DoseType = reader["DOSETYPE"] as string;
+                reg.Image = (byte[])reader["IMAGE"];
             }
+            string CancelButton = "";
+
+            if (reg.Status < 2)
+                CancelButton = "<div class='interactive-area'>" 
+                    + "<button class='btn-medium-bordered btn-cancel-registration'>Hủy</button>"
+                    + "</div>";
+
+            message += 
+            "< div class='registration' id='" + reg.Sched.Id + "'>"
+            + "<p class='obj-org-name'>" + reg.Sched.Org.Name + "</p>"
+            + "<div class='holder-obj-attr'>"
+                + "< div class='obj-attr'>"
+                    + "< p class='attr-address'>Đ/c: "
+                    + reg.Sched.Org.ProvinceName + ", "
+                    + reg.Sched.Org.DistrictName + ", "
+                    + reg.Sched.Org.TownName
+                    + "</p>"
+                    + "<p class='attr-date-time-no'>Lịch tiêm ngày: " + reg.Sched.OnDate
+                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Buổi " + reg.Time
+                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
+                    + "<p class='attr-vaccine-serial'>Vaccine: "
+                    + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
+                    + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                + "</div>"
+                + CancelButton 
+            + "</div>"
+        + "</div>";
 
             return Json(new { message = "" });
         }
-
+        
         [HttpPost]
         public IActionResult CancelRegistration(string SchedID)
         {
