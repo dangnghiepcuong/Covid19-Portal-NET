@@ -33,32 +33,37 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             + "from CITIZEN where Phone= :username";
             var command = new OracleCommand(query, conn);
             command.Parameters.Add(new OracleParameter("username", account.Username));
-            var reader = command.ExecuteReader();
-
-            if (reader.HasRows == false)
-                return;
-
-            while (reader.Read())
+            try
             {
-                citizen.LastName = reader["LASTNAME"] as string;
-                citizen.FirstName = reader["FIRSTNAME"] as string;
-                citizen.Id = reader["ID"] as string;
-                string date = reader["BIRTHDAY"] as string;
-                citizen.Birthday = reader["BIRTHDAY"] as string;
-                citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
-                citizen.HomeTown = reader["HOMETOWN"] as string;
-                citizen.ProvinceName = reader["PROVINCENAME"] as string;
-                citizen.DistrictName = reader["DISTRICTNAME"] as string;
-                citizen.TownName = reader["TOWNNAME"] as string;
-                citizen.Street = reader["STREET"] as string;
-                citizen.Phone = reader["PHONE"] as string;
-                citizen.Email = reader["EMAIL"] as string;
-                citizen.Guadian = reader["GUARDIAN"] as string;
-                /*citizen.Avatar = (byte[])reader["AVATAR"];*/
-            }
-            conn.Close();
+                var reader = command.ExecuteReader();
 
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
+                if (reader.HasRows == false)
+                    return;
+
+                while (reader.Read())
+                {
+                    citizen.LastName = reader["LASTNAME"] as string;
+                    citizen.FirstName = reader["FIRSTNAME"] as string;
+                    citizen.Id = reader["ID"] as string;
+                    string date = reader["BIRTHDAY"] as string;
+                    citizen.Birthday = reader["BIRTHDAY"] as string;
+                    citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
+                    citizen.HomeTown = reader["HOMETOWN"] as string;
+                    citizen.ProvinceName = reader["PROVINCENAME"] as string;
+                    citizen.DistrictName = reader["DISTRICTNAME"] as string;
+                    citizen.TownName = reader["TOWNNAME"] as string;
+                    citizen.Street = reader["STREET"] as string;
+                    citizen.Phone = reader["PHONE"] as string;
+                    citizen.Email = reader["EMAIL"] as string;
+                    citizen.Guadian = reader["GUARDIAN"] as string;
+                    /*citizen.Avatar = (byte[])reader["AVATAR"];*/
+                }
+                conn.Close();
+
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
+            } catch (OracleException e)
+            {
+            }
             return;
         }
 
@@ -252,12 +257,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 message += "!ChangePassword";
             else
             {
+                conn.Open();
                 command = new OracleCommand("ACC_UPDATE_PASSWORD", conn);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.Add("par_Username", OracleDbType.Varchar2).Value = phone;
                 command.Parameters.Add("par_OldPass", OracleDbType.Varchar2).Value = password;
                 command.Parameters.Add("par_NewPass", OracleDbType.Varchar2).Value = new_password;
-                conn.Open();
                 try
                 {
                     command.ExecuteNonQuery();
@@ -281,7 +286,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 else
                 {
                     Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
-
+                    conn.Open();
                     command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
@@ -298,7 +303,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = phone;
                     command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
                     command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = citizen.Email;
-                    conn.Open();
                     try
                     {
                         command.ExecuteNonQuery();
@@ -335,7 +339,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
 
             Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
-
+            conn.Open();
             var command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
@@ -352,7 +356,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = citizen.Phone;
             command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
             command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = email;
-            conn.Open();
             try
             {
                 command.ExecuteNonQuery();
@@ -421,58 +424,66 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 command.Parameters.Add(new OracleParameter("vaccine", vaccine));
             if (time != -1)
                 command.Parameters.Add(new OracleParameter("time", time));
-            var reader = command.ExecuteReader();
-
-            Register reg = new Register();
-            reg.Sched = new Schedule();
-            reg.Sched.Org = new Organization();
-            reg.Sched.Vaccine = new Vaccine();
-
+            
             string html = "";
-            while (reader.Read())
+            try
             {
-                reg.Sched.Id = reader["SCHEDID"] as string;
-                reg.Sched.Org.Name = reader["NAME"] as string;
-                reg.Sched.Org.ProvinceName = reader["PROVINCENAME"] as string;
-                reg.Sched.Org.DistrictName = reader["DISTRICTNAME"] as string;
-                reg.Sched.Org.TownName = reader["TOWNNAME"] as string;
-                reg.Sched.Org.Street = reader["STREET"] as string;
-                reg.Sched.OnDate = reader["ONDATE"] as string;
-                reg.Sched.Vaccine.Id = reader["VACCINEID"] as string;
-                reg.Sched.Serial = reader["SERIAL"] as string;
-                reg.Time = reader.GetInt32(reader.GetOrdinal("TIME"));
-                reg.No = reader.GetInt32(reader.GetOrdinal("NO"));
-                reg.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
-                reg.DoseType = reader["DOSETYPE"] as string;
+                var reader = command.ExecuteReader();
 
-                string CancelButton = "";
+                Register reg = new Register();
+                reg.Sched = new Schedule();
+                reg.Sched.Org = new Organization();
+                reg.Sched.Vaccine = new Vaccine();
 
-                if (reg.Status < 2)
-                    CancelButton = "<div class='interactive-area'>"
-                        + "<button class='btn-medium-bordered btn-cancel-registration'>Hủy</button>"
-                        + "</div>";
+                while (reader.Read())
+                {
+                    reg.Sched.Id = reader["SCHEDID"] as string;
+                    reg.Sched.Org.Name = reader["NAME"] as string;
+                    reg.Sched.Org.ProvinceName = reader["PROVINCENAME"] as string;
+                    reg.Sched.Org.DistrictName = reader["DISTRICTNAME"] as string;
+                    reg.Sched.Org.TownName = reader["TOWNNAME"] as string;
+                    reg.Sched.Org.Street = reader["STREET"] as string;
+                    reg.Sched.OnDate = reader["ONDATE"] as string;
+                    reg.Sched.Vaccine.Id = reader["VACCINEID"] as string;
+                    reg.Sched.Serial = reader["SERIAL"] as string;
+                    reg.Time = reader.GetInt32(reader.GetOrdinal("TIME"));
+                    reg.No = reader.GetInt32(reader.GetOrdinal("NO"));
+                    reg.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
+                    reg.DoseType = reader["DOSETYPE"] as string;
 
-                html +=
-                "<div class='registration' id='" + reg.Sched.Id + "'>"
-                + "<p class='obj-org-name'>" + reg.Sched.Org.Name + "</p>"
-                + "<div class='holder-obj-attr'>"
-                    + "<div class='obj-attr'>"
-                        + "<p class='attr-address'>Đ/c: "
-                        + reg.Sched.Org.ProvinceName + ", "
-                        + reg.Sched.Org.DistrictName + ", "
-                        + reg.Sched.Org.TownName
-                        + "</p>"
-                        + "<p class='attr-date-time-no'>Lịch tiêm ngày: " + reg.Sched.OnDate
-                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Buổi " + reg.Time
-                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
-                        + "<p class='attr-vaccine-serial'>Vaccine: "
-                        + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
-                        + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                    string CancelButton = "";
+
+                    if (reg.Status < 2)
+                        CancelButton = "<div class='interactive-area'>"
+                            + "<button class='btn-medium-bordered btn-cancel-registration'>Hủy</button>"
+                            + "</div>";
+
+                    html +=
+                    "<div class='registration' id='" + reg.Sched.Id + "'>"
+                    + "<p class='obj-org-name'>" + reg.Sched.Org.Name + "</p>"
+                    + "<div class='holder-obj-attr'>"
+                        + "<div class='obj-attr'>"
+                            + "<p class='attr-address'>Đ/c: "
+                            + reg.Sched.Org.ProvinceName + ", "
+                            + reg.Sched.Org.DistrictName + ", "
+                            + reg.Sched.Org.TownName
+                            + "</p>"
+                            + "<p class='attr-date-time-no'>Lịch tiêm ngày: " + reg.Sched.OnDate
+                            + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Buổi " + reg.Time
+                            + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
+                            + "<p class='attr-vaccine-serial'>Vaccine: "
+                            + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
+                            + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                        + "</div>"
+                        + CancelButton
                     + "</div>"
-                    + CancelButton
-                + "</div>"
-            + "</div>";
+                + "</div>";
+                }
             }
+            catch (OracleException e)
+            {
+                message = e.Message;
+            };
 
             return Content(html, "text/html");
         }
@@ -480,13 +491,85 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult CancelRegistration(string SchedID)
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("REG_UPDATE_STATUS", conn);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
+            command.Parameters.Add("par_SchedID", OracleDbType.Varchar2).Value = SchedID;
+            command.Parameters.Add("par_Status", OracleDbType.Int16).Value = 3;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message = "CancelRegistration";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
         public IActionResult LoadOrg(string province, string district, string town)
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select ORG.ID as ID, Name, ProvinceName, DistrictName, TownName, Street, COUNT(SCHED.ID) as C"
+                            + " from "
+                            + " (select * from ORGANIZATION where 1 = 1 ";
+            if (province != null)
+                query += " and ProvinceName = :province";
+            if (district != null)
+                query += " and DistrictName = :district";
+            if (district != null)
+                query += " and TownName = :town";
+
+            var command = new OracleCommand(query, conn);
+            if (province != null)
+                command.Parameters.Add(new OracleParameter("province", province));
+            if (district != null)
+                command.Parameters.Add(new OracleParameter("district", district));
+            if (town != null)
+                command.Parameters.Add(new OracleParameter("town", town));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    html += "<div class='organization object' id='" + reader["ID"] as string + "'>"
+                        + "<div class='holder-org'>"
+                            + "<p class='obj-org-name'>" + reader["NAME"] + ": " + reader["C"] as string + " lịch</p>"
+                            + "<div class='obj-attr'>"
+                                + "<p class='attr-location'>K/v: " + reader["PROVINCENAME"] as string + " - " + reader["DISTRICTNAME"] as string + " - " + reader["TOWNNAME"] as string + "</p>"
+                                + "<p class='attr-address'>Đ/c: " + reader["STREET"] as string + "</p>"
+                            + "</div>"
+                        + "</div>"
+                        + "<div class='holder-btn-expand-org'>"
+                            + "<div class='btn-expand-org'> > </div> "
+                       + "</div>"
+                   + " </div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+            }
+
+            return Content(html, "text/html");
         }
 
         [HttpPost]
