@@ -4,7 +4,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Schedule
     {
-        private String id;
+        private string id;
         private Organization org;
         private string ondate;
         private Vaccine vaccine;

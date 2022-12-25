@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyViewComponent
+namespace Covid19_Vaccination_Infogate_MVC.ViewComponents
 {
     // Tên lớp ViewProductViewComponent thì không cần thuộc tính [ViewComponent]
     [ViewComponent]

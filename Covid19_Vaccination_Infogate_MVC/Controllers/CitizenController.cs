@@ -287,7 +287,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = citizen.LastName;
                     command.Parameters.Add("par_FirstName", OracleDbType.Varchar2).Value = citizen.FirstName;
                     command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = citizen.Birthday;
-                    command.Parameters.Add("par_Gender", OracleDbType.Int16).Value = Int16.Parse(citizen.Gender(-2));
+                    command.Parameters.Add("par_Gender", OracleDbType.Int16).Value = 1;
                     command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2).Value = citizen.HomeTown;
                     command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2).Value = citizen.ProvinceName;
                     command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2).Value = citizen.DistrictName;
@@ -295,6 +295,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     command.Parameters.Add("par_Street", OracleDbType.Varchar2).Value = citizen.Street;
                     command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = phone;
                     command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
+                    command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = citizen.Email;
                     conn.Open();
                     command.ExecuteNonQuery();
                     conn.Close();
@@ -313,9 +314,54 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
+        public IActionResult UpdateProfile(
+            string lastname, string firstname, int gender, string id, string birthday,
+            string hometown, string province, string district, string town, string street, string email)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
+
+            var command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
+            command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = id;
+            command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = lastname;
+            command.Parameters.Add("par_FirstName", OracleDbType.Varchar2).Value = firstname;
+            command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = birthday;
+            command.Parameters.Add("par_Gender", OracleDbType.Int16).Value = gender;
+            command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2).Value = hometown;
+            command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2).Value = province;
+            command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2).Value = district;
+            command.Parameters.Add("par_TownName", OracleDbType.Varchar2).Value = town;
+            command.Parameters.Add("par_Street", OracleDbType.Varchar2).Value = street;
+            command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = citizen.Phone;
+            command.Parameters.Add("par_OldPhone", OracleDbType.Varchar2).Value = citizen.Phone;
+            command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = email;
+            conn.Open();
+            command.ExecuteNonQuery();
+            conn.Close();
+
+            message += "UpdateAccount";
+
+            citizen.Id = id;
+            citizen.LastName = lastname;
+            citizen.FirstName = firstname;
+            citizen.Birthday = birthday;
+            citizen.Gender(gender);
+            citizen.HomeTown = hometown;
+            citizen.ProvinceName = province;
+            citizen.DistrictName = district;
+            citizen.TownName = town;
+            citizen.Street = street;
+            citizen.Email = email;
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
+
+            return Json(new { message = message });
         }
 
         [HttpPost]
@@ -329,18 +375,17 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.Open();
 
             string query = "select SchedID, Name, ProvinceName, DistrictName, TownName, Street, TO_CHAR(OnDate, 'YYYY-MM-DD') OnDate, Time, NO, VaccineID, Serial, Status, DoseType, Image from ("
-                            + "(select SchedID, Time, NO, Status, REG.DoseType, OrgID, OnDate, VaccineID, Serial, Image from("
-                                + "(select ID, SchedID, NO, Time, Status, DoseType, Image from REGISTER where CitizenID = :citizenid) REG"
-                                + "inner join"
-                                + "(select ID, OrgID, OnDate, VaccineID, Serial from SCHEDULE) SCHED"
-                                + "on"
-                                + "REG.SchedID = SCHED.ID)"
-                            + ") REG_SCHED"
-                            + "inner join"
-                            + "(select ID, Name, ProvinceName, DistrictName, TownName, Street from ORGANIZATION) ORG"
-                            + "on REG_SCHED.OrgID = ORG.ID"
-                        + ")"
-                        + "where 1 = 1";
+                            + " (select SchedID, Time, NO, Status, REG.DoseType, OrgID, OnDate, VaccineID, Serial, Image from("
+                                + " (select ID, SchedID, NO, Time, Status, DoseType, Image from REGISTER where CitizenID = :citizenid) REG"
+                                + " inner join"
+                                + " (select ID, OrgID, OnDate, VaccineID, Serial from SCHEDULE) SCHED"
+                                + " on REG.SchedID = SCHED.ID)"
+                            + " ) REG_SCHED"
+                            + " inner join"
+                            + " (select ID, Name, ProvinceName, DistrictName, TownName, Street from ORGANIZATION) ORG"
+                            + " on REG_SCHED.OrgID = ORG.ID"
+                        + " )"
+                        + " where 1 = 1";
 
             if (status != -1)
                 query += " and Status = :status";
@@ -361,6 +406,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             var reader = command.ExecuteReader();
 
             Register reg = new Register();
+            reg.Sched = new Schedule();
             while (reader.Read())
             {
                 reg.Sched.Id = reader["SCHEDID"] as string;

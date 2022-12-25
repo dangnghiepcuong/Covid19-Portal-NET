@@ -9,10 +9,10 @@ namespace Covid19_Vaccination_Infogate_MVC.Views.Shared
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    public partial class _HomeSlider : global::Microsoft.AspNetCore.Components.ComponentBase
+    public partial class _HomeSlider : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
-        protected override void BuildRenderTree(global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
+        protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
             __builder.AddMarkupContent(0, "<link rel=\"stylesheet\" href=\"css/HomepageSlider.css\">\r\n\r\n");
             __builder.AddMarkupContent(1, @"<div class=""slider"">
