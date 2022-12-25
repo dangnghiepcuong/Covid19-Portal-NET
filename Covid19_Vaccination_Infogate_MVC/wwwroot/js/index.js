@@ -78,22 +78,22 @@ $(document).ready(function () {
             url: '/Home/Login',
             type: 'POST',
             data: { username: username, password: password },
-            success: function (result) {    //button click to login
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message);
+            success: function (data) {    //button click to login
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data);
                     return;
                 }
-                if (result.message == 'NoAccount') {    //No Account Existed
+                if (data == 'NoAccount') {    //No Account Existed
                     $('#form-container-login').find('.msg1').text('Tài khoản không tồn tại!');
                     return;
                 }
-                if (result.message == 'NoProfile') {    //No Profile Existed
+                if (data == 'NoProfile') {    //No Profile Existed
                     $('#form-container-login').css('display', 'none');
                     $('#gradient-bg-faded').css('display', 'block');
                     $('.container-reg-profile').css('display', 'block');
                     return;
                 }
-                if (result.message == 'incorrect password') {   //Incorrect Password
+                if (data == 'incorrect password') {   //Incorrect Password
                     $('#form-container-login').find('.msg2').text('Sai mật khẩu!');
                     return;
                 }
@@ -124,13 +124,13 @@ $(document).ready(function () {
             url: '/Home/RegisterCheckExist',
             type: 'POST',
             data: { username: username },
-            success: function (result) {    //check if account existed
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message);
+            success: function (data) {    //check if account existed
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data);
                     return;
                 }
 
-                if (result.message == 'Account Existed!') {     //account existed
+                if (data == 'Account Existed!') {     //account existed
                     $('#form-reg-acc').find('.msg1').text('Số điện thoại đã được sử dụng!');
                 }
                 else {                                  //register account
@@ -150,9 +150,9 @@ $(document).ready(function () {
                         url: '/Home/RegisterAccount',
                         type: 'POST',
                         data: { username: username, password: password },
-                        success: function (result) {
-                            if (result.message.substring(0, 5) == 'ERROR') {
-                                alert(result.message);
+                        success: function (data) {
+                            if (data.substring(0, 5) == 'ERROR') {
+                                alert(data);
                                 return;
                             }
                         },
@@ -222,12 +222,12 @@ $(document).ready(function () {
                 gender: gender, id: id, birthday: birthday, hometown: hometown, province: province,
                 district: district, town: town, street: street, email: email
             },
-            success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message);
+            success: function (data) {
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data);
                     return;
                 }
-                if (result.message == 'Profile Created!') {
+                if (data == 'Profile Created!') {
                     $('#container-reg-profile').css('display', 'none');
                     $('.form-message').text('Đăng ký thông tin tài khoản thành công!');
                     $('#form-popup-confirm').css('display', 'block');
@@ -254,12 +254,12 @@ $(document).ready(function () {
             url: 'HandleForgotPassword.cs',
             type: 'POST',
             data: { username: username},
-            success: function (result) {    //button click to login
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    alert(result.message);
+            success: function (data) {    //button click to login
+                if (data.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                    alert(data);
                     return;
                 }
-                if (result.message == 'NoAccount') {    //No Account Existed
+                if (data == 'NoAccount') {    //No Account Existed
                     $('#container-forgot-password').find('.message').text('Tài khoản không tồn tại!');
                     return;
                 }
