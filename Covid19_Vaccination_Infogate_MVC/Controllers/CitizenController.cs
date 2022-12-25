@@ -521,7 +521,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult LoadOrg(string province, string district, string town)
         {
             string message = "";
-            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
             var conn = new OracleConnection();
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
@@ -535,6 +534,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 query += " and DistrictName = :district";
             if (district != null)
                 query += " and TownName = :town";
+            query += ") ORG"
+            + " inner join"
+            + " (select ID, OrgID from SCHEDULE where OnDate > SYSDATE) SCHED"
+            + " on ORG.ID = SCHED.OrgID"
+            + " group by ORG.ID, Name, ProvinceName, DistrictName, TownName, Street";
 
             var command = new OracleCommand(query, conn);
             if (province != null)
@@ -573,9 +577,70 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoadSchedule(string orogid, string startdate, string enddate, string vaccine )
+        public IActionResult LoadSchedule(string orgid, string startdate, string enddate, string vaccine )
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select * from SCHEDULE where OrgID = :id and OnDate >= SYSDATE";
+
+            if (startdate != null)
+                query += " and OnDate >= TO_DATE(:startdate, 'YYYY-MM-DD')";
+            if (enddate != null)
+                query += " and OnDate <= TO_DATE(:enddate, 'YYYY-MM-DD')";
+            if (vaccine != null)
+                query += " and VaccineID = :vaccine";
+            query += " order by OnDate";
+
+            var command = new OracleCommand(query, conn);
+            
+            command.Parameters.Add(new OracleParameter("id", orgid));
+            if (startdate != null)
+                command.Parameters.Add(new OracleParameter("startdate", startdate));
+            if (enddate != null)
+                command.Parameters.Add(new OracleParameter("enddate", enddate));
+            if (vaccine != null)
+                command.Parameters.Add(new OracleParameter("vaccine", vaccine));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    html +=
+                "<div class='schedule object' id='" + reader["ID"] as string + "'>"
+                        + "<div class='obj-attr'>"
+                            + "<p class='attr-date'>Lịch tiêm ngày: " + reader["ONDATE"] as string + "</p>"
+                            + "<p class='attr-vaccine'>Vaccine: " + reader["VACCINEID"] as string + "</p>"
+                            + "<p class='attr-serial'>Serial: " + reader["SERIAL"] as string + "</p>"
+                        + "</div>"
+                        + "<div class='obj-attr'>"
+                            + "<p class='attr-daytime'>Buổi sáng: " + reader["DAYREGISTERED"] as string + "/" + reader["LIMITDAY"] as string + "</p>"
+                            + "<p class='attr-noontime'>Buổi trưa: " + reader["NOONREGISTERED"] as string + "/" + reader["LIMITNOON"] as string + "</p>"
+                            + "<p class='attr-nighttime'>Buổi tối: " + reader["NIGHTREGISTERED"] as string + "/" + reader["LIMITNIGHT"] as string + "</p>"
+                        + "</div>"
+                        + "<div class='interactive-area'>"
+                            + "<select class='drop-down-time' name='' id=''>"
+                                + "<option value='0'>Sáng</option>"
+                                + "<option value='1'>Trưa</option>"
+                                + "<option value='2'>Tối</option>"
+                           + " </select>"
+                            + "<br>"
+                            + "<button class='btn-medium-filled btn-register-schedule'>Đăng ký</button>"
+                        + "</div>"
+                    + "</div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+
+            return Content(html, "text/html");
         }
 
         [HttpPost]

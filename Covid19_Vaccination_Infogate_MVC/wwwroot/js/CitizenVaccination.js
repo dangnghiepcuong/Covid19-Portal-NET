@@ -43,7 +43,7 @@ $(document).ready(function () {
                     alert(data)
                     return
                 }
-                $('#list-org').html(data.html)
+                $('#list-org').html(data)
             },
             error: function (error) {
             }
@@ -79,7 +79,7 @@ $(document).ready(function () {
                     alert(data)
                     return
                 }
-                $('#list-schedule').html(data.html)
+                $('#list-schedule').html(data)
                 // $('body').html(data)
             },
             error: function (error) {
@@ -93,6 +93,7 @@ $(document).ready(function () {
         $('#list-schedule').html('')
         org = $(this).parent()//.parent()
         if (org.css('margin-top') == '20px') {
+            $('#list-schedule').html('Danh sách lịch tiêm')
             $('#list-schedule').html('')
             org.css('margin', '3px 0px 3px 5px')
             org.css('width', '90%')
@@ -109,7 +110,7 @@ $(document).ready(function () {
 
         orgid = org.attr('id')
         orgname = org.find('.obj-org-name').text()
-        $('.list-name .schedule').html('Lịch tiêm ' + orgname)
+        $('.list-name .schedule').html('DS lịch tiêm ' + orgname)
         $('.list-name .schedule').attr('id', orgid)
         LoadSchedule(orgid)
     })
