@@ -42,7 +42,7 @@ $(document).ready(function () {
                     alert(data)
                     return
                 }
-                $('#list-org').html(data.html)
+                $('#list-org').html(data)
             },
             error: function (error) {
             }
