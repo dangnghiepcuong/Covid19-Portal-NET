@@ -64,7 +64,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Guadian { get; set; }
-        public byte[] Avatar { get; set; }
+        public byte[]? Avatar { get; set; }
 
 
 
