@@ -43,7 +43,7 @@ $(document).ready(function () {
                     alert(data)
                     return
                 }
-                $('#list-schedule').html(data.html)
+                $('#list-schedule').html(data)
             },
             error: function (error) {
             }
@@ -94,7 +94,7 @@ $(document).ready(function () {
                 if (data == '') {
                     PopupConfirm('Không có lượt đăng ký nào cho lịch tiêm này.')
                 }
-                $('#list-registration').html(data.html)
+                $('#list-registration').html(data)
             },
             error: function (error) {
             }
