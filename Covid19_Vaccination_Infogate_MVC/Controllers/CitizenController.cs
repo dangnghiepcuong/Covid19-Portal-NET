@@ -342,7 +342,83 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult LoadCertificate()
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select InjNO, DoseType, OnDate, VaccineID, Name from"
+                            + " (select * from INJECTION where CitizenID = :citizenid) INJ"
+                            + " join"
+                            + " ("
+                                + " select SCHED.ID  as ID, OnDate, VaccineID, Name  from"
+                                + " (select ID, OrgID, OnDate, VaccineID, Serial from SCHEDULE) SCHED"
+                                + " join"
+                                + " (select ID, Name from ORGANIZATION) ORG"
+                                + " on SCHED.OrgID = ORG.ID"
+                            + " ) SCHED_ORG"
+                            + " on INJ.SchedID = SCHED_ORG.ID";
+
+          
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("citizenid", citizenid));
+
+            string html = "";
+            try
+            {
+                int count = 0;
+                string dosetype = "";
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    count++;
+                    switch(reader["DOSETYPE"] as string)
+                    {
+                        case "basic":
+                            dosetype = "Cơ bản";
+                            break;
+                        case "booster":
+                            dosetype = "Tăng cường";
+                            break;
+                        case "repeat":
+                            dosetype = "Nhắc lại";
+                            break;
+                        default:
+                            dosetype = "";
+                            break;
+                    }
+                    DateTime date = (DateTime)reader["ONDATE"];
+
+                    html +="<div class='injection'>"
+                            + "<p>Mũi " + reader["INJNO"] + " (" + dosetype + ")</p>"
+                            + "<p>Vaccine: " + reader["VACCINEID"] + "</p>"
+                            + "<p>Đơn vị tiêm chủng: " + reader["NAME"] + "</p>"
+                            + "<p>Lịch tiêm ngày: " + date.ToString("yyyy/MM/dd") + "</p>"
+                        + "</div>";
+                }
+
+                switch (count)
+                {
+                    case 0:
+                        html = "<p class='status' id='0'>Chưa thực hiện tiêm chủng vaccine Covid-19</p>" + html;
+                        break;
+                    case 1:
+                        html = "<p class='status' id='1'>Chưa tiêm đủ liều cơ bản vaccine Covid-19</p>" + html;
+                        break;
+                    default:
+                        html = "<p class='status' id='" + count + "'>Đã tiêm đủ liều cơ bản vaccine Covid-19</p>" + html;
+                        break;
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+            }
+
+            return Content(html, "text/html");
         }
 
         [HttpPost]
@@ -382,7 +458,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             };
             conn.Close();
 
-            message += "UpdateAccount";
+            message += "UpdateProfile";
 
             citizen.Id = id;
             citizen.LastName = lastname;
