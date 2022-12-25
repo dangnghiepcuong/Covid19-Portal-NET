@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Globalization;
+using System.Data;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -226,6 +226,22 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
         }
 
+        public IActionResult Statistic()
+        {
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            if (account != null && account.Role == 2 && account.Status == 1)
+            {
+                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+                    LoadCitizenProfile();
+                return View();
+            }
+            else
+            {
+                Response.Redirect("/Home");
+                return Json(new { message = "Redirected to /Home" });
+            }
+        }
+
         [HttpPost]
         public IActionResult UpdateAccount(string phone, string password, string new_password)
         {
@@ -259,7 +275,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             {
                 conn.Open();
                 command = new OracleCommand("ACC_UPDATE_PASSWORD", conn);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("par_Username", OracleDbType.Varchar2).Value = phone;
                 command.Parameters.Add("par_OldPass", OracleDbType.Varchar2).Value = password;
                 command.Parameters.Add("par_NewPass", OracleDbType.Varchar2).Value = new_password;
@@ -288,7 +304,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
                     conn.Open();
                     command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
                     command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = citizen.Id;
                     command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = citizen.LastName;
@@ -341,7 +357,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             Citizen citizen = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile");
             conn.Open();
             var command = new OracleCommand("CITIZEN_UPDATE_RECORD", conn);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("par_OldID", OracleDbType.Varchar2).Value = citizen.Id;
             command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = id;
             command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = lastname;
@@ -498,7 +514,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.Open();
 
             var command = new OracleCommand("REG_UPDATE_STATUS", conn);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
             command.Parameters.Add("par_SchedID", OracleDbType.Varchar2).Value = SchedID;
             command.Parameters.Add("par_Status", OracleDbType.Int16).Value = 3;
@@ -648,14 +664,62 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult CheckRegistration()
         {
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
 
-            return Json(new { message = "" });
+            var command = new OracleCommand("REG_BEFORE_INSERT_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
+            command.Parameters.Add("par_BoosterAvai", OracleDbType.Int16).Direction = ParameterDirection.Output;
+            command.Parameters.Add("par_DoseType", OracleDbType.Varchar2, 50).Direction = ParameterDirection.Output;
+            try
+            {
+                command.ExecuteNonQuery();
+                message = command.Parameters["par_BoosterAvai"].Value as string;
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += "CheckRegistration";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
-        public IActionResult RegisterVaccination(string SchedID, string time, string dosetype)
+        public IActionResult RegisterVaccination(string SchedID, int time, string dosetype)
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("REG_INSERT_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
+            command.Parameters.Add("par_SchedID", OracleDbType.Varchar2).Value = SchedID;
+            command.Parameters.Add("par_Time", OracleDbType.Int16).Value = time;
+            command.Parameters.Add("par_DoseType", OracleDbType.Varchar2).Value = dosetype;
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message = "RegisterVaccination";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
