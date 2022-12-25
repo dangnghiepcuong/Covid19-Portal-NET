@@ -723,15 +723,85 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult MedicalList(string formdate2)
+        public IActionResult MedicalList(string formdate)
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            string citizenFullName = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").FullName();
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select * from FORM where CitizenID = :citizenid and (to_date(filleddate,'DD-MM-YYYY') > (to_date(CURRENT_DATE,'DD-MM-YYYY') - :formdate))";
+
+            var command = new OracleCommand(query, conn);
+
+            command.Parameters.Add(new OracleParameter("citizenid", citizenid));
+            command.Parameters.Add(new OracleParameter("citizenid", formdate));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Form form = new Form();
+                    DateTime date = (DateTime)reader["FILLEDDATE"];
+                    form.FilledDate = date.ToString("yyyy/MM/dd");
+                    form.Choice = reader["CHOICE"] as string;
+                    form.Id = reader.GetInt32(reader.GetOrdinal("ID"));
+
+                    if (form.Choice == "0000")
+                    {
+                        html += "<div class='form-medical'>"
+                                + "<p class='title'>Đối tượng: " + citizenFullName + " (ID: " + citizenid + ")</p>"
+                                + "<p class='date'>Ngày thực hiện khai báo: " + form.FilledDate + "</p>"
+                                + "<p class='detail-good'>Sức khỏe bình thường - Đạt điều kiện sức khỏe tiêm chủng</p>"
+                                + "</div>";
+                    }
+                    html += "<div class='form-medical'>"
+                        + "<p class='title'>Đối tượng: " + citizenFullName + " (ID: " + citizenid + ")</p>"
+                        + "<p class='date'>Ngày thực hiện khai báo: " + form.FilledDate + "</p>"
+                        + "<p class='detail-bad'>Sức khỏe không tốt/không đảm bảo</p>"
+                        + "</div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+
+            return Content(html, "text/html");
         }
 
         [HttpPost]
         public IActionResult MedicalForm(string filleddate, string choice)
         {
-            return Json(new { message = "" });
+            string message = "";
+            string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("FORM_INSERT_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
+            command.Parameters.Add("par_FilledDate", OracleDbType.Varchar2).Value = filleddate;
+            command.Parameters.Add("par_Choice", OracleDbType.Int16).Value = choice;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message = "Form Submited!";
+            return Content(message, "text/html");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

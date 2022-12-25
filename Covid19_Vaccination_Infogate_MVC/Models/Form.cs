@@ -21,6 +21,6 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public Citizen Citizen { get ; set ; }
         public string FilledDate { get ; set ; }
         public string Choice { get ; set ; }
-        public int ID { get ; set ; }
+        public int Id { get ; set ; }
     }
 }
