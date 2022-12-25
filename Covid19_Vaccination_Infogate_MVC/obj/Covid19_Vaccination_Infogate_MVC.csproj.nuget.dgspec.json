@@ -10,14 +10,11 @@
         "projectUniqueName": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
         "projectName": "Covid19_Vaccination_Infogate_MVC",
         "projectPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
-        "packagesPath": "C:\\Users\\operator\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\HoaDo\\.nuget\\packages\\",
         "outputPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\operator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HoaDo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -66,7 +63,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -78,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
