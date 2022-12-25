@@ -39,7 +39,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { province: province, district: district, town: town },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -75,7 +75,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -151,7 +151,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     PopupConfirm(result.message)    //if fired trigger, show error
                     return
                 }
@@ -194,8 +194,8 @@ $(document).ready(function () {
             data: { SchedID: SchedID, time: time, dosetype: dosetype },
             indexValue: { orgid: SchedID.substring(0, 5) },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
-                    switch (result.message.substring(7, 12)) {
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    switch (result.message.substring(5, 10)) {
                         case '20001':
                             PopupConfirm('Bạn phải hoàn thành mũi tiêm đã đăng ký trước đó<br>trước khi đăng ký mũi mới.')
                             break

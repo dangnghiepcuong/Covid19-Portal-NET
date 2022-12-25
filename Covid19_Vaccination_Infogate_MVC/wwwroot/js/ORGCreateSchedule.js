@@ -43,7 +43,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { orgid: orgid, date: date, vaccine: vaccine, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }

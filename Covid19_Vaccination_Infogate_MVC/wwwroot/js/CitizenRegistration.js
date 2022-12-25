@@ -43,7 +43,7 @@ $(document).ready(function () {
             type: 'POST',
             data: {status: status, vaccine: vaccine, time: time },
             success: function (result) {
-                if (result.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
@@ -79,7 +79,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result)
                     return
                 }

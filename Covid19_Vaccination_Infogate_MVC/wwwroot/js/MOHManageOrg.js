@@ -38,7 +38,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { province: province, district: district, town: town },
             success: function (result) {
-                if (result.message.substring(0, 5) == 'ERROR') {    //EXCEPTION
+                if (result.message.substring(0, 3) == 'ORA') {    //EXCEPTION
                     alert(result.message)
                     return
                 }
