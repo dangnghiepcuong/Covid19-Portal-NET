@@ -294,7 +294,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 };
                 conn.Close();
 
-                message = "ChangePassword";
+                message += "ChangePassword";
             }
 
             /*UPDATE USERNAME*/
@@ -341,7 +341,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 }
             }
 
-            return Json(new { message = message });
+            return Content(message, "text/htmlm");
         }
 
         [HttpPost]
