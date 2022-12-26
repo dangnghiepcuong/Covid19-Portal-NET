@@ -8,6 +8,8 @@ using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Reflection;
 using System.Web.Helpers;
+using System.Reflection.PortableExecutable;
+using System.Web.WebPages;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -307,9 +309,89 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoadScheduleRegistration(string SchedID, string SchedInfo)
+        public IActionResult LoadScheduleRegistration(string SchedID, string date, int time, int status)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select LastName, FirstName, Gender, BirthYear, ID, Phone, Time, NO, Status, Image from ("
+                        + " (select Time, NO, Status, Image, CitizenID from REGISTER where SchedID = :schedid and Status < 3) REG"
+                        + " inner join"
+                        + " (select LastName, FirstName, Gender, EXTRACT(year from Birthday) as BirthYear, ID, Phone from CITIZEN) CITIZEN"
+                        + " on REG.CitizenID = CITIZEN.ID"
+                        + " )"
+                        + " where 1=1"; ;
+
+            if (time != null)
+                query += " and Time =:time";
+            if (status != null)
+                query += " and Status =:statu";
+           
+            query += " order by Time, NO";
+
+            var command = new OracleCommand(query, conn);
+
+            command.Parameters.Add(new OracleParameter("id", SchedID));
+            if (time != null)
+                command.Parameters.Add(new OracleParameter("startdate", time));
+            if (status != null)
+                command.Parameters.Add(new OracleParameter("enddate", status));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Register reg = new Register();
+                    reg.Citizen.LastName = reader["LASTNAME"] as string;
+                    reg.Citizen.FirstName = reader["FIRSTNAME"] as string;
+                    reg.Citizen.Gender(reader.GetInt32(reader.GetOrdinal("GENDER")));
+                    reg.Citizen.Birthday = reader["BIRTHYEAR"] as string;
+                    reg.Citizen.Id = reader["ID"] as string;
+                    reg.Citizen.Phone = reader["PHONE"] as string;
+                    reg.Time = reader.GetInt32(reader.GetOrdinal("TIME"));
+                    reg.No = reader.GetInt32(reader.GetOrdinal("NO"));
+                    reg.Status = reader.GetInt32(reader.GetOrdinal("STATUS"));
+
+                    string interaction = "";
+                    if (reg.Status < 2)
+                    {
+                        interaction += "<select class='select-status' name=''>";
+                        if (reg.Status == 0)
+                            interaction += "<option value='1'>Điểm danh</option><option value='3'>Đã hủy</option>";
+                        else
+                            interaction += "<option value='2'>Đã tiêm</option><option value='3'>Đã hủy</option>";
+                        interaction += "</select><br><button class='btn-medium-filled btn-update-registration'>Cập nhật</button>";
+                    }
+
+                    html += "<div class='registration' id='" + SchedID + "'>"
+                            + "<p class='obj-name' id='" + reg.Citizen.Id + "'>" + reg.Citizen.FullName() + " - " + reg.Citizen.Gender() + " - " + reg.Citizen.Birthday + " (ID:" + reg.Citizen.Id + ")</p>"
+                            + "<div class='hoder-obj-attr'>"
+                                + "<div class='obj-attr'>"
+                                    + "<p class='attr-sdt'>SĐT: " + reg.Citizen.Phone + "</p>"
+                                    + "<div class='attr-detail'>"
+                                        + "<p>Buổi: " + reg.Time + "</p>"
+                                        + "<p>STT: " + reg.No + "</p>"
+                                        + "<p>Tình trạng: " + reg.Status + " </p>"
+                                    + "</div>"
+                                + "</div>"
+                                + "<div class='interactive-area'>"
+                                    + interaction
+                                + "</div>"
+                            + "</div>"
+                        + "</div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+
+            return Content(html, "text/html");
         }
 
 
