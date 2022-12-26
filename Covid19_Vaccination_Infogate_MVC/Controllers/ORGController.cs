@@ -147,7 +147,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Statistic()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Role == 2 && account.Status == 1)
+            if (account != null && account.Role == 1)
             {
                 if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
                     LoadORGProfile();

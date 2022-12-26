@@ -32,7 +32,7 @@ $(document).ready(function () {
             type: 'POST',
             data: { },
             success: function (data) {
-                $('#list-injection').html(data.html)
+                $('#list-injection').html(data)
                 cert = $('#list-injection').find('.status').attr('id')
                 switch (parseInt(cert)) {
                     case 0:

@@ -2,18 +2,13 @@
 {
     public class Vaccine
     {
-        private string id;
-        private string name;
-        private string technology;
-        private string country;
-
         //Constructor
         public Vaccine()
         {
-            id = "";
-            name = "";
-            technology = "";
-            country = "";
+            Id = "";
+            Name = "";
+            Technology = "";
+            Country = "";
         }
 
         //Getter, Setter
