@@ -4,7 +4,7 @@ $(document).ready(function () {
     menu_title = '<a href="/ORG/Schedule">Danh sách lịch tiêm</a>'
     $('#function-navigation-bar-title').html(menu_title)
 
-    homepage = '<a href="/Home">Trang chủ</a>'
+    homepage = '<a href="index">Trang chủ</a>'
     $('#homepage-path').html(homepage)
 
     subpage = '<a href="/ORG/Schedule">Lịch tiêm</a>'
@@ -18,28 +18,31 @@ $(document).ready(function () {
     var day = ('0' + today.getDate()).slice(-2)
     var month = ('0' + (today.getMonth() + 1)).slice(-2)
     var today = today.getFullYear() + '-' + (month) + '-' + (day)
-    // $('#start-date').val(today)
+    $('#start-date').val(today)
     // $('#end-date').val(today)
 
     // LOAD SCHEDULE DATA
     LoadSchedule($('.orgid').attr('id'))
 
-    $('#btn-filter-schedule').click(function () {
+    $('#filter-schedule').change(function () {
+        $('#list-registration').html('')
+        $('.list-name-registration').text('')
+        $('#filter-registration').css('display', 'none')
         LoadSchedule($('.orgid').attr('id'))
+
     })
 
     function LoadSchedule(orgid) {
         startdate = $('#start-date').val()
         enddate = $('#end-date').val()
-        vaccine = $('#vaccine').find('option:selected').val()
 
         $.ajax({
             cache: false,
             url: '/ORG/LoadSchedule',
             type: 'POST',
-            data: { orgid: orgid, startdate: startdate, enddate: enddate, vaccine: vaccine },
+            data: { orgid: orgid, startdate: startdate, enddate: enddate },
             success: function (data) {
-                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
                     alert(data)
                     return
                 }
@@ -81,25 +84,43 @@ $(document).ready(function () {
         schedule = $(this).parent().parent().parent()
         SchedID = schedule.attr('id')
         SchedInfo = schedule.find('.obj-attr').find('.attr-date-vaccine-serial').text()
+        $('.list-name-scheduleinfo').text(SchedInfo)
+        LoadScheduleRegistration(SchedID, SchedInfo.substring(11, 21))
+    })
+
+    $('#filter-registration').change(function () {
+        SchedID = $('.list-name-registration').attr('id')
+        LoadScheduleRegistration(SchedID)
+    })
+
+    function LoadScheduleRegistration(SchedID, date) {
+        time = $('#time').find('option:selected').val()
+        status = $('#status').find('option:selected').val()
+
         $.ajax({
             cache: false,
             url: '/ORG/LoadScheduleRegistration',
             type: 'POST',
-            data: { SchedID: SchedID, SchedInfo: SchedInfo },
+            data: { SchedID: SchedID, date: date, time: time, status: status },
+            indexValue: { SchedID: SchedID },
             success: function (data) {
-                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
                     alert(data)
                     return
                 }
                 if (data == '') {
                     PopupConfirm('Không có lượt đăng ký nào cho lịch tiêm này.')
                 }
+
                 $('#list-registration').html(data)
+                $('.list-name-registration').text('DANH SÁCH LƯỢT ĐĂNG KÝ')
+                $('.list-name-registration').attr('id', this.indexValue.SchedID)
+                $('#filter-registration').css('display', 'block')
             },
             error: function (error) {
             }
         })
-    })
+    }
 
     // HANDLE UPDATE REGISTRATION STATUS
     $('#list-registration').on('click', '.btn-update-registration', function () {
@@ -113,7 +134,7 @@ $(document).ready(function () {
             data: { citizenid: citizenid, SchedID: SchedID, status: status },
             indexValue: { reg: $(this).parent().parent().parent() },
             success: function (data) {
-                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
                     alert(data)
                     return
                 }
@@ -161,7 +182,7 @@ $(document).ready(function () {
 
         $('#list-registration').html(
             '<div class="panel-update-schedule" id="' + SchedID + '">'
-            + '<div class="title">CẬP NHẬT LỊCH TIÊM</div>'
+            + '<br>'
             + '<div class="schedule-id">Mã lịch tiêm: ' + SchedID + '</div>'
             + '<div class="attr-date-vaccine-serial">' + SchedInfo + '</div>'
             + '<div class="attr-time">' + SchedValue + '</div>'
@@ -181,7 +202,7 @@ $(document).ready(function () {
     // HANDLE UPDATE SCHEDULE VALUE
     $('#list-registration').on('click', '#btn-confirm-update-schedule', function () {
         SchedID = $(this).parent().parent().attr('id')
-        orgid = SchedID.substring(0, 5)
+        orgid = SchedID.substring(4, 9)
         limitday = $('#limit-day').val()
         limitnoon = $('#limit-noon').val()
         limitnight = $('#limit-night').val()
@@ -206,11 +227,12 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (data) {
-                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
                     alert(data)
                     return
                 }
                 if (data == 'UpdateSchedule') {
+                    $('.panel-update-schedule').html('')
                     PopupConfirm('Cập nhật lịch tiêm thành công!')
                     LoadSchedule(orgid)
                 }
@@ -233,7 +255,7 @@ $(document).ready(function () {
                 data: { SchedID: SchedID },
                 indexValue: { schedule: schedule },
                 success: function (data) {
-                    if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
                         alert(data)
                         return
                     }

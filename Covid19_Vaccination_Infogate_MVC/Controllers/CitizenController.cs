@@ -6,6 +6,11 @@ using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
+using System.Net.Mail;
+using System.Net;
+using System.Reflection.PortableExecutable;
+using System.Security.Cryptography;
+using System.Web.WebPages;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -286,10 +291,11 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 catch (OracleException e)
                 {
                     message = e.Message;
+                    return Content(message, "text/html");
                 };
                 conn.Close();
 
-                message = "ChangePassword";
+                message += "ChangePassword";
             }
 
             /*UPDATE USERNAME*/
@@ -326,6 +332,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     catch (OracleException e)
                     {
                         message = e.Message;
+                        return Content(message, "text/html");
                     };
                     conn.Close();
 
@@ -336,7 +343,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 }
             }
 
-            return Json(new { message = message });
+            return Content(message, "text/htmlm");
         }
 
         [HttpPost]
@@ -416,6 +423,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             }
 
             return Content(html, "text/html");
@@ -455,6 +463,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             };
             conn.Close();
 
@@ -474,7 +483,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
 
-            return Json(new { message = message });
+            return Content(message, "text/html");
         }
 
         [HttpPost]
@@ -565,7 +574,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                             + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp STT: " + reg.No + "</p>"
                             + "<p class='attr-vaccine-serial'>Vaccine: "
                             + reg.Sched.Vaccine.Id + " - " + reg.Sched.Serial
-                            + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Tình trạng: " + reg.Status + "</p>"
+                            + "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Trạng thái: " + reg.Status + "</p>"
                         + "</div>"
                         + CancelButton
                     + "</div>"
@@ -575,6 +584,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             };
 
             return Content(html, "text/html");
@@ -663,6 +673,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             }
 
             return Content(html, "text/html");
@@ -767,11 +778,53 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Content(message, "text/html");
         }
 
+        public string SendEmail(string SenderName, string ReceiverMail, string ReceiverName, string subject, string content)
+        {
+            string message = "";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var senderEmail = new MailAddress("20520418@gm.uit.edu.vn", SenderName);
+                    var receiverEmail = new MailAddress(ReceiverMail, ReceiverName);
+                    var password = "Cuong214789";
+                    var sub = subject;
+                    var body = content;
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = true,
+                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                    };
+                    using (var mess = new MailMessage(senderEmail, receiverEmail)
+                    {
+                        Subject = subject,
+                        Body = body
+                    })  
+                    {
+                        smtp.Send(mess);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return "ORA-*****: Error in sending verification email!";
+            }
+
+            return "";
+        }
+
         [HttpPost]
         public IActionResult RegisterVaccination(string SchedID, int time, string dosetype)
         {
             string message = "";
             string citizenid = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Id;
+            string citizenFullName = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").FullName();
+            string citizenMail = SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile").Email;
+
             var conn = new OracleConnection();
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
@@ -793,6 +846,53 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 return Content(message, "text/html");
             };
             conn.Close();
+
+
+            string query = "select * from ("
+                            + " (select * from ORGANIZATION where ID = :id) ORG"
+                            + " join (select OrgID, TO_CHAR(OnDate,'DD/MM/YYYY') as OnDate, VaccineID, Serial from SCHEDULE where ID = :schedid) SCHED"
+                            + " on ORG.ID = SCHED.OrgID)";
+            conn.Open();
+            command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("id", SchedID.Substring(0,5)));
+            command.Parameters.Add(new OracleParameter("id", SchedID));
+
+            Schedule Sched = new Schedule();
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Sched.Org.Id = reader["id"] as string;
+                    Sched.Org.Name = reader["name"] as string;
+                    Sched.Org.ProvinceName = reader["ProvinceName"] as string;
+                    Sched.Org.DistrictName = reader["DistrictName"] as string;
+                    Sched.Org.TownName = reader["TownName"] as string;
+                    Sched.Org.Street = reader["Street"] as string;
+                    Sched.OnDate = reader["OnDate"] as string;
+                    Sched.Vaccine.Id = reader["VaccineID"] as string;
+                    Sched.Serial = reader["Serial"] as string;
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+            conn.Close();
+
+            Register reg = new Register();
+            reg.Time = time;
+
+            string content = "Gửi " + citizenFullName + ",\n\n"
+                            + "Bạn đã thực hiện đăng ký tiêm chủng thành công!\n"
+                            + "Lịch tiêm của bạn diễn ra vào ngày: " + Sched.OnDate + " - lúc: " + reg.TimeClock() + "\n"
+                            + "Vaccine: " + Sched.Vaccine.Id + " - Serial: " + Sched.Serial + "\n\n"
+                            + "Tại địa điểm " + Sched.Org.Name + " (" 
+                            + Sched.Org.ProvinceName + "-" + Sched.Org.DistrictName + "-" + Sched.Org.TownName + "-" 
+                            + Sched.Org.Street + ")\n\n"
+                            + "Vui lòng đảm bảo các quy tắc phòng chống dịch khi đến nơi thực hiện tiêm chủng!";
+            message += SendEmail(Sched.Org.Name, citizenMail, citizenFullName, "THƯ XÁC NHẬN ĐÃ ĐĂNG KÝ TIÊM CHỦNG", content);
 
             message = "RegisterVaccination";
             return Content(message, "text/html");

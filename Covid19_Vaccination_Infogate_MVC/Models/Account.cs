@@ -2,11 +2,6 @@
 {
     public class Account
     {
-        private string username;
-        private string password;
-        private string role;
-        private string status;
-
         //Constructor
         public Account()
         {
