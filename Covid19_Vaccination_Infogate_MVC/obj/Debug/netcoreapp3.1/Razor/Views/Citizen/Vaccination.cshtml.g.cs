@@ -49,7 +49,9 @@ using Newtonsoft.Json;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"dddda3a3be563fc157f5f9270b4bc08e7ab0de2c", @"/Views/Citizen/Vaccination.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2d6cf68f1de3d4ed5694007f3e39407c7f9dba19", @"/Views/_ViewImports.cshtml")]
+    #nullable restore
     public class Views_Citizen_Vaccination : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
+    #nullable disable
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("value", "", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("value", "Astra", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -109,7 +111,7 @@ using Newtonsoft.Json;
                 <label for=""province-name"">Tỉnh/Thành phố</label>
                 <select type=""text"" name=""province-name"" id=""select-province"">
                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c6429", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c6475", async() => {
 #nullable restore
 #line 22 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                 Write(citizen.ProvinceName);
@@ -155,7 +157,7 @@ using Newtonsoft.Json;
 #line hidden
 #nullable disable
             WriteLiteral("                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c8823", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c8869", async() => {
 #nullable restore
 #line 40 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                               Write(province[i].Name);
@@ -206,7 +208,7 @@ using Newtonsoft.Json;
 #nullable disable
             WriteLiteral("\')\r\n                        </script>\r\n");
             WriteLiteral("                </select>\r\n                <label for=\"district-name\">Quận/Huyện/Thị xã</label>\r\n                <select type=\"text\" name=\"district-name\" id=\"select-district\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c11670", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c11716", async() => {
 #nullable restore
 #line 52 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                 Write(citizen.DistrictName);
@@ -242,7 +244,7 @@ using Newtonsoft.Json;
 #line hidden
 #nullable disable
             WriteLiteral("                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c13544", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c13590", async() => {
 #nullable restore
 #line 60 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                               Write(district[i].Name);
@@ -294,7 +296,7 @@ using Newtonsoft.Json;
 #nullable disable
             WriteLiteral("\')\r\n                        </script>\r\n");
             WriteLiteral("                </select>\r\n\r\n                <label for=\"town-name\">Xã/Phường/Thị trấn</label>\r\n                <select type=\"drop-down\" name=\"town-name\" id=\"select-town\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c16408", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c16454", async() => {
 #nullable restore
 #line 74 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                 Write(citizen.TownName);
@@ -330,7 +332,7 @@ using Newtonsoft.Json;
 #line hidden
 #nullable disable
             WriteLiteral("                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c18258", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c18304", async() => {
 #nullable restore
 #line 82 "D:\Lychthac\Covid19_Vaccination_Infogate_MVC\Views\Citizen\Vaccination.cshtml"
                                               Write(town[i].Name);
@@ -398,7 +400,7 @@ using Newtonsoft.Json;
                 <label for=""vaccine"">Vaccine</label>
                 <select type=""text"" name=""vaccine"" id=""vaccine"">
                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c21571", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c21617", async() => {
                 WriteLiteral("Tất cả");
             }
             );
@@ -414,7 +416,7 @@ using Newtonsoft.Json;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c22751", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c22797", async() => {
                 WriteLiteral("AstraZeneca");
             }
             );
@@ -430,7 +432,7 @@ using Newtonsoft.Json;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c23936", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c23982", async() => {
                 WriteLiteral("Corminaty (Pfizer)");
             }
             );
@@ -446,7 +448,7 @@ using Newtonsoft.Json;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c25128", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c25174", async() => {
                 WriteLiteral("Sputnik V");
             }
             );
@@ -462,7 +464,7 @@ using Newtonsoft.Json;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c26311", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c26357", async() => {
                 WriteLiteral("Verro Cell");
             }
             );
@@ -478,7 +480,7 @@ using Newtonsoft.Json;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c27495", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dddda3a3be563fc157f5f9270b4bc08e7ab0de2c27541", async() => {
                 WriteLiteral("Moderna");
             }
             );
@@ -521,16 +523,26 @@ using Newtonsoft.Json;
 <br>");
         }
         #pragma warning restore 1998
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IUrlHelper Url { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.IViewComponentHelper Component { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; } = default!;
+        #nullable disable
+        #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<dynamic> Html { get; private set; } = default!;
+        #nullable disable
     }
 }
 #pragma warning restore 1591
