@@ -155,7 +155,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult Statistic()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Role == 1)
+            if (account != null && account.Role < 2)
             {
                 if (SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile") == null)
                     LoadORGProfile();
@@ -199,6 +199,60 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             message = "CreateSchedule";
             return Content(message, "text/html");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAccount(string phone, string password, string new_password)
+        {
+            string message = "";
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select Password from ACCOUNT where Username = :username";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("username", account.Username));
+            var reader = command.ExecuteReader();
+
+            reader.Read();
+            account.Password = reader["Password"] as string;
+            conn.Close();
+
+            /*CHECK ENTERED PASSWORD*/
+            if (password != account.Password)
+            {
+                account.Password = null;
+                return Json(new { message = "Password is incorrect!" });
+            }
+            account.Password = null;
+
+            /*CHANGE PASSWORD*/
+            if (new_password == null || new_password == account.Password)
+                message += "!ChangePassword";
+            else
+            {
+                conn.Open();
+                command = new OracleCommand("ACC_UPDATE_PASSWORD", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("par_Username", OracleDbType.Varchar2).Value = phone;
+                command.Parameters.Add("par_OldPass", OracleDbType.Varchar2).Value = password;
+                command.Parameters.Add("par_NewPass", OracleDbType.Varchar2).Value = new_password;
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (OracleException e)
+                {
+                    message = e.Message;
+                    return Content(message, "text/html");
+                };
+                conn.Close();
+
+                message += "ChangePassword";
+            }
+
+            return Content(message, "text/htmlm");
         }
 
         [HttpPost]
