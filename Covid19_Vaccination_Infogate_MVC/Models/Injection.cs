@@ -3,18 +3,13 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Injection
     {
-        private Citizen citizen = new Citizen();
-        private int injno;
-        private Schedule sched;
-        private string dosetype;
-
         //Constructor
         public Injection()
         {
-            citizen = new Citizen();
-            injno = -1;
-            sched = new Schedule();
-            dosetype = "";
+            Citizen = new Citizen();
+            InjNO = -1;
+            Sched = new Schedule();
+            DoseType = "";
         }
 
         //Getter, setter
