@@ -5,20 +5,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
 {
     public class Citizen
     {
-        private string id;
-        private string lastname;
-        private string firstname;
-        private string birthday;
         private int gender;
-        private string hometown;
-        private string provincename;
-        private string districtname;
-        private string townname;
-        private string street;
-        private string phone;
-        private string? email;
-        private string? guadian;
-        private byte[]? avatar;
 
         //Constructor
         public Citizen()
@@ -62,8 +49,8 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public string TownName { get; set; }
         public string Street { get; set; }
         public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Guadian { get; set; }
+        public string? Email { get; set; }
+        public string? Guadian { get; set; }
         public byte[]? Avatar { get; set; }
 
 
