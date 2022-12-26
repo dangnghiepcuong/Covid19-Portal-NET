@@ -17,7 +17,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public New()
         {
             id = "";
-            org = new Organization();
+            Org = new Organization();
             tittle = "";
             content = "";
         }
