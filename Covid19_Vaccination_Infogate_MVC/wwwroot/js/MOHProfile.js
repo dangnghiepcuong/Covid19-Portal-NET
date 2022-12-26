@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
         // LOAD FRONT END DATA
-        menu_title = '<a href="/MOH/Profile">Thông tin Bộ Y tế</a>'
+        menu_title = '<a href="/ORG/Profile">Thông tin Bộ Y tế</a>'
         $('#function-navigation-bar-title').html(menu_title)
     
         homepage = '<a href="/Home">Trang chủ</a>'

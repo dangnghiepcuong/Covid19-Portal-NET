@@ -10,6 +10,9 @@ using System.Reflection;
 using System.Web.Helpers;
 using System.Reflection.PortableExecutable;
 using System.Web.WebPages;
+using System.IO;
+using System.Xml.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -398,25 +401,128 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult UpdateRegistrationStatus(string citizenid, string SchedID, string status)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+
+            conn.Open();
+            var command = new OracleCommand("REG_UPDATE_STATUS", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
+            command.Parameters.Add("par_SchedID", OracleDbType.Varchar2).Value = SchedID;
+            command.Parameters.Add("par_Status", OracleDbType.Varchar2).Value = status;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += status;
+
+            return Content(message, "text/html");
         }
 
         [HttpPost]
         public IActionResult SelectScheduleValue(string SchedID)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select LimitDay, LimitNoon, LimitNight from SCHEDULE where ID = :id";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("id", SchedID));
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    HttpContext.Session.SetInt32("limitday", reader.GetInt32(reader.GetOrdinal("LIMITDAY")));
+                    HttpContext.Session.SetInt32("limitnoon", reader.GetInt32(reader.GetOrdinal("LIMITNOON")));
+                    HttpContext.Session.SetInt32("limitnight", reader.GetInt32(reader.GetOrdinal("LIMITNIGHT")));
+                }
+            }
+            catch(OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+            conn.Close();
+
+            return Content(message, "text/html");
         }
 
         [HttpPost]
-        public IActionResult UpdateSchedule(string SchedID, string limitday, string limitnoon, string limitnight)
+        public IActionResult UpdateSchedule(string SchedID, int? limitday, int? limitnoon, int? limitnight)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            if (limitday == -1)
+                limitday = HttpContext.Session.GetInt32("limitday");
+            if (limitnoon == -1)
+                limitnoon = HttpContext.Session.GetInt32("limitnoon"); 
+            if (limitnight == -1)
+                limitnight = HttpContext.Session.GetInt32("limitnight");
+            HttpContext.Session.Remove("limitday");
+            HttpContext.Session.Remove("limitnoon");
+            HttpContext.Session.Remove("limitnight");
+
+            var command = new OracleCommand("SCHED_UPDATE_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = SchedID;
+            command.Parameters.Add("par_LimitDay", OracleDbType.Int16).Value = limitday;
+            command.Parameters.Add("par_LimitNoon", OracleDbType.Int16).Value = limitnoon;
+            command.Parameters.Add("par_LimitNight", OracleDbType.Int16).Value = limitnight;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += "UpdateSchedule";
+
+            return Content(message, "text/html");
         }
 
         [HttpPost]
         public IActionResult CancelSchedule(string SchedID)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("SCHED_CANCEL_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = SchedID;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += "CancelSchedule";
+
+            return Content(message, "text/html");
         }
 
         
@@ -455,13 +561,81 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult LoadOrg(string province, string district, string town)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select * from ORGANIZATION where 1=1 ";
+            if (province != null)
+                query += " and ProvinceName = :province";
+            if (district != null)
+                query += " and DistrictName = :district";
+            if (district != null)
+                query += " and TownName = :town";
+
+            var command = new OracleCommand(query, conn);
+            if (province != null)
+                command.Parameters.Add(new OracleParameter("province", province));
+            if (district != null)
+                command.Parameters.Add(new OracleParameter("district", district));
+            if (town != null)
+                command.Parameters.Add(new OracleParameter("town", town));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    html += "<div class='organization' id='" + reader["ID"] as string + "'>"
+                            + "<p class='obj-org-name'>" + reader["NAME"] as string + "</p>"
+                            + "<div class='holder-obj-attr'>"
+                                + "<div class='obj-attr'>"
+                                    + "<p class='id-org'>ID: " + reader["ID"] as string + "</p>"
+                                    + "<p class='attr-location'>K/v: " + reader["PROVINCENAME"] as string + " - " + reader["DISTRICTNAME"] as string + " - " + reader["TOWNNAME"] as string + "</p>"
+                                    + "<p class='attr-address'>Đ/c: " + reader["STREET"] as string + "</p>"
+                                + "</div>"
+                            + "</div>"
+                        + "</div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+            return Content(html, "text/html");
         }
 
         [HttpPost]
-        public IActionResult ProvideAccount(string quantity, string code, string province)
+        public IActionResult ProvideAccount(int quantity, string code, string province)
         {
-            return Json(new { message = "" });
+
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("ACC_CREATE_ORG", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_Quantity", OracleDbType.Int32).Value = quantity;
+            command.Parameters.Add("par_ProvinceCode", OracleDbType.Varchar2).Value = code;
+            command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2).Value = province;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += "ProvideAccount";
+
+            return Content(message, "text/html");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
