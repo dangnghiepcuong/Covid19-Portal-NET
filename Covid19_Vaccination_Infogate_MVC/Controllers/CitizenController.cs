@@ -909,7 +909,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
 
-            string query = "select * from FORM where CitizenID = :citizenid and (to_date(filleddate,'DD-MM-YYYY') > (to_date(CURRENT_DATE,'DD-MM-YYYY') - :formdate))";
+            string query = "select * from FORM where CitizenID = :citizenid and (to_date(filleddate,'DD-MM-YYYY') > (to_date(CURRENT_DATE,'DD-MM-YYYY') - :formdate)) order by FilledDate desc, ID desc";
 
             var command = new OracleCommand(query, conn);
 
@@ -936,11 +936,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                                 + "<p class='detail-good'>Sức khỏe bình thường - Đạt điều kiện sức khỏe tiêm chủng</p>"
                                 + "</div>";
                     }
-                    html += "<div class='form-medical'>"
+                    else
+                    {
+                        html += "<div class='form-medical'>"
                         + "<p class='title'>Đối tượng: " + citizenFullName + " (ID: " + citizenid + ")</p>"
                         + "<p class='date'>Ngày thực hiện khai báo: " + form.FilledDate + "</p>"
                         + "<p class='detail-bad'>Sức khỏe không tốt/không đảm bảo</p>"
                         + "</div>";
+                    }
                 }
             }
             catch (OracleException e)
@@ -965,7 +968,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
             command.Parameters.Add("par_FilledDate", OracleDbType.Varchar2).Value = filleddate;
-            command.Parameters.Add("par_Choice", OracleDbType.Int16).Value = choice;
+            command.Parameters.Add("par_Choice", OracleDbType.Varchar2).Value = choice;
             try
             {
                 command.ExecuteNonQuery();
