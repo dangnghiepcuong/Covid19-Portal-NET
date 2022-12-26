@@ -57,10 +57,6 @@
               "target": "Package",
               "version": "[13.0.2, )"
             },
-            "Oracle.ManagedDataAccess": {
-              "target": "Package",
-              "version": "[19.17.0, )"
-            },
             "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
               "version": "[3.21.80, )"
