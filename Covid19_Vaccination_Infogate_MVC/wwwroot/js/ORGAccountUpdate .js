@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $('#update-account-info').click(function () {
         $('.message').text("")
-        alert(2)
+        alert(1);
         phone = $('.account input[name="phone"]').val()
         if (phone == "") {
             $('.account').find('.msg1').text("Nhập số điện thoại!")
@@ -40,7 +40,7 @@ $(document).ready(function () {
         */
         $.ajax({
             cache: false,
-            url: '/Citizen/UpdateAccount',
+            url: '/ORG/UpdateAccount',
             type: "POST",
             /*
             The requests to back-end code must send a key-value to verify that this is a right call.
