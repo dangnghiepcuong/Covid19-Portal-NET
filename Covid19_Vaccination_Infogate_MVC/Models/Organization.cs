@@ -2,15 +2,22 @@
 {
     public class Organization
     {
+        private string id;
+        private string name;
+        private string provincename;
+        private string districtname;
+        private string townname;
+        private string street;
+
         //Constructor
         public Organization()
         {
-            Id = "";
-            Name = "";
-            ProvinceName = "";
-            DistrictName = "";
-            TownName = "";
-            Street = "";
+            id = "";
+            name = "";
+            provincename = "";
+            districtname = "";
+            townname = "";
+            street = "";
         }
 
         //Getter, Setter

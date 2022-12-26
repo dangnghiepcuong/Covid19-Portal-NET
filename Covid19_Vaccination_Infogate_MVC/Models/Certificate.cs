@@ -2,12 +2,17 @@
 {
     public class Certificate
     {
+        private Citizen citizen;
+        private int dose;
+        private int certtype;
+
+
         //Constructor
         public Certificate()
         {
-            Citizen = new Citizen();
-            Dose = -1;
-            CertType = -1;
+            this.citizen = new Citizen();
+            dose = -1;
+            certtype = -1;
         }
 
         //Getter, Setter
