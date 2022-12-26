@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
+using System.Net.Mail;
+using System.Net;
+using System;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -35,7 +38,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             {
                 string query = "select * from ACCOUNT where Username = :username";
                 var command = new OracleCommand(query, conn);
-                command.Parameters.Add(new OracleParameter("userName", username));
+                command.Parameters.Add(new OracleParameter("username", username));
                 var reader = command.ExecuteReader();
 
                 if (reader.HasRows == false)
@@ -114,6 +117,43 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Json(new { message = "" });
         }
 
+        public void SendEmail(string SenderName, string ReceiverMail, string ReceiverName, string subject, string content)
+        {
+            string message = "";
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var senderEmail = new MailAddress("20520418@gm.uit.edu.vn", SenderName);
+                    var receiverEmail = new MailAddress(ReceiverMail, ReceiverName);
+                    var password = "Cuong214789";
+                    var sub = subject;
+                    var body = content;
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = true,
+                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                    };
+                    using (var mess = new MailMessage(senderEmail, receiverEmail)
+                    {
+                        Subject = subject,
+                        Body = body
+                    })
+                    {
+                        smtp.Send(mess);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                /*return "ORA-*****: Error in sending verification email!";*/
+            }
+        }
+
         [HttpPost]
         public IActionResult RegisterAccount(string username, string password)
         {
@@ -124,6 +164,67 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         public IActionResult RegisterProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
         {
             return Json(new { message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(string email)
+        {
+            string message = "";
+            string new_password = "";
+
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select FirstName, Phone from CITIZEN where Email = :email";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("userName", email));
+            var reader = command.ExecuteReader();
+
+            if (reader.HasRows == false)
+            {
+                message = "NoAccount";
+                return Content(message, "text/html");
+            }
+
+            string username = "";
+            string ReceiverName = "";
+            // account existed,
+            while (reader.Read())
+            {
+                username = reader["Phone"] as string;
+                ReceiverName = reader["FirstName"] as string;
+            }
+
+            Random rnd = new Random();
+            for (int i = 0; i < 6; i++)
+            {
+                int num = rnd.Next(0, 9);
+                new_password += num.ToString();
+            }
+
+            query = "update ACCOUNT set Password = :password where Username = :username";
+            command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("password", new_password));
+            command.Parameters.Add(new OracleParameter("username", username));
+            try
+            {
+                command.ExecuteNonQuery();
+            } catch(OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+
+            }
+
+            string content = "Mật khẩu mới của tài khoản " + username + " là: " + new_password 
+                            + ".\nVui lòng bảo mật thông tin tài khoản cá nhân!\nXin cảm ơn.";
+
+            SendEmail("Dịch vụ cấp lại mật khẩu Cổng thông tin tiêm chủng vaccine Covid19", email, ReceiverName,
+                "CẤP LẠI MẬT KHẨU CHO TÀI KHOẢN TRÊN CỔNG THÔNG TIN TIÊM CHỦNG VACCINE COVID19", content);
+
+            message = "ResetPassword";
+            return Content(message, "text/html");
         }
 
         /*[HttpPost]*/

@@ -32,10 +32,34 @@ $(document).ready(function () {
         $(this).parent().find('.message').text("");
     })
 
-    $('#btn-forgot-password').click(function () {
+    $('#btn-forgot-password').click(function(){
         $('#form-container-login').css('display', 'none');
         $('#container-forgot-password').css('display', 'grid');
         $(this).parent().find('.message').text("");
+    })
+
+    $('#btn-reset-password').click(function(){
+        $('#container-forgot-password').find('.message').text('');
+
+        email = $('#container-forgot-password').find('input[name="email"]').val().toLowerCase();
+        if (email == '') {
+            $('#container-forgot-password').find('.msg1').text('Nhập email của tài khoản cần cấp lại mật khẩu!');
+            return;
+        }
+
+        $.ajax({
+            cache: false,
+            url: '/Home/ResetPassword',
+            type: 'POST',
+            data: { email: email },
+            sucess: function (data) {
+                alert(data)
+                if (data == 'ResetPassword')
+                    PopupConfirm('Hệ thống đã gửi mật khẩu mới đến email của bạn.<br>Vui lòng kiểm tra hộp thư!')
+            },
+            error: function (error) {
+            }
+        })
     })
 
     // LOAD LOCAL LIST DATA ON SELECT
@@ -239,7 +263,7 @@ $(document).ready(function () {
         })
     })
 
-    //HANDLE FORGOT PASSWORD
+    /*//HANDLE FORGOT PASSWORD
     $('#btn-forgot-password').click(function () {
         $('#container-forgot-password').find('.message').text("");
 
@@ -269,5 +293,15 @@ $(document).ready(function () {
                 $('body').html(error);
             }
         });
-    })
+    })*/
 })
+
+var PopupConfirm = function (message) {
+    $('.form-message').html(message)
+    $('#form-popup-confirm').css('display', 'grid')
+    $('#gradient-bg-faded').css('display', 'block')
+    $('#form-popup-confirm').find('.btn-confirm').click(function () {
+        $('#form-popup-confirm').css('display', 'none')
+        $('#gradient-bg-faded').css('display', 'none')
+    })
+}
