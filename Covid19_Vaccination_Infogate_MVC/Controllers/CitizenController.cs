@@ -936,11 +936,14 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                                 + "<p class='detail-good'>Sức khỏe bình thường - Đạt điều kiện sức khỏe tiêm chủng</p>"
                                 + "</div>";
                     }
-                    html += "<div class='form-medical'>"
+                    else
+                    {
+                        html += "<div class='form-medical'>"
                         + "<p class='title'>Đối tượng: " + citizenFullName + " (ID: " + citizenid + ")</p>"
                         + "<p class='date'>Ngày thực hiện khai báo: " + form.FilledDate + "</p>"
                         + "<p class='detail-bad'>Sức khỏe không tốt/không đảm bảo</p>"
                         + "</div>";
+                    }
                 }
             }
             catch (OracleException e)
