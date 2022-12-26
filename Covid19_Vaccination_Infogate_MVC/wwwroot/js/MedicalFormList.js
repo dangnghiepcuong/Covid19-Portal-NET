@@ -1,20 +1,20 @@
 $(document).ready(function () {
     // LOAD FRONT END DATA
-    menu_title = '<a href="/Citizen/MedicalFormList">Danh sách tờ khai</a>'
+    menu_title = '<a href="/Citizen/MedicalForm">Tờ khai y tế</a>'
     $('#function-navigation-bar-title').html(menu_title)
 
     homepage = '<a href="/Home">Trang chủ</a>'
     $('#homepage-path').html(homepage)
 
-    subpage = '<a href="/Citizen/MedicalFormSubmit">Khai báo</a>'
+    subpage = '<a href="/Citizen/MedicalForm">Khai báo</a>'
     $('#subpage-path').html(subpage)
 
-    selected_function = '<a href="/Citizen/MedicalFormList">Danh sách tờ khai</a>'
+    selected_function = '<a href="/Citizen/MedicalForm">Tờ khai y tế</a>'
     $('#selected-function-path').html(selected_function)
 
     $('#function-menu-title').text('Trang khai báo y tế')
 
-    menu = '<br><a href="/Citizen/MedicalFormSubmit"><li>Tờ khai y tế</li></a>'
+    menu = '<br><a href="/Citizen/MedicalForm"><li>Tờ khai y tế</li></a>'
     menu += '<br><a href="/Citizen/MedicalFormList"><li>Danh sách tờ khai</li></a>'
 
     $('#function-menu-list').find('ul').html(menu)
