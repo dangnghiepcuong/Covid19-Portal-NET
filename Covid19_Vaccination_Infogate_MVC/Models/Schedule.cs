@@ -7,7 +7,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         public Schedule()
         {
             Id = "";
-            ondate = "";
+            OnDate = "";
             Org = new Organization();
             Vaccine = new Vaccine();
             Serial = "";
