@@ -909,7 +909,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
 
-            string query = "select * from FORM where CitizenID = :citizenid and (to_date(filleddate,'DD-MM-YYYY') > (to_date(CURRENT_DATE,'DD-MM-YYYY') - :formdate))";
+            string query = "select * from FORM where CitizenID = :citizenid and (to_date(filleddate,'DD-MM-YYYY') > (to_date(CURRENT_DATE,'DD-MM-YYYY') - :formdate)) order by FilledDate desc, ID desc";
 
             var command = new OracleCommand(query, conn);
 
