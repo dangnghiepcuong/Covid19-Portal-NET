@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
+using System.Data;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -161,9 +162,36 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSchedule(string ordid, string date, string vaccine, string limitday, string limitnoon, string limitnight)
+        public IActionResult CreateSchedule(string orgid, string date, string vaccine, string serial, int limitday, int limitnoon, int limitnight)
         {
-            return Json(new { message = "" });
+            string message = "";
+            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("SCHED_INSERT_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_OrgID", OracleDbType.Varchar2).Value = orgid;
+            command.Parameters.Add("par_OnDate", OracleDbType.Varchar2).Value = date;
+            command.Parameters.Add("par_VaccineID", OracleDbType.Varchar2).Value = vaccine;
+            command.Parameters.Add("par_Serial", OracleDbType.Varchar2).Value = serial;
+            command.Parameters.Add("par_LimitDay", OracleDbType.Int16).Value = limitday;
+            command.Parameters.Add("par_LimitNoon", OracleDbType.Int16).Value = limitnoon;
+            command.Parameters.Add("par_LimitNight", OracleDbType.Int16).Value = limitnight;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message = "CreateSchedule";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
