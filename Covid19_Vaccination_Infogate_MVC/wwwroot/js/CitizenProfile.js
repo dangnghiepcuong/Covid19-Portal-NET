@@ -86,8 +86,7 @@ $(document).ready(function () {
                     return
                 }
                 switch (result.message) {
-                    case 'UpdateCitizenProfile':
-                    case 'UpdateOrgProfile':
+                    case 'UpdateProfile':
                         $('.form-message').text('Cập nhật thông tin thành công!')
                         break
                     case '':
