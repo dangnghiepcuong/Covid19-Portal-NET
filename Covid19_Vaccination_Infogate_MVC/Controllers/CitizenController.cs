@@ -231,21 +231,21 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
         }
 
-        public IActionResult Statistic()
-        {
-            Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
-            if (account != null && account.Role == 2 && account.Status == 1)
-            {
-                if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
-                    LoadCitizenProfile();
-                return View();
-            }
-            else
-            {
-                Response.Redirect("/Home");
-                return Json(new { message = "Redirected to /Home" });
-            }
-        }
+        //public IActionResult Statistic()
+        //{
+        //    Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
+        //    if (account != null && account.Role == 2 && account.Status == 1)
+        //    {
+        //        if (SessionHelper.GetObjectFromJson<Citizen>(HttpContext.Session, "CitizenProfile") == null)
+        //            LoadCitizenProfile();
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        Response.Redirect("/Home");
+        //        return Json(new { message = "Redirected to /Home" });
+        //    }
+        //}
 
         [HttpPost]
         public IActionResult UpdateAccount(string phone, string password, string new_password)

@@ -152,7 +152,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
         }
 
-        public IActionResult Statistic()
+       /* public IActionResult Statistic()
         {
             Account account = SessionHelper.GetObjectFromJson<Account>(HttpContext.Session, "AccountInfo");
             if (account != null && account.Role < 2)
@@ -166,7 +166,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 Response.Redirect("/Home");
                 return Json(new { message = "Redirected to /Home" });
             }
-        }
+        }*/
 
         [HttpPost]
         public IActionResult CreateSchedule(string orgid, string date, string vaccine, string serial, int limitday, int limitnoon, int limitnight)
