@@ -779,7 +779,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return Content(message, "text/html");
         }
 
-        public string SendEmail(string SenderName, string ReceiverMail, string ReceiverName, string subject, string content)
+        public void SendEmail(string SenderName, string ReceiverMail, string ReceiverName, string subject, string content)
         {
             string message = "";
             try
@@ -812,10 +812,8 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
             catch (Exception)
             {
-                return "ORA-*****: Error in sending verification email!";
+                /*return "ORA-*****: Error in sending verification email!";*/
             }
-
-            return "";
         }
 
         [HttpPost]
@@ -856,7 +854,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.Open();
             command = new OracleCommand(query, conn);
             command.Parameters.Add(new OracleParameter("id", SchedID.Substring(0,5)));
-            command.Parameters.Add(new OracleParameter("id", SchedID));
+            command.Parameters.Add(new OracleParameter("schedid", SchedID));
 
             Schedule Sched = new Schedule();
             try
@@ -886,14 +884,12 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             reg.Time = time;
 
             string content = "Gửi " + citizenFullName + ",\n\n"
-                            + "Bạn đã thực hiện đăng ký tiêm chủng thành công!\n"
-                            + "Lịch tiêm của bạn diễn ra vào ngày: " + Sched.OnDate + " - lúc: " + reg.TimeClock() + "\n"
-                            + "Vaccine: " + Sched.Vaccine.Id + " - Serial: " + Sched.Serial + "\n\n"
+                            + "Bạn đã thực hiện đăng ký tiêm chủng thành công!\nLịch tiêm của bạn diễn ra vào ngày: " + Sched.OnDate + " - lúc: " + reg.TimeClock() + "\nVaccine: " + Sched.Vaccine.Id + " - Serial: " + Sched.Serial + "\n\n"
                             + "Tại địa điểm " + Sched.Org.Name + " (" 
-                            + Sched.Org.ProvinceName + "-" + Sched.Org.DistrictName + "-" + Sched.Org.TownName + "-" 
+                            + Sched.Org.ProvinceName + ", " + Sched.Org.DistrictName + ", " + Sched.Org.TownName + ", " 
                             + Sched.Org.Street + ")\n\n"
                             + "Vui lòng đảm bảo các quy tắc phòng chống dịch khi đến nơi thực hiện tiêm chủng!";
-            message += SendEmail(Sched.Org.Name, citizenMail, citizenFullName, "THƯ XÁC NHẬN ĐÃ ĐĂNG KÝ TIÊM CHỦNG", content);
+            SendEmail(Sched.Org.Name, citizenMail, citizenFullName, "THƯ XÁC NHẬN ĐÃ ĐĂNG KÝ TIÊM CHỦNG", content);
 
             message = "RegisterVaccination";
             return Content(message, "text/html");
