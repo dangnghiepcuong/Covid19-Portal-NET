@@ -227,9 +227,15 @@ $(document).ready(function () {
             type: 'POST',
             data: { SchedID: SchedID, limitday: limitday, limitnoon: limitnoon, limitnight: limitnight },
             success: function (data) {
-                if (data.substring(4, 9) == 'ORA') {    //EXCEPTION
-                    alert(data)
-                    return
+                if (data.substring(0, 3) == 'ORA') {    //EXCEPTION
+                    switch (data.substring(4, 9)) {
+                        case '20020':
+                            PopupConfirm('Không thể cập nhật giới hạn đăng ký xuống thấp hơn số lượng đã đăng ký!')
+                            return
+                        default:
+                            PopupConfirm('Lỗi!')
+                            return
+                    }
                 }
                 if (data == 'UpdateSchedule') {
                     $('.panel-update-schedule').html('')
