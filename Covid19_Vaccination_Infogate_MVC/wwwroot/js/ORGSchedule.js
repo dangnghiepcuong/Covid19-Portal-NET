@@ -38,7 +38,7 @@ $(document).ready(function () {
 
         $.ajax({
             cache: false,
-            url: '/ORG/LoadOrgSchedule',
+            url: '/ORG/LoadSchedule',
             type: 'POST',
             data: { orgid: orgid, startdate: startdate, enddate: enddate },
             success: function (data) {
@@ -173,7 +173,7 @@ $(document).ready(function () {
             cache: false,
             url: '/ORG/SelectScheduleValue',
             type: 'POST',
-            data: { schedID: SchedID },
+            data: { SchedID: SchedID },
             success: function (data) {
             },
             error: function (error) {
@@ -232,6 +232,7 @@ $(document).ready(function () {
                     return
                 }
                 if (data == 'UpdateSchedule') {
+                    $('.panel-update-schedule').html('')
                     PopupConfirm('Cập nhật lịch tiêm thành công!')
                     LoadSchedule(orgid)
                 }

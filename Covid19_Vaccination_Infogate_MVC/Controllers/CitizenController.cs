@@ -291,6 +291,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                 catch (OracleException e)
                 {
                     message = e.Message;
+                    return Content(message, "text/html");
                 };
                 conn.Close();
 
@@ -331,6 +332,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
                     catch (OracleException e)
                     {
                         message = e.Message;
+                        return Content(message, "text/html");
                     };
                     conn.Close();
 
@@ -421,6 +423,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             }
 
             return Content(html, "text/html");
@@ -460,6 +463,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             };
             conn.Close();
 
@@ -580,6 +584,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             };
 
             return Content(html, "text/html");
@@ -668,6 +673,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             catch (OracleException e)
             {
                 message = e.Message;
+                return Content(message, "text/html");
             }
 
             return Content(html, "text/html");
