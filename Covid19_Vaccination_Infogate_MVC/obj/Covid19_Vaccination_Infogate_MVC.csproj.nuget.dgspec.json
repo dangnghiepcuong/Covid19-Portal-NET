@@ -10,11 +10,15 @@
         "projectUniqueName": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
         "projectName": "Covid19_Vaccination_Infogate_MVC",
         "projectPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
-        "packagesPath": "C:\\Users\\HoaDo\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
         "outputPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\HoaDo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,6 +57,10 @@
               "target": "Package",
               "version": "[13.0.2, )"
             },
+            "Oracle.ManagedDataAccess": {
+              "target": "Package",
+              "version": "[19.17.0, )"
+            },
             "Oracle.ManagedDataAccess.Core": {
               "target": "Package",
               "version": "[3.21.80, )"
@@ -68,6 +77,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.29, 3.1.29]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

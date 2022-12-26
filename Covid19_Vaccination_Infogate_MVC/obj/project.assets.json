@@ -358,6 +358,15 @@
           }
         }
       },
+      "Oracle.ManagedDataAccess/19.17.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Oracle.ManagedDataAccess.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Oracle.ManagedDataAccess.dll": {}
+        }
+      },
       "Oracle.ManagedDataAccess.Core/3.21.80": {
         "type": "package",
         "dependencies": {
@@ -1131,6 +1140,31 @@
         "packageIcon.png"
       ]
     },
+    "Oracle.ManagedDataAccess/19.17.0": {
+      "sha512": "1n/oYl9OAp+XFWp4Bh2B0r2AHeCRlASXpkUwWZvVSIEhgeWbKjIt4VZZO5Cq0Cy2s7e4ky6YbVUq3X7G14byhQ==",
+      "type": "package",
+      "path": "oracle.manageddataaccess/19.17.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "PerfCounters/register_odpm_perfmon_counters.ps1",
+        "PerfCounters/unregister_odpm_perfmon_counters.ps1",
+        "bin/x64/Oracle.ManagedDataAccessIOP.dll",
+        "bin/x86/Oracle.ManagedDataAccessIOP.dll",
+        "content/net40/App.config.install.xdt",
+        "content/net40/App.config.transform",
+        "content/net40/App.config.uninstall.xdt",
+        "content/net40/Web.config.install.xdt",
+        "content/net40/Web.config.transform",
+        "content/net40/Web.config.uninstall.xdt",
+        "info.txt",
+        "lib/net40/Oracle.ManagedDataAccess.dll",
+        "oracle.manageddataaccess.19.17.0.nupkg.sha512",
+        "oracle.manageddataaccess.nuspec",
+        "readme.txt"
+      ]
+    },
     "Oracle.ManagedDataAccess.Core/3.21.80": {
       "sha512": "NBy3qenkUo3PJBmKc6/SOyNCWPCJijtRqWZ4gImdfeS5hhXs60L1dAeDLiF6N15IfQT2ExRe/0W3+xbxJ6VQ/Q==",
       "type": "package",
@@ -1759,11 +1793,13 @@
       "Microsoft.AspNet.Mvc >= 5.2.9",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 3.1.31",
       "Newtonsoft.Json >= 13.0.2",
+      "Oracle.ManagedDataAccess >= 19.17.0",
       "Oracle.ManagedDataAccess.Core >= 3.21.80"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HoaDo\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -1771,11 +1807,15 @@
       "projectUniqueName": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
       "projectName": "Covid19_Vaccination_Infogate_MVC",
       "projectPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\Covid19_Vaccination_Infogate_MVC.csproj",
-      "packagesPath": "C:\\Users\\HoaDo\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
       "outputPath": "D:\\Lychthac\\Covid19_Vaccination_Infogate_MVC\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\HoaDo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1783,6 +1823,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1813,6 +1854,10 @@
             "target": "Package",
             "version": "[13.0.2, )"
           },
+          "Oracle.ManagedDataAccess": {
+            "target": "Package",
+            "version": "[19.17.0, )"
+          },
           "Oracle.ManagedDataAccess.Core": {
             "target": "Package",
             "version": "[3.21.80, )"
@@ -1829,6 +1874,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.29, 3.1.29]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1878,6 +1929,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Oracle.ManagedDataAccess 19.17.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Oracle.ManagedDataAccess",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
       ]

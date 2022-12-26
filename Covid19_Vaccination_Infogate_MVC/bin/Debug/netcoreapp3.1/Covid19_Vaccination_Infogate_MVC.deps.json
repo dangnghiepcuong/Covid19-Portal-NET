@@ -34,6 +34,7 @@
           "Microsoft.AspNet.Mvc": "5.2.9",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "3.1.31",
           "Newtonsoft.Json": "13.0.2",
+          "Oracle.ManagedDataAccess": "19.17.0",
           "Oracle.ManagedDataAccess.Core": "3.21.80",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -628,21 +629,23 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "Oracle.ManagedDataAccess/19.17.0": {
+        "runtime": {
+          "lib/net40/Oracle.ManagedDataAccess.dll": {
+            "assemblyVersion": "4.122.19.1",
+            "fileVersion": "4.122.19.1"
+          }
+        },
+        "compile": {
+          "lib/net40/Oracle.ManagedDataAccess.dll": {}
+        }
+      },
       "Oracle.ManagedDataAccess.Core/3.21.80": {
         "dependencies": {
           "System.Diagnostics.PerformanceCounter": "6.0.0",
           "System.DirectoryServices": "5.0.0",
           "System.DirectoryServices.Protocols": "5.0.1",
           "System.Text.Json": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.1/Oracle.ManagedDataAccess.dll": {
-            "assemblyVersion": "3.1.21.1",
-            "fileVersion": "3.1.21.1"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.1/Oracle.ManagedDataAccess.dll": {}
         }
       },
       "System.Collections.Immutable/1.5.0": {},
@@ -2715,6 +2718,13 @@
       "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
       "path": "newtonsoft.json/13.0.2",
       "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
+    "Oracle.ManagedDataAccess/19.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1n/oYl9OAp+XFWp4Bh2B0r2AHeCRlASXpkUwWZvVSIEhgeWbKjIt4VZZO5Cq0Cy2s7e4ky6YbVUq3X7G14byhQ==",
+      "path": "oracle.manageddataaccess/19.17.0",
+      "hashPath": "oracle.manageddataaccess.19.17.0.nupkg.sha512"
     },
     "Oracle.ManagedDataAccess.Core/3.21.80": {
       "type": "package",
