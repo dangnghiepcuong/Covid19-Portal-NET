@@ -965,7 +965,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("par_CitizenID", OracleDbType.Varchar2).Value = citizenid;
             command.Parameters.Add("par_FilledDate", OracleDbType.Varchar2).Value = filleddate;
-            command.Parameters.Add("par_Choice", OracleDbType.Int16).Value = choice;
+            command.Parameters.Add("par_Choice", OracleDbType.Varchar2).Value = choice;
             try
             {
                 command.ExecuteNonQuery();
