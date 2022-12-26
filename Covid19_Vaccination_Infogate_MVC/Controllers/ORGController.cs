@@ -560,7 +560,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
             conn.Open();
 
-            var command = new OracleCommand("SCHED_CANCEL_RECORD", conn);
+            var command = new OracleCommand("SCHED_CANCEL_SCHED", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = SchedID;
             try
