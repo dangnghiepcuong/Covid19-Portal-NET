@@ -14,6 +14,7 @@ using System.Web.WebPages;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
+    
     public class CitizenController : Controller
     {
         private readonly ILogger<CitizenController> _logger;
