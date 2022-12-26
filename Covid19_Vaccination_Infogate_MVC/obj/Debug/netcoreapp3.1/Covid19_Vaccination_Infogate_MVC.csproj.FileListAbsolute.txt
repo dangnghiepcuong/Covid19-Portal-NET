@@ -415,6 +415,6 @@ D:\Lychthac\Covid19_Vaccination_Infogate_MVC\bin\Debug\netcoreapp3.1\Newtonsoft.
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\ManageOrg.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\ProvideOrgAcc.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\ViewHeaderMOH\Default.cshtml.g.cs
-D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Citizen\Remove_Statistic1.cshtml.g.cs
 D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Home\Statistic.cshtml.g.cs
-D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Remove_Statistic2.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\Citizen\Remove_Statistic.cshtml.g.cs
+D:\Lychthac\Covid19_Vaccination_Infogate_MVC\obj\Debug\netcoreapp3.1\Razor\Views\ORG\Remove_Statistic.cshtml.g.cs
