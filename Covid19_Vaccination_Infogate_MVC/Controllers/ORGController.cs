@@ -6,6 +6,8 @@ using System;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using System.Reflection;
+using System.Web.Helpers;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -197,13 +199,111 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         [HttpPost]
         public IActionResult UpdateOrgProfile(string name, string district, string town, string street)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+
+            Organization org = SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile");
+            conn.Open();
+            var command = new OracleCommand("ORG_UPDATE_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = org.Id;
+            command.Parameters.Add("par_Name", OracleDbType.Varchar2).Value = name;
+            command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2).Value = district;
+            command.Parameters.Add("par_TownName", OracleDbType.Varchar2).Value = town;
+            command.Parameters.Add("par_Street", OracleDbType.Varchar2).Value = street;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+            };
+            conn.Close();
+
+            message += "UpdateProfile";
+
+            org.Name = name;
+            org.DistrictName = district;
+            org.TownName = town;
+            org.Street = street;
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "ORGProfile", org);
+
+            return Content(message, "text/html");
         }
 
         [HttpPost]
-        public IActionResult LoadSchedule(string orgid, string startdate, string enddate, string vaccine)
+        public IActionResult LoadSchedule(string startdate, string enddate, string vaccine)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+            string orgid = SessionHelper.GetObjectFromJson<Organization>(HttpContext.Session, "ORGProfile").Id;
+
+            string query = "select * from SCHEDULE where OrgID = :id";
+
+            if (startdate != null)
+                query += " and OnDate >= TO_DATE(:startdate, 'YYYY-MM-DD')";
+            if (enddate != null)
+                query += " and OnDate <= TO_DATE(:enddate, 'YYYY-MM-DD')";
+            if (vaccine != null)
+                query += " and VaccineID = :vaccine";
+            query += " order by OnDate";
+
+            var command = new OracleCommand(query, conn);
+
+            command.Parameters.Add(new OracleParameter("id", orgid));
+            if (startdate != null)
+                command.Parameters.Add(new OracleParameter("startdate", startdate));
+            if (enddate != null)
+                command.Parameters.Add(new OracleParameter("enddate", enddate));
+            if (vaccine != null)
+                command.Parameters.Add(new OracleParameter("vaccine", vaccine));
+
+            string html = "";
+            try
+            {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    DateTime date = (DateTime)reader["ONDATE"];
+                    string CancelButton = "";
+                    if (date > DateTime.Now)
+                        CancelButton = "<button class='btn-short-bordered btn-cancel'>Hủy</button>";
+
+                    html += "<div class='schedule object' id='" + reader["ID"] + "'>"
+                            + "<div class='holder-schedule'>"
+                            + "<div class='obj-attr'>"
+                                + "<p class='attr-date-vaccine-serial'>Ngày tiêm: " + date.ToString("yyyy/MM/dd") + " - Vaccine:"
+                                + reader["VACCINEID"] + " - " + reader["SERIAL"] + "</p>"
+                                + "<div class='attr-time'>"
+                                    + "<p>Buổi sáng: " + reader["DAYREGISTERED"] + "/</p><p class='day' id='" + reader["LIMITDAY"] + "'>" + reader["LIMITDAY"] + "</p>"
+                                    + "<p>&nbsp- Buổi trưa: " + reader["NOONREGISTERED"] + "/</p><p class='noon' id='" + reader["LIMITNOON"] + "'>" + reader["LIMITNOON"] + "</p>"
+                                    + "<p>&nbsp- Buổi tối: " + reader["NIGHTREGISTERED"] + "/</p><p class='night' id='" + reader["LIMITNIGHT"] + "'>" + reader["LIMITNIGHT"] + "</p>"
+                                    + "</div>"
+                                + "</div>"
+                                + "<div class='interactive-area'>"
+                                    + "<button class='btn-medium-filled btn-registration'>Lượt đăng ký</button>"
+                                    + "<button class='btn-medium-bordered btn-update'>Cập nhật</button>"
+                                    + CancelButton
+                                + "</div>"
+                            + "</div>"
+                            + "<div class='holder-btn-expand-schedule'>"
+                                + "<div class='btn-expand-schedule'> > </div>"
+                            + "</div>"
+                        + "</div>";
+                }
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            }
+
+            return Content(html, "text/html");
         }
 
         [HttpPost]

@@ -479,7 +479,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "CitizenProfile", citizen);
 
-            return Json(new { message = message });
+            return Content(message, "text/html");
         }
 
         [HttpPost]
