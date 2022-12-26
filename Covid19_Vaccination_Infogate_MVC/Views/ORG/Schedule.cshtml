@@ -14,7 +14,7 @@
 <div class="holder-function-panel">
     <div class="function-panel">
         <br>
-        <div class="list-name orgid" id="@org.Id">@org.Name</div>'
+        <div class="list-name orgid" id="@org.Id">@org.Name</div>
 
         <div class="holder-list">
             <div class="list-name" id="list-name-schedule">DANH SÁCH LỊCH TIÊM</div>
@@ -24,7 +24,7 @@
         <div class="holder-filter-panel">
             <div class="filter-panel l" id="filter-schedule">
                 <label for="start-date">Từ ngày</label>
-                <input type="date" name="start-date" id="start-date">
+                <input type="date" name="start-date" id="start-date" value="@DateTime.Now.ToString("yyyy-MM-dd")">
 
                 <label for="end-date">Đến ngày</label>
                 <input type="date" name="end-date" id="end-date">
