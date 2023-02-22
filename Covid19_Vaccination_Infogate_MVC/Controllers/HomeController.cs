@@ -8,6 +8,8 @@ using Oracle.ManagedDataAccess.Client;
 using System.Net.Mail;
 using System.Net;
 using System;
+using System.Web.Helpers;
+using System.Data;
 
 namespace Covid19_Vaccination_Infogate_MVC.Controllers
 {
@@ -111,11 +113,7 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
-        public IActionResult RegisterCheckExist(string username)
-        {
-            return Json(new { message = "" });
-        }
+
 
         public void SendEmail(string SenderName, string ReceiverMail, string ReceiverName, string subject, string content)
         {
@@ -155,15 +153,94 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
         }
 
         [HttpPost]
+        public IActionResult RegisterCheckExist(string username)
+        {
+            string message = "";
+
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            string query = "select * from ACCOUNT where Username = :username";
+            var command = new OracleCommand(query, conn);
+            command.Parameters.Add(new OracleParameter("username", username));
+            var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                message = "Account Existed!";
+                return Content(message, "text/html");
+            }
+
+            return Content(message, "text/html");
+        }
+
+        [HttpPost]
         public IActionResult RegisterAccount(string username, string password)
         {
-            return Json(new { message = "" });
+            string message = "";
+
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+            conn.Open();
+
+            var command = new OracleCommand("ACC_INSERT_RECORD", conn);
+            command.Parameters.Add("par_Username", OracleDbType.Varchar2).Value = username;
+            command.Parameters.Add("par_Password", OracleDbType.Varchar2).Value = password;
+            command.Parameters.Add("par_Role", OracleDbType.Int16).Value = 2;
+            command.Parameters.Add("par_Status", OracleDbType.Int16).Value = 0;
+            try
+            {
+                var reader = command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = "Account Existed!";
+                return Content(message, "text/html");
+            }
+
+            HttpContext.Session.SetString("username", username);
+
+            message = "Account Created!";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
         public IActionResult RegisterProfile(string lastname, string firstname, int gender, string id, string birthday, string hometown, string province, string district, string town, string street, string email)
         {
-            return Json(new { message = "" });
+            string message = "";
+            var conn = new OracleConnection();
+            conn.ConnectionString = "User Id=covid19_vaccination_infogate;Password=covid19_vaccination_infogate;Data Source=localhost/orcl";
+
+            string username = HttpContext.Session.GetString("username");
+            conn.Open();
+            var command = new OracleCommand("CITIZEN_INSERT_RECORD", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("par_ID", OracleDbType.Varchar2).Value = id;
+            command.Parameters.Add("par_LastName", OracleDbType.Varchar2).Value = lastname;
+            command.Parameters.Add("par_FirstName", OracleDbType.Varchar2).Value = firstname;
+            command.Parameters.Add("par_Birthday", OracleDbType.Varchar2).Value = birthday;
+            command.Parameters.Add("par_Gender", OracleDbType.Int16).Value = gender;
+            command.Parameters.Add("par_HomeTown", OracleDbType.Varchar2).Value = hometown;
+            command.Parameters.Add("par_ProvinceName", OracleDbType.Varchar2).Value = province;
+            command.Parameters.Add("par_DistrictName", OracleDbType.Varchar2).Value = district;
+            command.Parameters.Add("par_TownName", OracleDbType.Varchar2).Value = town;
+            command.Parameters.Add("par_Street", OracleDbType.Varchar2).Value = street;
+            command.Parameters.Add("par_Phone", OracleDbType.Varchar2).Value = username;
+            command.Parameters.Add("par_Email", OracleDbType.Varchar2).Value = email;
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (OracleException e)
+            {
+                message = e.Message;
+                return Content(message, "text/html");
+            };
+            conn.Close();
+
+            message += "UpdateProfile";
+            return Content(message, "text/html");
         }
 
         [HttpPost]
@@ -197,10 +274,22 @@ namespace Covid19_Vaccination_Infogate_MVC.Controllers
             }
 
             Random rnd = new Random();
+            for (int i = 0; i < 3; i++)
+            {
+                int unicode = rnd.Next(97, 122);
+                char character = (char)unicode;
+                new_password += character.ToString();
+            }
             for (int i = 0; i < 6; i++)
             {
                 int num = rnd.Next(0, 9);
                 new_password += num.ToString();
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int unicode = rnd.Next(65, 90);
+                char character = (char)unicode;
+                new_password += character.ToString();
             }
 
             query = "update ACCOUNT set Password = :password where Username = :username";

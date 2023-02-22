@@ -33,6 +33,22 @@ namespace Covid19_Vaccination_Infogate_MVC.Models
         }
         public int No { get; set; }
         public int Status { get; set; }
+        public string StatusString()
+        {
+            switch (Status)
+            {
+                case 0:
+                    return "Đã đăng ký";
+                case 1:
+                    return "Đã điểm danh";
+                case 2:
+                    return "Đã tiêm";
+                case 3:
+                    return "Đã hủy";
+                default:
+                    return "";
+            }
+        }
         public byte[]? Image { get; set; }
         public string DoseType { get; set; }
         public int Id { get; set; }

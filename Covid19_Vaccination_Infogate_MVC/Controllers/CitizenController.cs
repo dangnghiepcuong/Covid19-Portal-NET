@@ -1,7 +1,7 @@
 ﻿using Covid19_Vaccination_Infogate_MVC.Models;
 using Covid19_Vaccination_Infogate_MVC.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging; 
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using System;

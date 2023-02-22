@@ -38,7 +38,10 @@ $(document).ready(function () {
         $(this).parent().find('.message').text("");
     })
 
-    $('#btn-reset-password').click(function(){
+    $('#btn-reset-password').click(function () {
+        $('#container-forgot-password').css('display', 'none');
+        PopupConfirm('Hệ thống đã gửi mật khẩu mới đến email của bạn.<br>Vui lòng kiểm tra hộp thư!')
+
         $('#container-forgot-password').find('.message').text('');
 
         email = $('#container-forgot-password').find('input[name="email"]').val().toLowerCase();
